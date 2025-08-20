@@ -17,7 +17,7 @@ class Ad(SQLModel, table=True):
     html: str
     url: str
     weight: int = 1
-    zone: Zone = Relationship(back_populates='ads')
+    zone: Zone | None = Relationship(back_populates='ads')
 
 
 class Impression(SQLModel, table=True):

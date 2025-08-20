@@ -17,17 +17,19 @@ def setup_db():
 
 
 def test_create_and_get_zone():
-    resp = client.post('/zones/', json={'name': 'Z1', 'width': 100, 'height': 100})
-    assert resp.status_code == 200
-    data = resp.json()
-    assert data['id'] and data['name'] == 'Z1'
+    with TestClient(app) as client:
+        resp = client.post('/zones/', json={'name': 'Z1', 'width': 100, 'height': 100})
+        assert resp.status_code == 200
+        data = resp.json()
+        assert data['id'] and data['name'] == 'Z1'
 
-    get_resp = client.get(f"/zones/{data['id']}")
-    assert get_resp.status_code == 200
-    assert get_resp.json()['width'] == 100
+        get_resp = client.get(f"/zones/{data['id']}")
+        assert get_resp.status_code == 200
+        assert get_resp.json()['width'] == 100
 
 
 def test_list_zones_empty():
-    resp = client.get('/zones/')
-    assert resp.status_code == 200
-    assert resp.json() == []
+    with TestClient(app) as client:
+        resp = client.get('/zones/')
+        assert resp.status_code == 200
+        assert resp.json() == []

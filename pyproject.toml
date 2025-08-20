@@ -1,0 +1,90 @@
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.ruff]
+line-length = 88
+target-version = "py311" # Change to "py312" if your venv uses 3.12
+exclude = [
+    ".git",
+    ".venv",
+    "venv",
+    "__pycache__",
+    ".ruff_cache",
+    ".mypy_cache",
+    ".pytest_cache",
+    "build",
+    "dist",
+]
+
+[tool.ruff.lint]
+# Style + correctness without being draconian
+select = [
+    "E",
+    "F",
+    "I",
+    "UP",
+    "B",
+] # pycodestyle, pyflakes, isort, pyupgrade, bugbear
+
+[tool.ruff.lint.isort]
+combine-as-imports = true
+force-sort-within-sections = true
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+skip-magic-trailing-comma = false
+
+[tool.pytest.ini_options]
+addopts = "-q"
+testpaths = ["tests"]
+pythonpath = ["src"]  # Remove if you don't use a src/ layout
+
+# ---- Static typing (mypy) ----
+[tool.mypy]
+python_version = "3.11"                                # Set to 3.12 if that's your default
+plugins = []                                           # e.g. ["pydantic.mypy"] if needed
+mypy_path = ["src"]                                    # Keep imports clean with src/ layout
+namespace_packages = true
+warn_return_any = false
+warn_unused_configs = true
+disallow_untyped_defs = true
+disallow_incomplete_defs = true
+no_implicit_optional = true
+check_untyped_defs = true
+implicit_reexport = false
+ignore_missing_imports = true
+exclude = ["tests/fixtures/.*", "build/.*", "dist/.*"]
+
+# ---- Type checker used by Pylance (Pyright) ----
+[tool.pyright]
+pythonVersion = "3.11"
+typeCheckingMode = "standard"    # Matches your VS Code setting
+venvPath = "."
+venv = ".venv"
+include = ["src", "tests"]
+reportMissingTypeStubs = false
+reportPrivateUsage = "none"
+reportUnusedImport = "warning"
+reportUnusedVariable = "warning"
+
+# ---- Coverage (coverage.py) ----
+[tool.coverage.run]
+branch = true
+source = ["src"]
+omit = ["tests/*", "**/__init__.py"]
+
+[tool.coverage.report]
+fail_under = 90 # Adjust threshold to your appetite
+show_missing = true
+skip_covered = true
+exclude_lines = [
+    "pragma: no cover",
+    "if TYPE_CHECKING:",
+    "if __name__ == .__main__.:",
+]
+
+[tool.coverage.paths]
+# Combine paths across OS/CI runners
+source = ["src", "*/site-packages"]

@@ -39,7 +39,7 @@ skip-magic-trailing-comma = false
 [tool.pytest.ini_options]
 addopts = "-q"
 testpaths = ["tests"]
-pythonpath = ["src"]  # Remove if you don't use a src/ layout
+pythonpath = ["."]    # Remove if you don't use a src/ layout
 
 # ---- Static typing (mypy) ----
 [tool.mypy]

@@ -10,7 +10,7 @@ client = TestClient(app)
 
 @pytest.fixture(autouse=True)
 def setup_db():
-    # Refresh DB for each test
+    # Drop and recreate all tables before each test
     SQLModel.metadata.drop_all(engine)
     SQLModel.metadata.create_all(engine)
     yield

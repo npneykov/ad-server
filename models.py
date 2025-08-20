@@ -24,3 +24,9 @@ class Impression(SQLModel, table=True):
     id: int | None = Field(default=None, primary_key=True)
     ad_id: int = Field(foreign_key='ad.id')
     timestamp: datetime = Field(default_factory=datetime.utcnow)
+
+
+class Click(SQLModel, table=True):
+    id: int | None = Field(default=None, primary_key=True)
+    ad_id: int = Field(foreign_key='ad.id')
+    timestamp: datetime = Field(default_factory=datetime.utcnow)

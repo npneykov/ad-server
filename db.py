@@ -1,7 +1,12 @@
+import os
+
+from dotenv import load_dotenv
 from sqlmodel import Session, SQLModel, create_engine
 
-# SQLite file in project root
-engine = create_engine('sqlite:///./adserver.db', echo=False)
+load_dotenv()
+
+DATABASE_URL = os.getenv('DATABASE_URL', 'sqlite:///./adserver.db')
+engine = create_engine(DATABASE_URL, echo=False)
 
 
 def init_db():

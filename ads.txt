@@ -1,0 +1,2 @@
+# ads.txt
+example.com, 12345, DIRECT, f08c47fec0942fa0

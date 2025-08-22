@@ -12,7 +12,12 @@ from fastapi import (
     Request,
     Response,
 )
-from fastapi.responses import HTMLResponse, JSONResponse, RedirectResponse
+from fastapi.responses import (
+    HTMLResponse,
+    JSONResponse,
+    PlainTextResponse,
+    RedirectResponse,
+)
 from fastapi.templating import Jinja2Templates
 from sqlalchemy import func
 from sqlmodel import Session, SQLModel, select
@@ -434,3 +439,21 @@ def public_stats(session: Session = Depends(get_session)):
 @app.get('/stats', response_class=HTMLResponse)
 def public_stats_ui(request: Request):
     return templates.TemplateResponse('public/stats.html', {'request': request})
+
+
+@app.get('/ads.txt', response_class=PlainTextResponse, include_in_schema=False)
+def ads_txt():
+    with open('ads.txt') as f:
+        return f.read()
+
+
+@app.get('/robots.txt', response_class=PlainTextResponse, include_in_schema=False)
+def robots_txt():
+    with open('robots.txt') as f:
+        return f.read()
+
+
+@app.get('/sitemap.xml', response_class=PlainTextResponse, include_in_schema=False)
+def sitemap_xml():
+    with open('sitemap.xml') as f:
+        return f.read()

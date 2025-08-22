@@ -1,14 +1,89 @@
-from fastapi import Depends, FastAPI, HTTPException, Query, Request
+from datetime import datetime, timedelta
+import os
+
+from dotenv import load_dotenv
+from fastapi import (
+    Depends,
+    FastAPI,
+    Form,
+    Header,
+    HTTPException,
+    Query,
+    Request,
+    Response,
+)
 from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi.templating import Jinja2Templates
-from sqlmodel import Session, select
+from sqlalchemy import func
+from sqlmodel import Session, SQLModel, select
 
-from db import get_session
+from db import engine, get_session
 from models import Ad, Click, Impression, Zone  # add Impression, Click
 
+load_dotenv()
 app = FastAPI()
 
 templates = Jinja2Templates(directory='templates')
+
+
+@app.on_event('startup')
+def on_startup():
+    SQLModel.metadata.create_all(engine)
+
+
+def verify_admin_key(x_admin_key: str | None = Header(default=None)):
+    expected = os.getenv('ADMIN_KEY')
+    if not expected:
+        # For local dev: allow if no key set
+        return True
+    if x_admin_key == expected:
+        return True
+    raise HTTPException(status_code=401, detail='Unauthorized: invalid X-ADMIN-KEY')
+
+
+def range_counts(session: Session, days: int = 7):
+    since = datetime.utcnow() - timedelta(days=days)
+
+    # Aggregate impressions per ad_id
+    imp_rows = session.exec(
+        select(Impression.ad_id, func.count(Impression.id))  # pyright: ignore[reportArgumentType]
+        .where(Impression.timestamp >= since)
+        .group_by(Impression.ad_id)  # pyright: ignore[reportArgumentType]
+    ).all()
+    imps = {ad_id: n for ad_id, n in imp_rows}
+
+    # Aggregate clicks per ad_id
+    clk_rows = session.exec(
+        select(Click.ad_id, func.count(Click.id))  # pyright: ignore[reportArgumentType]
+        .where(Click.timestamp >= since)
+        .group_by(Click.ad_id)  # pyright: ignore[reportArgumentType]
+    ).all()
+    clks = {ad_id: n for ad_id, n in clk_rows}
+
+    return imps, clks
+
+
+@app.get(
+    '/admin/analytics',
+    response_class=HTMLResponse,
+    dependencies=[Depends(verify_admin_key)],
+)
+def admin_analytics(
+    request: Request,
+    days: int = Query(7, ge=1, le=90),
+    session: Session = Depends(get_session),
+):
+    imps, clks = range_counts(session, days=days)
+    ads = session.exec(select(Ad)).all()
+    rows = []
+    for a in ads:
+        i = imps.get(a.id, 0)  # pyright: ignore[reportCallIssue, reportArgumentType]
+        c = clks.get(a.id, 0)  # pyright: ignore[reportArgumentType, reportCallIssue]
+        ctr = (c / i * 100.0) if i else 0.0
+        rows.append({'ad': a, 'imps': i, 'clks': c, 'ctr': ctr})
+    return templates.TemplateResponse(
+        'admin/analytics.html', {'request': request, 'rows': rows, 'days': days}
+    )
 
 
 # -------- util --------
@@ -190,6 +265,130 @@ def click(
     return RedirectResponse(url=ad.url, status_code=302)
 
 
+@app.get('/healthz')
+def healthz():
+    return {'ok': True}
+
+
 @app.get('/some-endpoint')
 def some_endpoint():
     return {'message': 'Success'}
+
+
+# ---------- Admin UI ----------
+@app.get(
+    '/admin', response_class=HTMLResponse, dependencies=[Depends(verify_admin_key)]
+)
+def admin_home(request: Request):
+    return templates.TemplateResponse(
+        'admin/base.html', {'request': request, 'page': 'home'}
+    )
+
+
+@app.get(
+    '/admin/zones',
+    response_class=HTMLResponse,
+    dependencies=[Depends(verify_admin_key)],
+)
+def admin_zones(request: Request, session: Session = Depends(get_session)):
+    zones = session.exec(select(Zone)).all()
+    return templates.TemplateResponse(
+        'admin/zones.html', {'request': request, 'zones': zones}
+    )
+
+
+@app.post('/admin/zones', dependencies=[Depends(verify_admin_key)])
+def admin_zones_create(
+    name: str = Form(...),
+    width: int = Form(...),
+    height: int = Form(...),
+    session: Session = Depends(get_session),
+):
+    z = Zone(name=name, width=width, height=height)
+    session.add(z)
+    session.commit()
+    return RedirectResponse(url='/admin/zones', status_code=303)
+
+
+@app.post('/admin/zones/{zone_id}/delete', dependencies=[Depends(verify_admin_key)])
+def admin_zones_delete(zone_id: int, session: Session = Depends(get_session)):
+    z = session.get(Zone, zone_id)
+    if not z:
+        raise HTTPException(status_code=404, detail='Zone not found')
+    session.delete(z)
+    session.commit()
+    return RedirectResponse(url='/admin/zones', status_code=303)
+
+
+@app.get(
+    '/admin/ads', response_class=HTMLResponse, dependencies=[Depends(verify_admin_key)]
+)
+def admin_ads(
+    request: Request,
+    zone: int | None = Query(default=None),
+    session: Session = Depends(get_session),
+):
+    zones = session.exec(select(Zone)).all()
+    query = select(Ad)
+    if zone:
+        query = query.where(Ad.zone_id == zone)
+    ads = session.exec(query).all()
+    return templates.TemplateResponse(
+        'admin/ads.html',
+        {'request': request, 'zones': zones, 'ads': ads, 'zone_filter': zone},
+    )
+
+
+@app.post('/admin/ads', dependencies=[Depends(verify_admin_key)])
+def admin_ads_create(
+    zone_id: int = Form(...),
+    html: str = Form(...),
+    url: str = Form(...),
+    weight: int = Form(1),
+    session: Session = Depends(get_session),
+):
+    if not session.get(Zone, zone_id):
+        raise HTTPException(status_code=400, detail='Invalid zone_id')
+    a = Ad(zone_id=zone_id, html=html, url=url, weight=weight)
+    session.add(a)
+    session.commit()
+    return RedirectResponse(url='/admin/ads', status_code=303)
+
+
+@app.post('/admin/ads/{ad_id}/delete', dependencies=[Depends(verify_admin_key)])
+def admin_ads_delete(ad_id: int, session: Session = Depends(get_session)):
+    a = session.get(Ad, ad_id)
+    if not a:
+        raise HTTPException(status_code=404, detail='Ad not found')
+    session.delete(a)
+    session.commit()
+    return RedirectResponse(url='/admin/ads', status_code=303)
+
+
+@app.get('/embed.js', response_class=Response, include_in_schema=False)
+def embed_js(zone: int = Query(description='Zone ID')):
+    return templates.TemplateResponse(
+        'embed.js.jinja2',
+        {'request': Request, 'zone': zone},
+        media_type='application/javascript',
+    )
+
+
+@app.get('/api/stats.json')
+def stats_api(session: Session = Depends(get_session)):
+    imps, clks = range_counts(session, days=7)
+    ads = session.exec(select(Ad)).all()
+
+    return [
+        {
+            'id': ad.id,
+            'zone_id': ad.zone_id,
+            'html_snippet': ad.html[:100] + '...' if len(ad.html) > 100 else ad.html,
+            'impressions': imps.get(ad.id, 0),  # type: ignore
+            'clicks': clks.get(ad.id, 0),  # type: ignore
+            'ctr': round((clks.get(ad.id, 0) / imps.get(ad.id, 1)) * 100, 2)  # type: ignore
+            if imps.get(ad.id)  # type: ignore
+            else 0.0,
+        }
+        for ad in ads
+    ]

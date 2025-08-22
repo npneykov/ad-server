@@ -181,7 +181,7 @@ def list_ads(session: Session = Depends(get_session)):
 def rent_form(request: Request, session: Session = Depends(get_session)):
     zones = session.exec(select(Zone)).all()
     return templates.TemplateResponse(
-        'public/rent.html', {'request': request, 'zones': zones}
+        'ads/rent.html', {'request': request, 'zones': zones}
     )
 
 

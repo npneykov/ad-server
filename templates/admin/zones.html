@@ -21,6 +21,7 @@
             <th>Name</th>
             <th>Size</th>
             <th>Actions</th>
+            <th>Embed Code</th>
         </tr>
     </thead>
     <tbody>
@@ -29,6 +30,11 @@
             <td>{{ z.id }}</td>
             <td>{{ z.name }}</td>
             <td>{{ z.width }} × {{ z.height }}</td>
+            <td>
+                <textarea readonly rows="4" cols="60" onclick="this.select()">
+<iframe src="https://ad-server.fly.dev/render?zone={{ zone.id }}" width="{{ zone.width }}" height="{{ zone.height }}" style="border:0;overflow:hidden;" loading="lazy"></iframe>
+    </textarea>
+            </td>
             <td>
                 <form class="inline" method="post" action="/admin/zones/{{ z.id }}/delete">
                     <button type="submit" onclick="return confirm('Delete zone {{ z.id }}?')">Delete</button>

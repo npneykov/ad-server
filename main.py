@@ -12,7 +12,7 @@ from fastapi import (
     Request,
     Response,
 )
-from fastapi.responses import HTMLResponse, RedirectResponse
+from fastapi.responses import HTMLResponse, JSONResponse, RedirectResponse
 from fastapi.templating import Jinja2Templates
 from sqlalchemy import func
 from sqlmodel import Session, SQLModel, select
@@ -392,3 +392,40 @@ def stats_api(session: Session = Depends(get_session)):
         }
         for ad in ads
     ]
+
+
+@app.get('/stats.json', response_class=JSONResponse)
+def public_stats(session: Session = Depends(get_session)):
+    # Optional: support filtering per zone later
+    ads = session.exec(select(Ad)).all()
+
+    data = []
+    for ad in ads:
+        impressions = (
+            session.exec(
+                select(func.count(Impression.id)).where(Impression.ad_id == ad.id)  # type: ignore
+            ).first()
+            or 0
+        )
+
+        clicks = (
+            session.exec(
+                select(func.count(Click.id)).where(Click.ad_id == ad.id)  # type: ignore
+            ).first()
+            or 0
+        )
+
+        ctr = round((clicks / impressions * 100.0), 2) if impressions else 0.0
+
+        data.append(
+            {
+                'ad_id': ad.id,
+                'zone_id': ad.zone_id,
+                'impressions': impressions,
+                'clicks': clicks,
+                'ctr': ctr,
+                'url': ad.url,
+            }
+        )
+
+    return {'ads': data}

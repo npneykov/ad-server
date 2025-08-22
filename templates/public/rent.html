@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Rent Ad Space</title>
+</head>
+
+<body>
+    <h1>Rent a Banner Slot</h1>
+
+    <form action="/ads/rent" method="post">
+        <label>Your banner HTML:</label><br>
+        <textarea name="html" rows="5" cols="50" required></textarea><br><br>
+
+        <label>Target URL:</label><br>
+        <input name="url" type="url" required><br><br>
+
+        <label>Select Zone:</label><br>
+        <select name="zone_id" required>
+            {% for zone in zones %}
+            <option value="{{ zone.id }}">{{ zone.name }} ({{ zone.width }}x{{ zone.height }})</option>
+            {% endfor %}
+        </select><br><br>
+
+        <label>Weight (optional, default 1):</label><br>
+        <input name="weight" type="number" value="1" min="1"><br><br>
+
+        <button type="submit">Submit</button>
+    </form>
+</body>
+
+</html>

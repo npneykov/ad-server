@@ -366,7 +366,7 @@ def admin_ads_delete(ad_id: int, session: Session = Depends(get_session)):
 
 
 @app.get('/embed.js', response_class=Response, include_in_schema=False)
-def embed_js(zone: int = Query(description='Zone ID')):
+def embed_js(request: Request, zone: int = Query(description='Zone ID')):
     return templates.TemplateResponse(
         'embed.js.jinja2',
         {'request': Request, 'zone': zone},
@@ -429,3 +429,8 @@ def public_stats(session: Session = Depends(get_session)):
         )
 
     return {'ads': data}
+
+
+@app.get('/stats', response_class=HTMLResponse)
+def public_stats_ui(request: Request):
+    return templates.TemplateResponse('public/stats.html', {'request': request})

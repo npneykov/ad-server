@@ -71,19 +71,23 @@ To persist the database:
 docker run --env-file=.env -p 8000:8000 -v $(pwd)/adserver.db:/app/adserver.db ad-server
 ```
 
-📜 License
-
-MIT License
-
-🙋‍♂️ Author
-
-Nikola Neykov
-github.com/npneykov
-
-💡 Example Embed Snippet
+## 💡 Example Embed Snippet
 
 Paste this on a partner/publisher site:
 
 ```html
 <script src="http://yourdomain.com/embed.js?zone=1"></script>
 ```
+
+## 📜 License
+
+This project is **proprietary software** owned by Nikola Neykov.
+
+You may not use, copy, distribute, or modify any part of this software without explicit written permission.
+
+For commercial inquiries or licensing, please contact: **<nikola.neykov@gmail.com>**
+
+## 🙋‍♂️ Author
+
+Nikola Neykov
+github.com/npneykov

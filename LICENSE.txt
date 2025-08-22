@@ -1,0 +1,11 @@
+Copyright (c) 2025 Nikola Neykov
+
+All rights reserved.
+
+This software is proprietary and confidential. You may not copy, modify,
+distribute, or use any part of this software without express written
+permission from the author.
+
+This repository is provided for demonstration and evaluation purposes only.
+
+For commercial or production use, contact: nikola.neykov@gmail.com

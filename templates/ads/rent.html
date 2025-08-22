@@ -3,11 +3,41 @@
 
 <head>
     <title>Rent an Ad Slot</title>
+    <script>
+        function updatePreview() {
+            const html = document.getElementById("html").value;
+            const iframe = document.getElementById("preview");
+            const doc = iframe.contentDocument || iframe.contentWindow.document;
+            doc.open();
+            doc.write(html);
+            doc.close();
+        }
+
+        function validateForm(event) {
+            const html = document.getElementById("html").value;
+            const url = document.getElementById("url").value;
+
+            if (!html.includes("<img") && !html.includes("<div") && !html.includes("<a")) {
+                alert("Ad HTML must include a valid HTML tag (e.g., <img>, <a>, <div>).");
+                event.preventDefault();
+                return false;
+            }
+
+            if (!url.startsWith("http://") && !url.startsWith("https://")) {
+                alert("Click-through URL must start with http:// or https://");
+                event.preventDefault();
+                return false;
+            }
+
+            return true;
+        }
+    </script>
 </head>
 
 <body>
     <h1>Rent an Ad Slot</h1>
-    <form action="/ads/rent" method="post">
+
+    <form action="/ads/rent" method="post" onsubmit="return validateForm(event)">
         <label for="zone_id">Zone:</label>
         <select name="zone_id" id="zone_id">
             {% for zone in zones %}
@@ -15,17 +45,20 @@
             {% endfor %}
         </select><br><br>
 
-        <label for="html">Ad HTML (or image embed):</label><br>
-        <textarea name="html" rows="6" cols="60" placeholder="E.g. <img src='https://...'>"></textarea><br><br>
+        <label for="html">Ad HTML:</label><br>
+        <textarea id="html" name="html" rows="6" cols="60" oninput="updatePreview()"></textarea><br><br>
 
-        <label for="url">Target URL (click-through):</label><br>
-        <input type="url" name="url" required><br><br>
+        <label for="url">Click-through URL:</label><br>
+        <input type="url" id="url" name="url" required><br><br>
 
-        <label for="weight">Impression Weight (default: 1):</label><br>
+        <label for="weight">Weight (default: 1):</label><br>
         <input type="number" name="weight" value="1" min="1"><br><br>
 
         <button type="submit">Submit</button>
     </form>
+
+    <h2>Live Preview:</h2>
+    <iframe id="preview" width="728" height="90" style="border:1px solid #ccc;"></iframe>
 </body>
 
 </html>

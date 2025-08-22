@@ -1,0 +1,57 @@
+{% extends "admin/base.html" %}
+{% block content %}
+<h2 class="mb-4">Ad Analytics (Last {{ days }} Days)</h2>
+<table border="1" cellpadding="8" cellspacing="0">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Zone</th>
+            <th>Preview</th>
+            <th>Impressions</th>
+            <th>Clicks</th>
+            <th>CTR (%)</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% set total_imps = 0 %}
+        {% set total_clicks = 0 %}
+        {% for row in rows %}
+        {% set total_imps = total_imps + row.imps %}
+        {% set total_clicks = total_clicks + row.clks %}
+        <tr>
+            <td>{{ row.ad.id }}</td>
+            <td>{{ row.ad.zone_id }}</td>
+            <td>
+                <a href="{{ row.ad.url }}" target="_blank">
+                    <div style="width: 200px; height: 90px; overflow: hidden;">
+                        {{ row.ad.html | safe }}
+                    </div>
+                </a>
+            </td>
+            <td>{{ row.imps }}</td>
+            <td>{{ row.clks }}</td>
+            <td>
+                {{ "%.2f"|format(row.ctr) }}
+                {% if row.ctr > 5.0 %}
+                <span style="color: green; font-weight: bold;">★</span>
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+    <tfoot>
+        <tr style="font-weight: bold;">
+            <td colspan="3">TOTAL</td>
+            <td>{{ total_imps }}</td>
+            <td>{{ total_clicks }}</td>
+            <td>
+                {% if total_imps %}
+                {{ "%.2f"|format((total_clicks / total_imps) * 100) }}
+                {% else %}
+                0.00
+                {% endif %}
+            </td>
+        </tr>
+    </tfoot>
+</table>
+{% endblock %}

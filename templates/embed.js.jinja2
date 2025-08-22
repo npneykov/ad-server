@@ -1,0 +1,13 @@
+(function() {
+  const container = document.currentScript.parentElement;
+  if (!container) return;
+
+  const iframe = document.createElement("iframe");
+  iframe.src = "http://localhost:8000/render?zone={{ zone }}";
+  iframe.width = "728";
+  iframe.height = "90";
+  iframe.style.border = "0";
+  iframe.loading = "lazy";
+
+  container.appendChild(iframe);
+})();

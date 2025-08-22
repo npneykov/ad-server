@@ -1,0 +1,41 @@
+{% extends "admin/base.html" %}
+{% block content %}
+<h1>Zones</h1>
+
+<div class="card">
+    <h3>Create Zone</h3>
+    <form method="post" action="/admin/zones">
+        <div class="row">
+            <label>Name<br><input name="name" required></label>
+            <label>Width<br><input type="number" name="width" required></label>
+            <label>Height<br><input type="number" name="height" required></label>
+            <button type="submit">Create</button>
+        </div>
+    </form>
+</div>
+
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Size</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for z in zones %}
+        <tr>
+            <td>{{ z.id }}</td>
+            <td>{{ z.name }}</td>
+            <td>{{ z.width }} × {{ z.height }}</td>
+            <td>
+                <form class="inline" method="post" action="/admin/zones/{{ z.id }}/delete">
+                    <button type="submit" onclick="return confirm('Delete zone {{ z.id }}?')">Delete</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

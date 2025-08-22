@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Ad Stats</title>
+    <meta charset="utf-8" />
+    <style>
+        body {
+            font-family: sans-serif;
+            padding: 20px;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th,
+        td {
+            padding: 8px 12px;
+            border: 1px solid #ccc;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        input {
+            margin-bottom: 10px;
+            padding: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Ad Performance</h1>
+    <input type="text" id="zoneFilter" placeholder="Filter by Zone ID..." onkeyup="filterTable()" />
+    <table id="statsTable">
+        <thead>
+            <tr>
+                <th>Ad ID</th>
+                <th>Zone ID</th>
+                <th>Impressions</th>
+                <th>Clicks</th>
+                <th>CTR %</th>
+            </tr>
+        </thead>
+        <tbody id="statsBody"></tbody>
+    </table>
+
+    <script>
+        async function fetchStats() {
+            const res = await fetch('/stats.json');
+            const data = await res.json();
+            const tbody = document.getElementById('statsBody');
+            tbody.innerHTML = '';
+
+            data.ads.forEach(ad => {
+                const row = `<tr>
+          <td>${ad.id}</td>
+          <td>${ad.zone_id}</td>
+          <td>${ad.impressions}</td>
+          <td>${ad.clicks}</td>
+          <td>${ad.ctr.toFixed(2)}</td>
+        </tr>`;
+                tbody.insertAdjacentHTML('beforeend', row);
+            });
+        }
+
+        function filterTable() {
+            const input = document.getElementById("zoneFilter").value.toLowerCase();
+            const rows = document.getElementById("statsBody").getElementsByTagName("tr");
+
+            for (let row of rows) {
+                const zone = row.cells[1].textContent;
+                row.style.display = zone.includes(input) ? "" : "none";
+            }
+        }
+
+        fetchStats();
+    </script>
+</body>
+
+</html>

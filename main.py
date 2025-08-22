@@ -177,6 +177,35 @@ def list_ads(session: Session = Depends(get_session)):
     return session.exec(select(Ad)).all()
 
 
+@app.get('/ads/rent', response_class=HTMLResponse)
+def rent_form(request: Request, session: Session = Depends(get_session)):
+    zones = session.exec(select(Zone)).all()
+    return templates.TemplateResponse(
+        'public/rent.html', {'request': request, 'zones': zones}
+    )
+
+
+@app.post('/ads/rent')
+def submit_rental(
+    html: str = Form(...),
+    url: str = Form(...),
+    zone_id: int = Form(...),
+    weight: int = Form(1),
+    session: Session = Depends(get_session),
+):
+    if not session.get(Zone, zone_id):
+        raise HTTPException(status_code=400, detail='Invalid zone ID')
+
+    ad = Ad(html=html, url=url, zone_id=zone_id, weight=weight)
+    session.add(ad)
+    session.commit()
+
+    # Optionally notify you via email or logging
+    print(f'New ad rental submitted for zone {zone_id}')
+
+    return RedirectResponse(url='/ads/rent?success=true', status_code=303)
+
+
 @app.get('/ads/{ad_id}', response_model=Ad)
 def get_ad(ad_id: int, session: Session = Depends(get_session)):
     ad = session.get(Ad, ad_id)
@@ -457,32 +486,3 @@ def robots_txt():
 def sitemap_xml():
     with open('sitemap.xml') as f:
         return f.read()
-
-
-@app.get('/ads/rent', response_class=HTMLResponse)
-def rent_form(request: Request, session: Session = Depends(get_session)):
-    zones = session.exec(select(Zone)).all()
-    return templates.TemplateResponse(
-        'public/rent.html', {'request': request, 'zones': zones}
-    )
-
-
-@app.post('/ads/rent')
-def submit_rental(
-    html: str = Form(...),
-    url: str = Form(...),
-    zone_id: int = Form(...),
-    weight: int = Form(1),
-    session: Session = Depends(get_session),
-):
-    if not session.get(Zone, zone_id):
-        raise HTTPException(status_code=400, detail='Invalid zone ID')
-
-    ad = Ad(html=html, url=url, zone_id=zone_id, weight=weight)
-    session.add(ad)
-    session.commit()
-
-    # Optionally notify you via email or logging
-    print(f'New ad rental submitted for zone {zone_id}')
-
-    return RedirectResponse(url='/ads/rent?success=true', status_code=303)

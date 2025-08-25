@@ -486,3 +486,10 @@ def robots_txt():
 def sitemap_xml():
     with open('sitemap.xml') as f:
         return f.read()
+
+
+@app.get('/', response_class=HTMLResponse)
+def home(request: Request):
+    return templates.TemplateResponse(
+        'index.html', {'request': request, 'year': datetime.utcnow().year}
+    )

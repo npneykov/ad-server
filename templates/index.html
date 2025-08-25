@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Open Ad Platform | Free Ad Hosting</title>
+    <meta name="description"
+        content="Run ads for free, track performance, and host banners via a fully open-source ad platform.">
+    <meta name="keywords" content="ad server, banner ads, open source ads, self hosted ads, ad platform, advertising">
+    <meta name="author" content="Nikola Neykov">
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="https://ad-server.fly.dev/" />
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f5f7fa;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background: linear-gradient(to right, #1e3c72, #2a5298);
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        section {
+            padding: 40px 20px;
+            max-width: 960px;
+            margin: 0 auto;
+            background: white;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        h1,
+        h2 {
+            margin-top: 0;
+        }
+
+        .zone-example {
+            margin: 20px 0;
+            padding: 10px;
+            border: 1px dashed #aaa;
+            background: #fafafa;
+            text-align: center;
+        }
+
+        iframe {
+            border: none;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            font-size: 14px;
+            color: #777;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <h1>Welcome to the Open Ad Platform</h1>
+        <p>Monetize your site, test ad banners, and track performance — 100% free and self-hosted.</p>
+    </header>
+
+    <section>
+        <h2>💡 Why Use This?</h2>
+        <ul>
+            <li>✔️ Free, open-source ad hosting</li>
+            <li>📊 Track impressions & clicks (CTR analytics)</li>
+            <li>🧩 Easy integration with any HTML site</li>
+            <li>🌐 Built with FastAPI + SQLite, deployable on Fly.io</li>
+        </ul>
+
+        <h2>🎯 Live Ad Zone Example</h2>
+        <div class="zone-example">
+            <iframe src="/render?zone=1" width="728" height="90" loading="lazy">
+            </iframe>
+        </div>
+
+        <p>Want to host your own ads? Visit the <a href="/admin" style="color:#2a5298;font-weight:bold;">admin
+                panel</a>.</p>
+    </section>
+
+    <footer>
+        &copy; {{ year }} Open Ad Platform. Built by Nikola Neykov.
+    </footer>
+
+</body>
+
+</html>

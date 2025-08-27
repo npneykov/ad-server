@@ -2,10 +2,22 @@
   const container = document.currentScript.parentElement;
   if (!container) return;
 
+  // Define available Adsterra banners (zone_id, width, height)
+  const zones = [
+    { id: 27382965, width: 728, height: 90 },   // Banner 728x90
+    { id: 27383203, width: 468, height: 60 },   // Banner 468x60
+    { id: 27383189, width: 300, height: 250 },  // Banner 300x250
+    { id: 27383212, width: 160, height: 600 },  // Banner 160x600
+    { id: 27383210, width: 160, height: 300 },  // Banner 160x300
+    { id: 27383198, width: 320, height: 50 }    // Banner 320x50
+  ];
+
+  const selected = zones[Math.floor(Math.random() * zones.length)];
+
   const iframe = document.createElement("iframe");
-  iframe.src = "http://localhost:8000/render?zone={{ zone }}";
-  iframe.width = "728";
-  iframe.height = "90";
+  iframe.src = `https://www.highperformanceformat.com/${selected.id}/invoke.js`;
+  iframe.width = selected.width;
+  iframe.height = selected.height;
   iframe.style.border = "0";
   iframe.loading = "lazy";
 

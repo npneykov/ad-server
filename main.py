@@ -493,3 +493,8 @@ def home(request: Request):
     return templates.TemplateResponse(
         'index.html', {'request': request, 'year': datetime.utcnow().year}
     )
+
+
+@app.get('/publisher', response_class=HTMLResponse)
+def publisher_page(request: Request):
+    return templates.TemplateResponse('public/publisher.html', {'request': request})

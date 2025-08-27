@@ -405,7 +405,7 @@ def embed_js(
 ):
     return templates.TemplateResponse(
         'embed.js.jinja2',
-        {'request': Request, 'zone': zone},
+        {'request': request, 'zone': zone},
         media_type='application/javascript',
     )
 

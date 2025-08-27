@@ -1,0 +1,33 @@
+<!-- templates/publisher-test.html -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Publisher Test</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            padding: 2rem;
+        }
+
+        iframe {
+            border: none;
+            margin-bottom: 1rem;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Adsterra Banner Test</h1>
+    <div id="ad-spot"></div>
+
+    <script>
+        const ad = document.createElement('script');
+        ad.src = 'https://www.highperformanceformat.com/27382965/invoke.js';  // Replace with any of your active zone IDs
+        ad.async = true;
+        document.getElementById('ad-spot').appendChild(ad);
+    </script>
+</body>
+
+</html>

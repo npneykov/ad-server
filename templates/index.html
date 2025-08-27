@@ -2,92 +2,83 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Open Ad Platform | Free Ad Hosting</title>
+    <meta charset="UTF-8">
+    <title>Ad Preview Tester – Live Ad Banners</title>
     <meta name="description"
-        content="Run ads for free, track performance, and host banners via a fully open-source ad platform.">
-    <meta name="keywords" content="ad server, banner ads, open source ads, self hosted ads, ad platform, advertising">
-    <meta name="author" content="Nikola Neykov">
-    <meta name="robots" content="index, follow" />
-    <link rel="canonical" href="https://ad-server.fly.dev/" />
+        content="Preview how Adsterra banner ads look in real time. Test 728x90, 300x250, and other popular ad formats.">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
         body {
             font-family: Arial, sans-serif;
-            background: #f5f7fa;
-            margin: 0;
-            padding: 0;
-        }
-
-        header {
-            background: linear-gradient(to right, #1e3c72, #2a5298);
-            color: white;
-            padding: 40px 20px;
-            text-align: center;
-        }
-
-        section {
-            padding: 40px 20px;
+            padding: 2rem;
+            background: #f9f9f9;
+            color: #333;
             max-width: 960px;
-            margin: 0 auto;
-            background: white;
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+            margin: auto;
         }
 
-        h1,
-        h2 {
-            margin-top: 0;
+        h1 {
+            color: #222;
         }
 
-        .zone-example {
-            margin: 20px 0;
-            padding: 10px;
-            border: 1px dashed #aaa;
-            background: #fafafa;
-            text-align: center;
+        .banner-preview {
+            margin: 1.5rem 0;
+            padding: 1rem;
+            background: #fff;
+            border: 1px solid #ddd;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
         }
 
         iframe {
+            display: block;
+            margin: 0 auto;
             border: none;
         }
 
-        footer {
+        .size-label {
+            font-size: 0.9rem;
+            color: #555;
             text-align: center;
-            padding: 20px;
-            font-size: 14px;
-            color: #777;
+            margin-bottom: 0.5rem;
+        }
+
+        footer {
+            margin-top: 3rem;
+            font-size: 0.8rem;
+            color: #888;
+            text-align: center;
         }
     </style>
 </head>
 
 <body>
 
-    <header>
-        <h1>Welcome to the Open Ad Platform</h1>
-        <p>Monetize your site, test ad banners, and track performance.</p>
-    </header>
+    <h1>🧪 Ad Preview Tester</h1>
+    <p>Use this tool to preview live banner ads in various common formats. Useful for testing layouts or visual
+        placement.</p>
 
-    <section>
-        <h2>💡 Why Use This?</h2>
-        <ul>
-            <li>✔️ Free, open-source ad hosting</li>
-            <li>📊 Track impressions & clicks (CTR analytics)</li>
-            <li>🧩 Easy integration with any HTML site</li>
-            <li>🌐 Built with FastAPI + SQLite, deployable on Fly.io</li>
-        </ul>
+    <div class="banner-preview">
+        <div class="size-label">728 × 90 Banner</div>
+        <script src="/embed.js?zone=27382965"></script>
+    </div>
 
-        <h2>🎯 Live Ad Zone Example</h2>
-        <div class="zone-example">
-            <iframe src="/render?zone=1" width="728" height="90" loading="lazy">
-            </iframe>
-        </div>
+    <div class="banner-preview">
+        <div class="size-label">468 × 60 Banner</div>
+        <script src="/embed.js?zone=27383203"></script>
+    </div>
 
-        <p>Want to host your own ads? Visit the <a href="/admin" style="color:#2a5298;font-weight:bold;">admin
-                panel</a>.</p>
-    </section>
+    <div class="banner-preview">
+        <div class="size-label">300 × 250 Banner</div>
+        <script src="/embed.js?zone=27383189"></script>
+    </div>
+
+    <div class="banner-preview">
+        <div class="size-label">160 × 600 Banner</div>
+        <script src="/embed.js?zone=27383212"></script>
+    </div>
 
     <footer>
-        &copy; {{ year }} Open Ad Platform. Built by Nikola Neykov.
+        This tool is free to use and powered by a custom ad server built with FastAPI.
     </footer>
 
 </body>

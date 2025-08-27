@@ -1,34 +1,27 @@
-(function () {
-  const container = document.currentScript.parentElement;
-  if (!container) return;
+// Select a random banner configuration
+var adZones = [
+  { id: "363fe61789ea411afa3a518e263921d3", width: 728, height: 90 },
+  { id: "667cbfaa4276c3a1a5297a14a6a72a4c", width: 468, height: 60 },
+  { id: "0b1c3d2651ee6075ac8ece211622ff34", width: 300, height: 250 },
+  { id: "f3c69ff1bb6955e67ecabdf7aea461cb", width: 160, height: 600 },
+  { id: "8666fede885322207af096e33f9cf8d5", width: 160, height: 300 },
+  { id: "071342321d1d152325291bc8945d1a86", width: 320, height: 50 }
+];
 
-  const zones = [
-    { id: "363fe61789ea411afa3a518e263921d3", width: 728, height: 90 },
-    { id: "667cbfaa4276c3a1a5297a14a6a72a4c", width: 468, height: 60 },
-    { id: "0b1c3d2651ee6075ac8ece211622ff34", width: 300, height: 250 },
-    { id: "f3c69ff1bb6955e67ecabdf7aea461cb", width: 160, height: 600 },
-    { id: "8666fede885322207af096e33f9cf8d5", width: 160, height: 300 },
-    { id: "071342321d1d152325291bc8945d1a86", width: 320, height: 50 }
-  ];
+var selected = adZones[Math.floor(Math.random() * adZones.length)];
 
-  const selected = zones[Math.floor(Math.random() * zones.length)];
+// Inject ad configuration globally
+window.atOptions = {
+  'key': selected.id,
+  'format': 'iframe',
+  'height': selected.height,
+  'width': selected.width,
+  'params': {}
+};
 
-  const optionsTag = document.createElement("script");
-  optionsTag.setAttribute("type", "text/javascript");
-  optionsTag.text = `
-    var atOptions = {
-      'key': '${selected.id}',
-      'format': 'iframe',
-      'height': ${selected.height},
-      'width': ${selected.width},
-      'params': {}
-    };
-  `;
-
-  const scriptTag = document.createElement("script");
-  scriptTag.src = `https://www.highperformanceformat.com/${selected.id}/invoke.js`;
-  scriptTag.setAttribute("type", "text/javascript");
-
-  container.appendChild(optionsTag);
-  container.appendChild(scriptTag);
-})();
+// Inject the banner loading script
+var s = document.createElement('script');
+s.type = 'text/javascript';
+s.src = 'https://www.highperformanceformat.com/' + selected.id + '/invoke.js';
+s.async = true;
+(document.currentScript.parentElement || document.body).appendChild(s);

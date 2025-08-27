@@ -1,39 +1,22 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="UTF-8">
-  <title>Publisher Test</title>
-</head>
-<body>
-  <h1>Adsterra Banner Test (Inline)</h1>
-  <div id="ad-slot"></div>
+{% set zones = [
+  {"id": "363fe61789ea411afa3a518e263921d3", "width": 728, "height": 90},
+  {"id": "667cbfaa4276c3a1a5297a14a6a72a4c", "width": 468, "height": 60},
+  {"id": "0b1c3d2651ee6075ac8ece211622ff34", "width": 300, "height": 250},
+  {"id": "f3c69ff1bb6955e67ecabdf7aea461cb", "width": 160, "height": 600},
+  {"id": "8666fede885322207af096e33f9cf8d5", "width": 160, "height": 300},
+  {"id": "071342321d1d152325291bc8945d1a86", "width": 320, "height": 50}
+] %}
+{% set selected = zones|random %}
 
-  <script>
-    const zones = [
-      { id: "363fe61789ea411afa3a518e263921d3", width: 728, height: 90 },
-      { id: "667cbfaa4276c3a1a5297a14a6a72a4c", width: 468, height: 60 },
-      { id: "0b1c3d2651ee6075ac8ece211622ff34", width: 300, height: 250 },
-      { id: "f3c69ff1bb6955e67ecabdf7aea461cb", width: 160, height: 600 },
-      { id: "8666fede885322207af096e33f9cf8d5", width: 160, height: 300 },
-      { id: "071342321d1d152325291bc8945d1a86", width: 320, height: 50 }
-    ];
-
-    const selected = zones[Math.floor(Math.random() * zones.length)];
-
-
-    window.atOptions = {
-      'key': selected.id,
+document.write(`
+  <script type="text/javascript">
+    atOptions = {
+      'key': '{{ selected.id }}',
       'format': 'iframe',
-      'height': selected.height,
-      'width': selected.width,
+      'height': {{ selected.height }},
+      'width': {{ selected.width }},
       'params': {}
     };
-
-    const script = document.createElement('script');
-    script.type = 'text/javascript';
-    script.src = `https://www.highperformanceformat.com/${selected.id}/invoke.js`;
-    script.async = true;
-    document.getElementById('ad-slot').appendChild(script);
-  </script>
-</body>
-</html>
+  <\/script>
+  <script type="text/javascript" src="https://www.highperformanceformat.com/{{ selected.id }}/invoke.js"><\/script>
+`);

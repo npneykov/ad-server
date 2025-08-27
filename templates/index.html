@@ -5,33 +5,36 @@
     <meta charset="UTF-8">
     <title>Ad Preview Tester – Live Banner Tool</title>
     <meta name="description"
-        content="Preview how Adsterra banner ads look in real time. Test 728x90, 300x250, and other ad formats.">
+        content="Preview how Adsterra banner ads look in real time. Test 728x90, 300x250, and more.">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
         body {
             font-family: Arial, sans-serif;
             padding: 2rem;
-            background: #f4f4f4;
+            background: #f9f9f9;
             color: #222;
             max-width: 960px;
             margin: auto;
+            line-height: 1.6;
         }
 
         h1 {
             font-size: 2rem;
             margin-bottom: 1rem;
+            color: #333;
         }
 
-        p {
-            margin-bottom: 1.5rem;
+        h2 {
+            font-size: 1.3rem;
+            margin-top: 3rem;
         }
 
         .banner-preview {
             background: #fff;
-            border: 1px solid #ccc;
+            border: 1px solid #ddd;
             padding: 1rem;
             margin-bottom: 2rem;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
         }
 
         .size-label {
@@ -47,12 +50,29 @@
         }
 
         .fallback {
-            background: #eee;
+            background: #f0f0f0;
             border: 1px dashed #999;
             text-align: center;
             padding: 1rem;
             font-size: 0.9rem;
             color: #777;
+        }
+
+        .cta-box {
+            background: #fff;
+            border: 1px solid #ccc;
+            padding: 1.5rem;
+            margin-top: 3rem;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        }
+
+        .embed-snippet {
+            background: #eee;
+            padding: 1rem;
+            font-family: monospace;
+            overflow-x: auto;
+            font-size: 0.95rem;
+            margin-top: 1rem;
         }
 
         .share {
@@ -72,6 +92,12 @@
             color: #888;
             text-align: center;
         }
+
+        @media (max-width: 600px) {
+            body {
+                padding: 1rem;
+            }
+        }
     </style>
 </head>
 
@@ -81,45 +107,39 @@
     <p>Preview Adsterra banners in various formats. A helpful tool for testing layouts and ad positions without coding.
     </p>
 
-    <!-- 728x90 -->
+    <!-- BANNER TESTS -->
     <div class="banner-preview">
         <div class="size-label">728 × 90 Banner</div>
         <script src="/embed.js?zone=27382965"
             onerror="this.insertAdjacentHTML('afterend', '<div class=\'fallback\'>Banner failed to load. Please check ad blocker settings.</div>')"></script>
     </div>
 
-    <!-- 468x60 -->
-    <div class="banner-preview">
-        <div class="size-label">468 × 60 Banner</div>
-        <script src="/embed.js?zone=27383203"
-            onerror="this.insertAdjacentHTML('afterend', '<div class=\'fallback\'>Banner failed to load. Please check ad blocker settings.</div>')"></script>
-    </div>
-
-    <!-- 300x250 -->
     <div class="banner-preview">
         <div class="size-label">300 × 250 Banner</div>
         <script src="/embed.js?zone=27383189"
             onerror="this.insertAdjacentHTML('afterend', '<div class=\'fallback\'>Banner failed to load. Please check ad blocker settings.</div>')"></script>
     </div>
 
-    <!-- 160x600 -->
-    <div class="banner-preview">
-        <div class="size-label">160 × 600 Banner</div>
-        <script src="/embed.js?zone=27383212"
-            onerror="this.insertAdjacentHTML('afterend', '<div class=\'fallback\'>Banner failed to load. Please check ad blocker settings.</div>')"></script>
+    <!-- CTA + Embed Code -->
+    <div class="cta-box">
+        <h2>📦 Want to Embed This Ad on Your Site?</h2>
+        <p>Just copy and paste the snippet below into your HTML where you want the banner to appear:</p>
+        <div class="embed-snippet">
+            &lt;script src="https://ad-server.fly.dev/embed.js?zone=27382965" async&gt;&lt;/script&gt;
+        </div>
     </div>
 
-    <!-- Share -->
+    <!-- Social Share -->
     <div class="share">
         <p>🔗 Share this tool:</p>
-        <a href="https://twitter.com/intent/tweet?text=Check+out+this+Ad+Preview+Tool:+https%3A%2F%2Fad-server.fly.dev"
+        <a href="https://twitter.com/intent/tweet?text=Try+this+Ad+Preview+Tool:+https%3A%2F%2Fad-server.fly.dev"
             target="_blank">Share on Twitter</a>
         <a href="https://www.reddit.com/submit?url=https%3A%2F%2Fad-server.fly.dev&title=Try+this+free+Ad+Preview+Tool"
             target="_blank">Share on Reddit</a>
     </div>
 
     <footer>
-        Built with ❤️ using FastAPI + SQLModel · Hosted on Fly.io
+        Built with ❤️ using FastAPI · Hosted on Fly.io
     </footer>
 
 </body>

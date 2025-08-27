@@ -4,22 +4,32 @@
 
   // Define available Adsterra banners (zone_id, width, height)
   const zones = [
-    { id: 27382965, width: 728, height: 90 },   // Banner 728x90
-    { id: 27383203, width: 468, height: 60 },   // Banner 468x60
-    { id: 27383189, width: 300, height: 250 },  // Banner 300x250
-    { id: 27383212, width: 160, height: 600 },  // Banner 160x600
-    { id: 27383210, width: 160, height: 300 },  // Banner 160x300
-    { id: 27383198, width: 320, height: 50 }    // Banner 320x50
+    { id: "363fe61789ea411afa3a518e263921d3", width: 728, height: 90 },   // Banner 728x90
+    { id: "667cbfaa4276c3a1a5297a14a6a72a4c", width: 468, height: 60 },   // Banner 468x60
+    { id: "0b1c3d2651ee6075ac8ece211622ff34", width: 300, height: 250 },  // Banner 300x250
+    { id: "f3c69ff1bb6955e67ecabdf7aea461cb", width: 160, height: 600 },  // Banner 160x600
+    { id: "8666fede885322207af096e33f9cf8d5", width: 160, height: 300 },  // Banner 160x300
+    { id: "071342321d1d152325291bc8945d1a86", width: 320, height: 50 }    // Banner 320x50
   ];
 
   const selected = zones[Math.floor(Math.random() * zones.length)];
 
-  const s = document.createElement("script");
-  s.src = `https://www.highperformanceformat.com/${selected.id}/invoke.js`;
-  s.width = selected.width;
-  s.height = selected.height;
-  s.style.border = "0";
-  s.loading = "lazy";
+const optScript = document.createElement("script");
+  optScript.type = "text/javascript";
+  optScript.innerHTML = `
+    atOptions = {
+      'key': '${selected.id}',
+      'format': 'iframe',
+      'height': ${selected.height},
+      'width': ${selected.width},
+      'params': {}
+    };
+  `;
 
-  container.appendChild(s);
+  const loaderScript = document.createElement("script");
+  loaderScript.src = `https://www.highperformanceformat.com/${selected.id}/invoke.js`;
+  loaderScript.type = "text/javascript";
+
+  container.appendChild(optScript);
+  container.appendChild(loaderScript);
 })();

@@ -498,3 +498,8 @@ def home(request: Request):
 @app.get('/publisher', response_class=HTMLResponse)
 def publisher_page(request: Request):
     return templates.TemplateResponse('public/publisher.html', {'request': request})
+
+
+@app.get('/publisher-test', response_class=HTMLResponse)
+def publisher_test(request: Request):
+    return templates.TemplateResponse('publisher-test.html', {'request': request})

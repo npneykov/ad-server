@@ -1,44 +1,19 @@
-(function() {
-  const container = document.currentScript.parentElement;
-  if (!container) return;
-
+(function () {
   const zones = [
-    { id: "363fe61789ea411afa3a518e263921d3", width: 728, height: 90 },
-    { id: "667cbfaa4276c3a1a5297a14a6a72a4c", width: 468, height: 60 },
-    { id: "0b1c3d2651ee6075ac8ece211622ff34", width: 300, height: 250 },
-    { id: "f3c69ff1bb6955e67ecabdf7aea461cb", width: 160, height: 600 },
-    { id: "8666fede885322207af096e33f9cf8d5", width: 160, height: 300 },
-    { id: "071342321d1d152325291bc8945d1a86", width: 320, height: 50 }
+    "363fe61789ea411afa3a518e263921d3", // 728x90
+    "667cbfaa4276c3a1a5297a14a6a72a4c", // 468x60
+    "0b1c3d2651ee6075ac8ece211622ff34", // 300x250
+    "f3c69ff1bb6955e67ecabdf7aea461cb", // 160x600
+    "8666fede885322207af096e33f9cf8d5", // 160x300
+    "071342321d1d152325291bc8945d1a86"  // 320x50
   ];
 
   const selected = zones[Math.floor(Math.random() * zones.length)];
 
-  const iframe = document.createElement('iframe');
-  iframe.width = selected.width;
-  iframe.height = selected.height;
-  iframe.style.border = '0';
-  iframe.setAttribute('scrolling', 'no');
-  iframe.setAttribute('frameborder', '0');
-  iframe.setAttribute('allowtransparency', 'true');
+  const script = document.createElement("script");
+  script.type = "text/javascript";
+  script.src = `https://www.highperformanceformat.com/${selected}/invoke.js`;
+  script.async = true;
 
-  // Use srcdoc to inject Adsterra banner safely
-  iframe.srcdoc = `
-    <html>
-      <head><base target="_top"></head>
-      <body style="margin:0;padding:0;">
-        <script>
-          atOptions = {
-            'key': '${selected.id}',
-            'format': 'iframe',
-            'height': ${selected.height},
-            'width': ${selected.width},
-            'params': {}
-          };
-        <\/script>
-        <script src="https://www.highperformanceformat.com/${selected.id}/invoke.js"><\/script>
-      </body>
-    </html>
-  `;
-
-  container.appendChild(iframe);
+  document.currentScript.parentElement.appendChild(script);
 })();

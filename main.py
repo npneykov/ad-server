@@ -400,10 +400,12 @@ def admin_ads_delete(ad_id: int, session: Session = Depends(get_session)):
 
 
 @app.get('/embed.js', response_class=Response, include_in_schema=False)
-def embed_js(request: Request):
+def embed_js(
+    request: Request, zone: int | None = Query(default=None, description='Zone ID')
+):
     return templates.TemplateResponse(
         'embed.js.jinja2',
-        {'request': Request},
+        {'request': Request, 'zone': zone},
         media_type='application/javascript',
     )
 

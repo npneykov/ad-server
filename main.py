@@ -37,7 +37,6 @@ def on_startup():
     SQLModel.metadata.create_all(engine)
 
 
-@app.mount('/tools', StaticFiles(directory='tools'), name='tools')  # type: ignore
 def verify_admin_key(x_admin_key: str | None = Header(default=None)):
     expected = os.getenv('ADMIN_KEY')
     if not expected:
@@ -46,6 +45,10 @@ def verify_admin_key(x_admin_key: str | None = Header(default=None)):
     if x_admin_key == expected:
         return True
     raise HTTPException(status_code=401, detail='Unauthorized: invalid X-ADMIN-KEY')
+
+
+if os.path.isdir('tools'):
+    app.mount('/tools', StaticFiles(directory='tools'), name='tools')
 
 
 def range_counts(session: Session, days: int = 7):

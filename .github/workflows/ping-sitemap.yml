@@ -1,0 +1,17 @@
+name: Weekly Ping Sitemap
+
+on:
+  schedule:
+    - cron: '0 9 * * 1'  # Every Monday at 09:00 UTC
+  workflow_dispatch:
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Ping sitemap to Google
+        run: |
+          curl -s "https://www.google.com/ping?sitemap=https://ad-server.fly.dev/sitemap.xml"

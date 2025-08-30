@@ -15,4 +15,22 @@
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
+  <url>
+  <loc>https://ad-server.fly.dev/tools/</loc>
+</url>
+<url>
+  <loc>https://ad-server.fly.dev/tools/banner-preview-728x90.html</loc>
+</url>
+<url>
+  <loc>https://ad-server.fly.dev/tools/banner-preview-160x600.html</loc>
+</url>
+<url>
+  <loc>https://ad-server.fly.dev/tools/banner-preview-320x50.html</loc>
+</url>
+<url>
+  <loc>https://ad-server.fly.dev/tools/banner-preview-468x60.html</loc>
+</url>
+<url>
+  <loc>https://ad-server.fly.dev/tools/banner-preview-300x250.html</loc>
+</url>
 </urlset>

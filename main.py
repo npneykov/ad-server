@@ -18,6 +18,7 @@ from fastapi.responses import (
     PlainTextResponse,
     RedirectResponse,
 )
+from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from sqlalchemy import func
 from sqlmodel import Session, SQLModel, select
@@ -36,6 +37,7 @@ def on_startup():
     SQLModel.metadata.create_all(engine)
 
 
+@app.mount('/tools', StaticFiles(directory='tools'), name='tools')  # type: ignore
 def verify_admin_key(x_admin_key: str | None = Header(default=None)):
     expected = os.getenv('ADMIN_KEY')
     if not expected:

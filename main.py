@@ -263,7 +263,20 @@ def render_ad(
     if not ads:
         raise HTTPException(status_code=404, detail='No ads for zone')
 
-    ad = weighted_choice(ads, [a.weight for a in ads])  # <-- fixed indent
+    # Get CTRs for ads
+    imps, clks = range_counts(session, days=7)
+    ctr_weights = []
+    for a in ads:
+        try:
+            i = imps.get(a.id, 0)  # type: ignore
+            c = clks.get(a.id, 0)  # type: ignore
+            ctr = (c / i) if i > 0 else 0
+            weight = a.weight * (1 + ctr * 5)  # Boost based on CTR
+        except ZeroDivisionError:
+            weight = a.weight
+        ctr_weights.append(weight)
+
+    ad = weighted_choice(ads, ctr_weights)
 
     # Log impression
     if ad.id is None:

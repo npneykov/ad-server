@@ -42,4 +42,8 @@
   `;
 
   container.appendChild(iframe);
+  // Reload ad every 45 seconds
+  setInterval(() => {
+    iframe.contentWindow.location.reload();
+  }, 45000); // 45,000 ms = 45 seconds
 })();

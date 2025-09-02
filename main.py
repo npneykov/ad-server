@@ -271,7 +271,7 @@ def render_ad(
             i = imps.get(a.id, 0)  # type: ignore
             c = clks.get(a.id, 0)  # type: ignore
             ctr = (c / i) if i > 0 else 0
-            weight = a.weight * (1 + ctr * 5)  # Boost based on CTR
+            weight = a.weight * (1.5 ** (ctr * 100))  # Boost based on CTR
         except ZeroDivisionError:
             weight = a.weight
         ctr_weights.append(weight)

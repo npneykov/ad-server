@@ -523,3 +523,12 @@ def publisher_page(request: Request):
 @app.get('/publisher-test', response_class=HTMLResponse)
 def publisher_test(request: Request):
     return templates.TemplateResponse('publisher-test.html', {'request': request})
+
+
+@app.get(
+    '/yandex_6079f30d3b2abdbc.html',
+    response_class=PlainTextResponse,
+    include_in_schema=False,
+)
+def yandex_verification():
+    return 'yandex-verification: 6079f30d3b2abdbc'

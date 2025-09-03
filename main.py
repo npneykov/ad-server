@@ -259,7 +259,7 @@ def render_ad(
     if not z:
         raise HTTPException(status_code=404, detail='Zone not found')
 
-    ads = session.exec(select(Ad).where(Ad.zone_id == zone)).all()
+    ads = session.exec(select(Ad).where(Ad.zone_id == zone, Ad.is_active == True)).all()
     if not ads:
         raise HTTPException(status_code=404, detail='No ads for zone')
 

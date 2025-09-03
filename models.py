@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from sqlmodel import Field, Relationship, SQLModel
+from sqlmodel import Boolean, Column, Field, Relationship, SQLModel
 
 
 class Zone(SQLModel, table=True):
@@ -18,6 +18,7 @@ class Ad(SQLModel, table=True):
     url: str
     weight: int = 1
     zone: Zone | None = Relationship(back_populates='ads')
+    is_active: bool = Field(default=True, sa_column=Column(Boolean, default=True))
 
 
 class Impression(SQLModel, table=True):

@@ -1,6 +1,6 @@
 {% extends "admin/base.html" %}
 {% block content %}
-<h1>Ad Performance (last {{ days }} days)</h1>
+<h1>Ad Performance Leaderboard (last {{ days }} days)</h1>
 
 <div class="card">
     <form method="get">
@@ -14,8 +14,9 @@
 <table id="leaderboard">
     <thead>
         <tr>
+            <th>Rank</th>
             <th>Ad ID</th>
-            <th>Zone (WxH)</th>
+            <th>Zone</th>
             <th>Impressions</th>
             <th>Clicks</th>
             <th>CTR %</th>
@@ -26,17 +27,21 @@
     <tbody>
         {% for r in rows %}
         <tr>
+            <td>{{ loop.index }}</td>
             <td>#{{ r.ad.id }}</td>
             <td>{{ r.zone.name }} ({{ r.zone.width }}×{{ r.zone.height }})</td>
             <td>{{ r.imps }}</td>
             <td>{{ r.clks }}</td>
             <td>{{ "%.2f"|format(r.ctr) }}</td>
             <td>
-                {% if r.ad.is_active %}<span style="color:green">Active</span>
-                {% else %}<span style="color:#a00">Disabled</span>{% endif %}
+                {% if r.active %}
+                <span style="color:green">Active</span>
+                {% else %}
+                <span style="color:#a00">Disabled</span>
+                {% endif %}
             </td>
             <td>
-                {% if r.ad.is_active %}
+                {% if r.active %}
                 <form method="post" action="/admin/ads/{{ r.ad.id }}/disable" style="display:inline">
                     <button type="submit">Disable</button>
                 </form>
@@ -61,6 +66,7 @@
     #leaderboard td {
         border: 1px solid #ddd;
         padding: 8px;
+        text-align: center;
     }
 
     #leaderboard th {

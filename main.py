@@ -59,6 +59,7 @@ def range_counts(session: Session, days: int = 7):
         .where(Impression.timestamp >= since)
         .group_by(Impression.ad_id)  # type: ignore
     ).all()
+
     clicks_rows = session.exec(
         select(Click.ad_id, func.count(Click.id))  # type: ignore
         .where(Click.timestamp >= since)
@@ -89,6 +90,7 @@ def admin_analytics(
         i = imps.get(ad.id, 0) or 0  # type: ignore
         c = clks.get(ad.id, 0) or 0  # type: ignore
         ctr = (c / i * 100.0) if i else 0.0
+        active = getattr(ad, 'is_active', True)
         data.append(
             {
                 'ad': ad,
@@ -96,10 +98,11 @@ def admin_analytics(
                 'imps': i,
                 'clks': c,
                 'ctr': ctr,
+                'active': active,
             }
         )
 
-    # sort by CTR desc for default leaderboard feel
+    # Sort ads by CTR descending (leaderboard style)
     data.sort(key=lambda r: r['ctr'], reverse=True)
 
     return templates.TemplateResponse(

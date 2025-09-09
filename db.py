@@ -6,7 +6,7 @@ from sqlmodel import Session, SQLModel, create_engine
 load_dotenv()
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-DB_PATH = os.path.join(BASE_DIR, 'data', 'ad_server.db')
+DB_PATH = os.path.join(BASE_DIR, 'data', 'adserver.db')
 
 os.makedirs(os.path.dirname(DB_PATH), exist_ok=True)
 

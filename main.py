@@ -54,22 +54,19 @@ if os.path.isdir('tools'):
 def range_counts(session: Session, days: int = 7):
     since = datetime.utcnow() - timedelta(days=days)
 
-    # Aggregate impressions per ad_id
-    imp_rows = session.exec(
-        select(Impression.ad_id, func.count(Impression.id))  # pyright: ignore[reportArgumentType]
+    imps_rows = session.exec(
+        select(Impression.ad_id, func.count(Impression.id))  # type: ignore
         .where(Impression.timestamp >= since)
-        .group_by(Impression.ad_id)  # pyright: ignore[reportArgumentType]
+        .group_by(Impression.ad_id)  # type: ignore
     ).all()
-    imps = {ad_id: n for ad_id, n in imp_rows}
-
-    # Aggregate clicks per ad_id
-    clk_rows = session.exec(
-        select(Click.ad_id, func.count(Click.id))  # pyright: ignore[reportArgumentType]
+    clicks_rows = session.exec(
+        select(Click.ad_id, func.count(Click.id))  # type: ignore
         .where(Click.timestamp >= since)
-        .group_by(Click.ad_id)  # pyright: ignore[reportArgumentType]
+        .group_by(Click.ad_id)  # type: ignore
     ).all()
-    clks = {ad_id: n for ad_id, n in clk_rows}
 
+    imps = {ad_id: n for ad_id, n in imps_rows}
+    clks = {ad_id: n for ad_id, n in clicks_rows}
     return imps, clks
 
 
@@ -83,16 +80,30 @@ def admin_analytics(
     days: int = Query(7, ge=1, le=90),
     session: Session = Depends(get_session),
 ):
+    rows = session.exec(select(Ad, Zone).join(Zone, Zone.id == Ad.zone_id)).all()  # type: ignore
+
     imps, clks = range_counts(session, days=days)
-    ads = session.exec(select(Ad)).all()
-    rows = []
-    for a in ads:
-        i = imps.get(a.id, 0)  # pyright: ignore[reportCallIssue, reportArgumentType]
-        c = clks.get(a.id, 0)  # pyright: ignore[reportArgumentType, reportCallIssue]
+
+    data = []
+    for ad, zone in rows:
+        i = imps.get(ad.id, 0) or 0  # type: ignore
+        c = clks.get(ad.id, 0) or 0  # type: ignore
         ctr = (c / i * 100.0) if i else 0.0
-        rows.append({'ad': a, 'imps': i, 'clks': c, 'ctr': ctr})
+        data.append(
+            {
+                'ad': ad,
+                'zone': zone,
+                'imps': i,
+                'clks': c,
+                'ctr': ctr,
+            }
+        )
+
+    # sort by CTR desc for default leaderboard feel
+    data.sort(key=lambda r: r['ctr'], reverse=True)
+
     return templates.TemplateResponse(
-        'admin/analytics.html', {'request': request, 'rows': rows, 'days': days}
+        'admin/analytics.html', {'request': request, 'rows': data, 'days': days}
     )
 
 
@@ -272,6 +283,8 @@ def render_ad(
             c = clks.get(a.id, 0)  # type: ignore
             ctr = (c / i) if i > 0 else 0
             boost = 1.0 + min(ctr * 10, 2.0)
+            if i < 100:
+                boost *= 1.5
             weight = a.weight * boost
         except ZeroDivisionError:
             weight = a.weight
@@ -533,3 +546,25 @@ def publisher_test(request: Request):
 )
 def yandex_verification():
     return 'yandex-verification: 6079f30d3b2abdbc'
+
+
+@app.post('/admin/ads/{ad_id}/disable', dependencies=[Depends(verify_admin_key)])
+def admin_ads_disable(ad_id: int, session: Session = Depends(get_session)):
+    ad = session.get(Ad, ad_id)
+    if not ad:
+        raise HTTPException(status_code=404, detail='Ad not found')
+    ad.is_active = False
+    session.add(ad)
+    session.commit()
+    return RedirectResponse(url='/admin/analytics', status_code=303)
+
+
+@app.post('/admin/ads/{ad_id}/enable', dependencies=[Depends(verify_admin_key)])
+def admin_ads_enable(ad_id: int, session: Session = Depends(get_session)):
+    ad = session.get(Ad, ad_id)
+    if not ad:
+        raise HTTPException(status_code=404, detail='Ad not found')
+    ad.is_active = True
+    session.add(ad)
+    session.commit()
+    return RedirectResponse(url='/admin/analytics', status_code=303)

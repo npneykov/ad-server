@@ -5,10 +5,15 @@ from sqlmodel import Session, SQLModel, create_engine
 
 load_dotenv()
 
-os.makedirs('data', exist_ok=True)
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+DB_PATH = os.path.join(BASE_DIR, 'data', 'ad_server.db')
 
-DATABASE_URL = os.getenv('DATABASE_URL', 'sqlite:///./data/adserver.db')
-engine = create_engine(DATABASE_URL, echo=False)
+os.makedirs(os.path.dirname(DB_PATH), exist_ok=True)
+
+DATABASE_URL = os.getenv('DATABASE_URL', f'sqlite:///{DB_PATH}')
+engine = create_engine(
+    DATABASE_URL, connect_args={'check_same_thread': False}, echo=False
+)
 
 
 def init_db():

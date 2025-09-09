@@ -19,7 +19,13 @@
             <td>{{ row.imps }}</td>
             <td>{{ row.clks }}</td>
             <td>{{ row.ctr }}</td>
-            <td>{% if row.ad.is_active %}✅ Active{% else %}❌ Disabled{% endif %}</td>
+            <td>
+                {% if row.ad.__dict__.get("is_active", True) %}
+                ✅ Active
+                {% else %}
+                ❌ Disabled
+                {% endif %}
+            </td>
         </tr>
         {% else %}
         <tr>

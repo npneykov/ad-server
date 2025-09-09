@@ -40,7 +40,13 @@
             <td>#{{ a.zone_id }}</td>
             <td>{{ a.weight }}</td>
             <td>{{ a.url or "N/A" }}</td>
-            <td>{% if a.is_active %}✅ Active{% else %}❌ Disabled{% endif %}</td>
+            <td>
+                {% if a.__dict__.get("is_active", True) %}
+                ✅ Active
+                {% else %}
+                ❌ Disabled
+                {% endif %}
+            </td>
             <td>
                 <iframe srcdoc="{{ a.html|e }}" width="200" height="60" style="border:0;"></iframe>
             </td>

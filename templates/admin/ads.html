@@ -5,49 +5,19 @@
 <div class="card">
     <h3>Create Ad</h3>
     <form method="post" action="/admin/ads">
-        <div class="row">
-            <label>Zone<br>
-                <select name="zone_id" required>
-                    {% for z in zones %}
-                    <option value="{{ z.id }}" {% if zone_filter and zone_filter==z.id %}selected{% endif %}>
-                        #{{ z.id }} – {{ z.name }} ({{ z.width }}×{{ z.height }})
-                    </option>
-                    {% endfor %}
-                </select>
-            </label>
-            <label>Weight<br><input type="number" name="weight" value="1" min="1"></label>
-        </div>
-        <div style="margin-top:8px">
-            <label>Destination URL<br>
-                <input name="url" placeholder="https://example.com" required style="width:100%">
-            </label>
-        </div>
-        <div style="margin-top:8px">
-            <label>HTML Creative<br>
-                <textarea name="html" rows="4" placeholder='<img src="https://via.placeholder.com/728x90">' required
-                    style="width:100%"></textarea>
-            </label>
-        </div>
-        <button type="submit" style="margin-top:8px">Create</button>
-    </form>
-</div>
-
-<div class="card">
-    <h3>Filter</h3>
-    <form method="get" action="/admin/ads">
-        <div class="row">
-            <label>Zone<br>
-                <select name="zone">
-                    <option value="">(all)</option>
-                    {% for z in zones %}
-                    <option value="{{ z.id }}" {% if zone_filter and zone_filter==z.id %}selected{% endif %}>
-                        #{{ z.id }} – {{ z.name }}
-                    </option>
-                    {% endfor %}
-                </select>
-            </label>
-            <button type="submit">Apply</button>
-        </div>
+        <label>Zone<br>
+            <select name="zone_id" required>
+                {% for z in zones %}
+                <option value="{{ z.id }}">{{ z.name }} ({{ z.width }}×{{ z.height }})</option>
+                {% else %}
+                <option disabled>No zones available</option>
+                {% endfor %}
+            </select>
+        </label>
+        <label>HTML<br><textarea name="html" rows="3" cols="50" required></textarea></label>
+        <label>URL<br><input type="url" name="url" required></label>
+        <label>Weight<br><input type="number" name="weight" value="1" min="1"></label>
+        <button type="submit">Create</button>
     </form>
 </div>
 
@@ -58,6 +28,7 @@
             <th>Zone</th>
             <th>Weight</th>
             <th>URL</th>
+            <th>Status</th>
             <th>Preview</th>
             <th>Actions</th>
         </tr>
@@ -68,13 +39,20 @@
             <td>{{ a.id }}</td>
             <td>#{{ a.zone_id }}</td>
             <td>{{ a.weight }}</td>
-            <td style="max-width:280px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap">{{ a.url }}</td>
-            <td>{{ a.html|safe }}</td>
+            <td>{{ a.url or "N/A" }}</td>
+            <td>{% if a.is_active %}✅ Active{% else %}❌ Disabled{% endif %}</td>
+            <td>
+                <iframe srcdoc="{{ a.html|e }}" width="200" height="60" style="border:0;"></iframe>
+            </td>
             <td>
                 <form class="inline" method="post" action="/admin/ads/{{ a.id }}/delete">
                     <button type="submit" onclick="return confirm('Delete ad {{ a.id }}?')">Delete</button>
                 </form>
             </td>
+        </tr>
+        {% else %}
+        <tr>
+            <td colspan="7">No ads available</td>
         </tr>
         {% endfor %}
     </tbody>

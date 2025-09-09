@@ -5,7 +5,9 @@ from sqlmodel import Session, SQLModel, create_engine
 
 load_dotenv()
 
-DATABASE_URL = os.getenv('DATABASE_URL', 'sqlite:///./adserver.db')
+os.makedirs('data', exist_ok=True)
+
+DATABASE_URL = os.getenv('DATABASE_URL', 'sqlite:///./data/adserver.db')
 engine = create_engine(DATABASE_URL, echo=False)
 
 

@@ -1,7 +1,6 @@
 {% extends "admin/base.html" %}
 {% block content %}
-<h1>Analytics (last {{ days }} days)</h1>
-
+<h1>Analytics</h1>
 <table>
     <thead>
         <tr>
@@ -9,27 +8,15 @@
             <th>Impressions</th>
             <th>Clicks</th>
             <th>CTR %</th>
-            <th>Status</th>
         </tr>
     </thead>
     <tbody>
-        {% for row in rows %}
+        {% for ad_id, data in ctr.items() %}
         <tr>
-            <td>{{ row.ad.id }}</td>
-            <td>{{ row.imps }}</td>
-            <td>{{ row.clks }}</td>
-            <td>{{ row.ctr }}</td>
-            <td>
-                {% if row.ad.__dict__.get("is_active", True) %}
-                ✅ Active
-                {% else %}
-                ❌ Disabled
-                {% endif %}
-            </td>
-        </tr>
-        {% else %}
-        <tr>
-            <td colspan="5">No ads found for analytics</td>
+            <td>{{ ad_id }}</td>
+            <td>{{ data.impressions }}</td>
+            <td>{{ data.clicks }}</td>
+            <td>{{ '%.2f'|format(data.ctr * 100) }}</td>
         </tr>
         {% endfor %}
     </tbody>

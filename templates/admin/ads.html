@@ -1,64 +1,26 @@
 {% extends "admin/base.html" %}
 {% block content %}
 <h1>Ads</h1>
-
-<div class="card">
-    <h3>Create Ad</h3>
-    <form method="post" action="/admin/ads">
-        <label>Zone<br>
-            <select name="zone_id" required>
-                {% for z in zones %}
-                <option value="{{ z.id }}">{{ z.name }} ({{ z.width }}×{{ z.height }})</option>
-                {% else %}
-                <option disabled>No zones available</option>
-                {% endfor %}
-            </select>
-        </label>
-        <label>HTML<br><textarea name="html" rows="3" cols="50" required></textarea></label>
-        <label>URL<br><input type="url" name="url" required></label>
-        <label>Weight<br><input type="number" name="weight" value="1" min="1"></label>
-        <button type="submit">Create</button>
-    </form>
-</div>
-
 <table>
     <thead>
         <tr>
             <th>ID</th>
             <th>Zone</th>
-            <th>Weight</th>
-            <th>URL</th>
-            <th>Status</th>
             <th>Preview</th>
             <th>Actions</th>
         </tr>
     </thead>
     <tbody>
-        {% for a in ads %}
+        {% for ad in ads %}
         <tr>
-            <td>{{ a.id }}</td>
-            <td>#{{ a.zone_id }}</td>
-            <td>{{ a.weight }}</td>
-            <td>{{ a.url or "N/A" }}</td>
+            <td>{{ ad.id }}</td>
+            <td>{{ ad.zone_id }}</td>
             <td>
-                {% if a.__dict__.get("is_active", True) %}
-                ✅ Active
-                {% else %}
-                ❌ Disabled
-                {% endif %}
+                <iframe srcdoc="{{ ad.html | e }}" width="300" height="250"></iframe>
             </td>
             <td>
-                <iframe srcdoc="{{ a.html|e }}" width="200" height="60" style="border:0;"></iframe>
+                <!-- Add actions like delete/edit later -->
             </td>
-            <td>
-                <form class="inline" method="post" action="/admin/ads/{{ a.id }}/delete">
-                    <button type="submit" onclick="return confirm('Delete ad {{ a.id }}?')">Delete</button>
-                </form>
-            </td>
-        </tr>
-        {% else %}
-        <tr>
-            <td colspan="7">No ads available</td>
         </tr>
         {% endfor %}
     </tbody>

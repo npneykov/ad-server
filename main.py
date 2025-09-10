@@ -1,4 +1,5 @@
 from datetime import datetime, timedelta
+import logging
 import os
 
 from dotenv import load_dotenv
@@ -26,6 +27,7 @@ from sqlmodel import Session, SQLModel, select
 from db import engine, get_session
 from models import Ad, Click, Impression, Zone  # add Impression, Click
 
+logging.basicConfig(level=logging.DEBUG)
 load_dotenv()
 app = FastAPI()
 
@@ -81,26 +83,32 @@ def admin_analytics(
     days: int = Query(7, ge=1, le=90),
     session: Session = Depends(get_session),
 ):
-    imps, clks = range_counts(session, days=days)
+    try:
+        imps, clks = range_counts(session, days=days)
 
-    # get active ads only if field exists
-    query = select(Ad)
-    if hasattr(Ad, 'is_active'):
-        query = query.where(Ad.is_active == True)
+        # get active ads only if field exists
+        query = select(Ad)
+        if hasattr(Ad, 'is_active'):
+            query = query.where(Ad.is_active == True)
 
-    ads = session.exec(query).all() or []
+        ads = session.exec(query).all() or []
 
-    rows = []
-    for a in ads:
-        i = imps.get(a.id, 0)  # type: ignore
-        c = clks.get(a.id, 0)  # type: ignore
-        ctr = round((c / i * 100.0), 2) if i else 0.0
-        rows.append({'ad': a, 'imps': i, 'clks': c, 'ctr': ctr})
+        rows = []
+        for a in ads:
+            i = imps.get(a.id, 0)  # type: ignore
+            c = clks.get(a.id, 0)  # type: ignore
+            ctr = round((c / i * 100.0), 2) if i else 0.0
+            rows.append({'ad': a, 'imps': i, 'clks': c, 'ctr': ctr})
 
-    return templates.TemplateResponse(
-        'admin/analytics.html',
-        {'request': request, 'rows': rows, 'days': days},
-    )
+        return templates.TemplateResponse(
+            'admin/analytics.html',
+            {'request': request, 'rows': rows, 'days': days},
+        )
+    except Exception as e:
+        import traceback
+
+        traceback.print_exc()
+        return HTMLResponse(f'Error: {e}', status_code=500)
 
 
 # -------- util --------
@@ -390,27 +398,33 @@ def admin_ads(
     zone: int | None = Query(default=None),
     session: Session = Depends(get_session),
 ):
-    # fetch all zones
-    zones = session.exec(select(Zone)).all() or []
+    try:
+        # fetch all zones
+        zones = session.exec(select(Zone)).all() or []
 
-    # fetch ads (filter by active + optional zone)
-    query = select(Ad)
-    if hasattr(Ad, 'is_active'):
-        query = query.where(Ad.is_active == True)
-    if zone:
-        query = query.where(Ad.zone_id == zone)
+        # fetch ads (filter by active + optional zone)
+        query = select(Ad)
+        if hasattr(Ad, 'is_active'):
+            query = query.where(Ad.is_active == True)
+        if zone:
+            query = query.where(Ad.zone_id == zone)
 
-    ads = session.exec(query).all() or []
+        ads = session.exec(query).all() or []
 
-    return templates.TemplateResponse(
-        'admin/ads.html',
-        {
-            'request': request,
-            'zones': zones,
-            'ads': ads,
-            'zone_filter': zone,
-        },
-    )
+        return templates.TemplateResponse(
+            'admin/ads.html',
+            {
+                'request': request,
+                'zones': zones,
+                'ads': ads,
+                'zone_filter': zone,
+            },
+        )
+    except Exception as e:
+        import traceback
+
+        traceback.print_exc()
+        return HTMLResponse(f'Error: {e}', status_code=500)
 
 
 @app.post('/admin/ads', dependencies=[Depends(verify_admin_key)])

@@ -9,7 +9,7 @@ ENV PYTHONUNBUFFERED=1
 WORKDIR /app
 
 # ---- Install system deps ----
-RUN apt-get update && apt-get install -y build-essential && rm -rf /var/lib/apt/lists/*
+RUN apt-get update && apt-get install -y build-essential sqlite3 bash && rm -rf /var/lib/apt/lists/*
 
 # ---- Install Python deps ----
 COPY requirements.txt .

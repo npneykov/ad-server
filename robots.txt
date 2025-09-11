@@ -1,4 +1,8 @@
 User-agent: *
-Disallow:
+Allow: /tools/
+Allow: /index.html
+Allow: /*.html$
+Disallow: /admin/
+Disallow: /data/
 
 Sitemap: https://ad-server.fly.dev/sitemap.xml

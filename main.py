@@ -264,21 +264,33 @@ def delete_ad(ad_id: int, session: Session = Depends(get_session)):
 
 
 # -------- Render & Click (iframe, Python-only) --------
+from fastapi import Depends, Query, Request
+from fastapi.responses import HTMLResponse
+from sqlmodel import Session
+
+from db import get_session
+from models import Ad, Zone
+
+
 @app.get('/render', response_class=HTMLResponse)
 def render_ad(
     request: Request,
-    zone: int = Query(..., description='Zone ID'),
+    zone: int = Query(1, description='Zone ID (defaults to 1)'),  # ✅ default value
     session: Session = Depends(get_session),
 ):
+    # Get the zone
     z = session.get(Zone, zone)
     if not z:
         raise HTTPException(status_code=404, detail='Zone not found')
 
-    ads = [a for a in ads if getattr(a, 'is_active', True)]  # type: ignore # noqa: F821
-    if not ads:
-        raise HTTPException(status_code=404, detail='No ads for zone')
+    # ✅ Fix: correctly load ads from the zone
+    ads = z.ads if hasattr(z, 'ads') else []
+    ads = [a for a in ads if getattr(a, 'is_active', True)]
 
-    # Get CTRs for ads
+    if not ads:
+        raise HTTPException(status_code=404, detail='No ads for this zone')
+
+    # Calculate CTR weights
     imps, clks = range_counts(session, days=7)
     ctr_weights = []
     for a in ads:
@@ -294,27 +306,27 @@ def render_ad(
             weight = a.weight
         ctr_weights.append(weight)
 
+    # Pick weighted ad
     ad = weighted_choice(ads, ctr_weights)
 
-    # Log impression
     if ad.id is None:
         raise HTTPException(status_code=500, detail='Ad ID is missing')
+
+    # Log impression
     session.add(Impression(ad_id=ad.id))
     session.commit()
 
-    # Click URL (through our redirect)
+    # Build click URL
     click_url = f'/click?id={ad.id}'
 
-    # Render full-page HTML for the iframe
-    return templates.TemplateResponse(
-        'render.html',
-        {
-            'request': request,
-            'html': ad.html,  # creative HTML
-            'click_url': click_url,  # our tracking redirect
-        },
-        status_code=200,
-    )
+    # Render ad HTML
+    return f"""
+    <div class="ad">
+        <a href="{click_url}" target="_blank">
+            {ad.html}
+        </a>
+    </div>
+    """
 
 
 @app.get('/click')

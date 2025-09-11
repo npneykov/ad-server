@@ -93,22 +93,25 @@ def admin_analytics(
 
         ads = session.exec(query).all() or []
 
-        rows = []
+        # ✅ Build dict in the structure template expects
+        ctr = {}
         for a in ads:
             i = imps.get(a.id, 0)  # type: ignore
             c = clks.get(a.id, 0)  # type: ignore
-            ctr = round((c / i * 100.0), 2) if i else 0.0
-            rows.append({'ad': a, 'imps': i, 'clks': c, 'ctr': ctr})
+            ctr[a.id] = {
+                'impressions': i,
+                'clicks': c,
+                'ctr': (c / i) if i else 0.0,
+            }
 
         return templates.TemplateResponse(
             'admin/analytics.html',
-            {'request': request, 'rows': rows, 'days': days},
+            {'request': request, 'ctr': ctr},
         )
-    except Exception as e:
-        import traceback
 
-        traceback.print_exc()
-        return HTMLResponse(f'Error: {e}', status_code=500)
+    except Exception as e:
+        logging.exception('Error in /admin/analytics')
+        raise HTTPException(status_code=500, detail=str(e))
 
 
 # -------- util --------

@@ -32,6 +32,9 @@ load_dotenv()
 app = FastAPI()
 
 templates = Jinja2Templates(directory='templates')
+ADSTERRA_SMARTLINK = (
+    'https://www.revenuecpmgate.com/kh3axptg1?key=1685a081c46f9b5d7aaa7abf4d050eb3'
+)
 
 
 @app.on_event('startup')
@@ -333,21 +336,17 @@ def render_ad(
 
 
 @app.get('/click')
-def click(
-    id: int = Query(..., description='Ad ID'),
-    session: Session = Depends(get_session),
-):
+def click(id: int, session: Session = Depends(get_session)):
     ad = session.get(Ad, id)
     if not ad:
         raise HTTPException(status_code=404, detail='Ad not found')
 
-    # Log click
-    if ad.id is None:
-        raise HTTPException(status_code=500, detail='Ad ID is missing')
-    session.add(Click(ad_id=ad.id))
+    # Log click internally
+    session.add(Click(ad_id=ad.id))  # type: ignore
     session.commit()
 
-    return RedirectResponse(url=ad.url, status_code=302)
+    # Always redirect to Adsterra SmartLink
+    return RedirectResponse(url=ADSTERRA_SMARTLINK, status_code=302)
 
 
 @app.get('/healthz')

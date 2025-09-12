@@ -67,29 +67,20 @@
         .banner-container {
             display: flex;
             justify-content: center;
+            /* center horizontally */
             align-items: center;
+            /* center vertically */
             overflow: hidden;
-            margin-top: 0.5rem;
             background: #f8f9fa;
             border: 1px dashed #ccc;
+            margin-top: 0.5rem;
             position: relative;
-        }
-
-        .banner-container::before {
-            content: attr(data-size);
-            position: absolute;
-            top: 5px;
-            right: 5px;
-            font-size: 11px;
-            color: #666;
-            background: rgba(255, 255, 255, 0.8);
-            padding: 2px 4px;
-            border-radius: 3px;
         }
 
         .banner-container>* {
             max-width: 100% !important;
             max-height: 100% !important;
+            object-fit: scale-down;
             display: block;
             margin: auto;
         }

@@ -69,6 +69,14 @@
             justify-content: center;
             align-items: center;
             overflow: hidden;
+            margin-top: 0.5rem;
+        }
+
+        .banner-container>* {
+            width: 100% !important;
+            height: 100% !important;
+            object-fit: contain;
+            display: block;
         }
 
         .size-label {
@@ -143,7 +151,17 @@
             color: #868e96;
         }
 
-        @media (max-width: 600px) {
+        @media (max-width: 768px) {
+            .banner-container {
+                width: 100% !important;
+                height: auto !important;
+            }
+
+            .banner-container>* {
+                max-width: 100% !important;
+                height: auto !important;
+            }
+
             body {
                 padding: 1rem;
                 font-size: 1rem;

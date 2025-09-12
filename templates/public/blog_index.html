@@ -1,0 +1,19 @@
+{% extends "public/blog_base.html" %}
+
+{% block page_title %}Ad Preview Tester Blog{% endblock %}
+{% block header_title %}Ad Preview Tester Blog{% endblock %}
+{% block description %}Read guides, tutorials, and comparisons about banner ads, ad testing, and open source ad
+servers.{% endblock %}
+
+{% block content %}
+<h2>📚 Latest Articles</h2>
+<ul class="list-group">
+    {% for slug in posts %}
+    <li class="list-group-item">
+        <a href="/blog/{{ slug }}"><strong>{{ slug.replace('_', ' ') | title }}</strong></a>
+    </li>
+    {% else %}
+    <li class="list-group-item text-muted">No blog posts available yet.</li>
+    {% endfor %}
+</ul>
+{% endblock %}

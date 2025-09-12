@@ -35,6 +35,7 @@ templates = Jinja2Templates(directory='templates')
 ADSTERRA_SMARTLINK = (
     'https://www.revenuecpmgate.com/kh3axptg1?key=1685a081c46f9b5d7aaa7abf4d050eb3'
 )
+BLOG_DIR = os.path.join('templates', 'public')
 
 
 @app.on_event('startup')
@@ -582,6 +583,44 @@ def publisher_test(request: Request):
 )
 def yandex_verification():
     return 'yandex-verification: 6079f30d3b2abdbc'
+
+
+@app.get('/blog', response_class=HTMLResponse)
+def blog_index(request: Request):
+    posts = [
+        f.replace('blog_', '').replace('.html', '')
+        for f in os.listdir(BLOG_DIR)
+        if f.startswith('blog_')
+        and f.endswith('.html')
+        and f not in ('blog_index.html', 'blog_base.html')
+    ]
+    return templates.TemplateResponse(
+        'public/blog_index.html', {'request': request, 'posts': posts}
+    )
+
+
+@app.get('/blog/{slug}', response_class=HTMLResponse)
+def blog_page(request: Request, slug: str):
+    filename = f'blog_{slug}.html'
+    filepath = os.path.join(BLOG_DIR, filename)
+
+    # Check if the file exists
+    if not os.path.exists(filepath):
+        # Instead of plain 404 → show available posts
+        available = [
+            f.replace('blog_', '').replace('.html', '')
+            for f in os.listdir(BLOG_DIR)
+            if f.startswith('blog_') and f.endswith('.html')
+        ]
+        raise HTTPException(
+            status_code=404,
+            detail={
+                'error': f"Blog post '{slug}' not found",
+                'available_posts': available,
+            },
+        )
+
+    return templates.TemplateResponse(f'public/{filename}', {'request': request})
 
 
 @app.post('/admin/ads/{ad_id}/disable', dependencies=[Depends(verify_admin_key)])

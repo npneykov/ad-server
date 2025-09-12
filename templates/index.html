@@ -70,6 +70,21 @@
             align-items: center;
             overflow: hidden;
             margin-top: 0.5rem;
+            background: #f8f9fa;
+            border: 1px dashed #ccc;
+            position: relative;
+        }
+
+        .banner-container::before {
+            content: attr(data-size);
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            font-size: 11px;
+            color: #666;
+            background: rgba(255, 255, 255, 0.8);
+            padding: 2px 4px;
+            border-radius: 3px;
         }
 
         .banner-container>* {
@@ -208,7 +223,7 @@
 
     <div class="banner-preview">
         <div class="size-label">728 × 90 Banner</div>
-        <div class="banner-container" style="width:728px; height:90px;">
+        <div class="banner-container" style="width:728px; height:90px;" data-size='728x90'>
             <script src="/embed.js?zone=27382965"
                 onerror="this.insertAdjacentHTML('afterend', '<div class=\'fallback\'>Banner failed to load. Please check your ad blocker or try a different browser.</div>')"></script>
         </div>
@@ -216,7 +231,7 @@
 
     <div class="banner-preview">
         <div class="size-label">300 × 250 Banner</div>
-        <div class="banner-container" style="width:300px; height:250px;">
+        <div class="banner-container" style="width:300px; height:250px;" data-size="300x250">
             <script src="/embed.js?zone=27383189"
                 onerror="this.insertAdjacentHTML('afterend', '<div class=\'fallback\'>Banner failed to load. Please check your ad blocker or try a different browser.</div>')"></script>
         </div>
@@ -224,7 +239,7 @@
 
     <div class="banner-preview">
         <div class="size-label">468 × 60 Banner</div>
-        <div class="banner-container" style="width:468px; height:60px;">
+        <div class="banner-container" style="width:468px; height:60px;" data-size="468x60">
             <script src="/embed.js?zone=27383203"
                 onerror="this.insertAdjacentHTML('afterend', '<div class=\'fallback\'>Banner failed to load. Please check your ad blocker or try a different browser.</div>')"></script>
         </div>
@@ -232,7 +247,7 @@
 
     <div class="banner-preview">
         <div class="size-label">160 × 600 Banner</div>
-        <div class="banner-container" style="width:160px; height:600px;">
+        <div class="banner-container" style="width:160px; height:600px;" data-size="160x600">
             <script src="/embed.js?zone=27383212"
                 onerror="this.insertAdjacentHTML('afterend', '<div class=\'fallback\'>Banner failed to load. Please check your ad blocker or try a different browser.</div>')"></script>
         </div>
@@ -240,7 +255,7 @@
 
     <div class="banner-preview">
         <div class="size-label">160 × 300 Banner</div>
-        <div class="banner-container" style="width:160px; height:300px;">
+        <div class="banner-container" style="width:160px; height:300px;" data-size="160x300">
             <script src="/embed.js?zone=27383210"
                 onerror="this.insertAdjacentHTML('afterend', '<div class=\'fallback\'>Banner failed to load. Please check your ad blocker or try a different browser.</div>')"></script>
         </div>
@@ -248,7 +263,7 @@
 
     <div class="banner-preview">
         <div class="size-label">320 × 50 Banner</div>
-        <div class="banner-container" style="width:320px; height:50px;">
+        <div class="banner-container" style="width:320px; height:50px;" data-size="320x50">
             <script src="/embed.js?zone=27383198"
                 onerror="this.insertAdjacentHTML('afterend', '<div class=\'fallback\'>Banner failed to load. Please check your ad blocker or try a different browser.</div>')"></script>
         </div>

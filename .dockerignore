@@ -6,11 +6,10 @@ __pycache__/
 *.sqlite3
 .env
 .venv/
+.github
 test
 check_db.py
 init_ads_and_zones.py
-is_active.py
-migrate_add_is_active.py
 seed_ads.py
 simulate_traffic.py
 *zip

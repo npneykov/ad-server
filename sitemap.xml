@@ -1,39 +1,78 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <!-- Home page -->
   <url>
     <loc>https://ad-server.fly.dev/</loc>
-    <changefreq>weekly</changefreq>
+    <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
+  <!-- Admin pages -->
   <url>
     <loc>https://ad-server.fly.dev/admin</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://ad-server.fly.dev/stats.json</loc>
+    <loc>https://ad-server.fly.dev/admin/ads</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <!-- Render pages -->
+  <url>
+    <loc>https://ad-server.fly.dev/render</loc>
     <changefreq>daily</changefreq>
+    <priority>0.9</priority>
+  </url>
+    <loc>https://ad-server.fly.dev/admin/zones</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://ad-server.fly.dev/admin/analytics</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <!-- Blog index -->
+  <url>
+    <loc>https://ad-server.fly.dev/blog</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <!-- Blog posts -->
+  <url>
+    <loc>https://ad-server.fly.dev/blog/best_free_tools</loc>
+    <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-  <loc>https://ad-server.fly.dev/tools/</loc>
-</url>
-<url>
-  <loc>https://ad-server.fly.dev/tools/banner-preview-728x90.html</loc>
-</url>
-<url>
-  <loc>https://ad-server.fly.dev/tools/banner-preview-160x600.html</loc>
-</url>
-<url>
-  <loc>https://ad-server.fly.dev/tools/banner-preview-160x300.html</loc>
-</url>
-<url>
-  <loc>https://ad-server.fly.dev/tools/banner-preview-320x50.html</loc>
-</url>
-<url>
-  <loc>https://ad-server.fly.dev/tools/banner-preview-468x60.html</loc>
-</url>
-<url>
-  <loc>https://ad-server.fly.dev/tools/banner-preview-300x250.html</loc>
-</url>
+    <loc>https://ad-server.fly.dev/blog/preview_html5_banners</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://ad-server.fly.dev/blog/open_source_ad_servers</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://ad-server.fly.dev/tools/</loc>
+  </url>
+  <url>
+    <loc>https://ad-server.fly.dev/tools/banner-preview-728x90.html</loc>
+  </url>
+  <url>
+    <loc>https://ad-server.fly.dev/tools/banner-preview-160x600.html</loc>
+  </url>
+  <url>
+    <loc>https://ad-server.fly.dev/tools/banner-preview-160x300.html</loc>
+  </url>
+  <url>
+    <loc>https://ad-server.fly.dev/tools/banner-preview-320x50.html</loc>
+  </url>
+  <url>
+    <loc>https://ad-server.fly.dev/tools/banner-preview-468x60.html</loc>
+  </url>
+  <url>
+    <loc>https://ad-server.fly.dev/tools/banner-preview-300x250.html</loc>
+  </url>
 </urlset>

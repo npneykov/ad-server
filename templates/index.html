@@ -77,6 +77,16 @@
             position: relative;
         }
 
+        .banner-container:empty::before {
+            content: "⚠️ " attr(data-size) "Ad failed to load ( ad blocker ? )";
+            font-size: 13px;
+            color: #999;
+            text-align: center;
+            display: block;
+            width: 100%;
+            padding: 0.5rem;
+        }
+
         .banner-container>* {
             max-width: 100% !important;
             max-height: 100% !important;

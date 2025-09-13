@@ -622,6 +622,18 @@ def blog_page(request: Request, slug: str):
 
     return templates.TemplateResponse(f'public/{filename}', {'request': request})
 
+@app.get('/debug/region')
+def get_region(request: Request):
+    # Fly.io provides region info via env var FLY_REGION
+    region = os.getenv('FLY_REGION', 'unknown')
+
+    client_ip = request.client.host if request.client else 'unknown'
+
+    return {
+        'region': region,
+        'client_ip': client_ip,
+        'message': f'Served from {region.upper()} region'
+    }
 
 @app.post('/admin/ads/{ad_id}/disable', dependencies=[Depends(verify_admin_key)])
 def admin_ads_disable(ad_id: int, session: Session = Depends(get_session)):

@@ -644,6 +644,16 @@ def get_region(request: Request):
     }
 
 
+@app.get('/debug/db')
+def debug_db(request: Request):
+    url = os.getenv('DATABASE_URL', '')
+    return {
+        'DATABASE_URL': url,
+        'data_exists': os.path.exists('/data/adserver.db'),
+        'app_exists': os.path.exists('/app/adserver.db'),
+    }
+
+
 @app.post('/admin/ads/{ad_id}/disable', dependencies=[Depends(verify_admin_key)])
 def admin_ads_disable(ad_id: int, session: Session = Depends(get_session)):
     ad = session.get(Ad, ad_id)

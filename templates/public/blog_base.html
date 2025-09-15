@@ -8,7 +8,38 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="icon" type="image/png" sizes="32x32" href="/static/images/favicon-32.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/static/images/logo-192.png">
+    <link rel="apple-touch-icon" href="/static/images/logo-192.png">
+    <link rel="canonical" href="{{ request.url }}">
+    <meta name="theme-color" content="#111827">
 
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Article",
+        "headline": {{ self.header_title()|tojson }},
+        "description": {{ self.description()|tojson }},
+        "author": {
+          "@type": "Person",
+          "name": "Ad Preview Tester Team"
+        },
+        "publisher": {
+          "@type": "Organization",
+          "name": "Ad Preview Tester",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "https://ad-server.fly.dev/static/images/logo.png"
+          }
+        },
+        "datePublished": "{{ published if published else year }}",
+        "dateModified": "{{ published if published else year }}",
+        "mainEntityOfPage": {
+          "@type": "WebPage",
+          "@id": "{{ request.url }}"
+        }
+      }
+    </script>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -86,6 +117,10 @@
         </div>
     </nav>
 
+    <header class="py-4 text-center bg-dark text-white">
+        <h1 class="m-0">{% block header_title %}{% endblock %}</h1>
+        {% if published %}<p class="meta mb-0">Published: {{ published }}</p>{% endif %}
+    </header>
 
     <main>
         {% block content %}{% endblock %}

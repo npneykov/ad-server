@@ -1,4 +1,4 @@
-from datetime import datetime, timedelta
+from datetime import date, datetime, timedelta
 import logging
 import os
 
@@ -55,6 +55,9 @@ def verify_admin_key(x_admin_key: str | None = Header(default=None)):
 
 if os.path.isdir('tools'):
     app.mount('/tools', StaticFiles(directory='tools'), name='tools')
+
+if os.path.isdir('static'):
+    app.mount('/static', StaticFiles(directory='static'), name='static')
 
 
 def range_counts(session: Session, days: int = 7):
@@ -603,6 +606,7 @@ def blog_index(request: Request):
 def blog_page(request: Request, slug: str):
     filename = f'blog_{slug}.html'
     filepath = os.path.join(BLOG_DIR, filename)
+    published = date.today().isoformat()
 
     # Check if the file exists
     if not os.path.exists(filepath):
@@ -620,7 +624,11 @@ def blog_page(request: Request, slug: str):
             },
         )
 
-    return templates.TemplateResponse(f'public/{filename}', {'request': request})
+    year = date.today().year  # Ensure 'year' is defined
+    return templates.TemplateResponse(
+        f'public/{filename}', {'request': request, 'published': published, 'year': year}
+    )
+
 
 @app.get('/debug/region')
 def get_region(request: Request):
@@ -632,8 +640,9 @@ def get_region(request: Request):
     return {
         'region': region,
         'client_ip': client_ip,
-        'message': f'Served from {region.upper()} region'
+        'message': f'Served from {region.upper()} region',
     }
+
 
 @app.post('/admin/ads/{ad_id}/disable', dependencies=[Depends(verify_admin_key)])
 def admin_ads_disable(ad_id: int, session: Session = Depends(get_session)):

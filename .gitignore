@@ -210,3 +210,4 @@ __marimo__/
 
 # Other folders/files to ignore
 test
+fly-wg.conf

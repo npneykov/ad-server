@@ -42,6 +42,18 @@
             {{ html|safe }}
         </a>
     </div>
+
+    <!-- Auto-refresh with randomized interval (45s–60s) -->
+    <script>
+        function scheduleRefresh() {
+            const delay = 45000 + Math.random() * 15000; // between 45s and 60s
+            setTimeout(() => {
+                window.location.reload();
+            }, delay);
+        }
+        scheduleRefresh();
+    </script>
+
 </body>
 
 </html>

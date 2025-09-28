@@ -32,8 +32,8 @@
             "url": "https://ad-server.fly.dev/static/images/logo.png"
           }
         },
-        "datePublished": "{{ published if published else year }}",
-        "dateModified": "{{ published if published else year }}",
+        "datePublished": "{{ published|default(now().isoformat()) }}",
+        "dateModified": "{{ published|default(now().isoformat()) }}",
         "mainEntityOfPage": {
           "@type": "WebPage",
           "@id": "{{ request.url }}"

@@ -10,7 +10,6 @@ primary_region = "ams"
 app = "uvicorn main:app --host 0.0.0.0 --port 8080"
 
 [env]
-DATABASE_URL = "sqlite:///data/adserver.db"
 
 [experimental]
 auto_rollback = true

@@ -12,5 +12,6 @@ check_db.py
 init_ads_and_zones.py
 seed_ads.py
 simulate_traffic.py
+fly-wg.conf
 *zip
 *.tar.gz

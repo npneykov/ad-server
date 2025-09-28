@@ -32,6 +32,7 @@ load_dotenv()
 app = FastAPI()
 
 templates = Jinja2Templates(directory='templates')
+
 ADSTERRA_SMARTLINK = (
     'https://www.revenuecpmgate.com/kh3axptg1?key=1685a081c46f9b5d7aaa7abf4d050eb3'
 )
@@ -100,7 +101,7 @@ def admin_analytics(
 
         ads = session.exec(query).all() or []
 
-        # ✅ Build dict in the structure template expects
+        # Build dict in the structure template expects
         ctr = {}
         for a in ads:
             i = imps.get(a.id, 0)  # type: ignore
@@ -273,19 +274,10 @@ def delete_ad(ad_id: int, session: Session = Depends(get_session)):
     return {'ok': True}
 
 
-# -------- Render & Click (iframe, Python-only) --------
-from fastapi import Depends, Query, Request
-from fastapi.responses import HTMLResponse
-from sqlmodel import Session
-
-from db import get_session
-from models import Ad, Zone
-
-
 @app.get('/render', response_class=HTMLResponse)
 def render_ad(
     request: Request,
-    zone: int = Query(1, description='Zone ID (defaults to 1)'),  # ✅ default value
+    zone: int = Query(1, description='Zone ID (defaults to 1)'),
     session: Session = Depends(get_session),
 ):
     # Get the zone
@@ -293,7 +285,7 @@ def render_ad(
     if not z:
         raise HTTPException(status_code=404, detail='Zone not found')
 
-    # ✅ Fix: correctly load ads from the zone
+    # Correctly load ads from the zone
     ads = z.ads if hasattr(z, 'ads') else []
     ads = [a for a in ads if getattr(a, 'is_active', True)]
 

@@ -1,22 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <title>Real-Time Ad Rendering</title>
-  <meta name="description" content="Live preview for banner ads with click tracking.">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <style>
-    body { font-family: sans-serif; padding: 2rem; }
-    iframe { width: 468px; height: 60px; border: none; display: block; margin: 1rem auto; }
-    .note { text-align: center; margin-top: 1rem; font-size: 0.9rem; }
-  </style>
+    <meta charset="UTF-8">
+    <title>Real-Time Ad Rendering</title>
+    <meta name="description" content="Live preview for banner ads with click tracking.">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body {
+            font-family: sans-serif;
+            padding: 2rem;
+        }
+
+        iframe {
+            width: 468px;
+            height: 60px;
+            border: none;
+            display: block;
+            margin: 1rem auto;
+        }
+
+        .note {
+            text-align: center;
+            margin-top: 1rem;
+            font-size: 0.9rem;
+        }
+    </style>
 </head>
+
 <body>
-  <h1>Live Banner Ad Preview</h1>
-  <p>View and test banner creatives with instant feedback.</p>
+    <h1 align='center'>Live Banner Ad Preview</h1>
+    <p style='text-align:center;'>View and test banner creatives with instant feedback.</p>
 
-  <iframe src="/render?zone=1" loading="lazy"></iframe>
+    <iframe src="/render?zone=1" loading="lazy"></iframe>
 
-  <p class="note">This is a demo banner using our live ad server.</p>
+    <p class="note">This is a demo banner using our live ad server.</p>
 </body>
+
 </html>

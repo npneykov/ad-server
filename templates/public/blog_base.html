@@ -3,43 +3,91 @@
 
 <head>
     <meta charset="UTF-8">
+
+    <meta name="description"
+        content="{{ description or 'Practical guides and tools for display ads, banners, and open-source ad serving.' }}">
+    <link rel="canonical" href="{{ request.url }}">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="{{ title or 'Ad Server Blog' }}">
+    <meta property="og:description"
+        content="{{ description or 'Practical guides and tools for display ads, banners, and open-source ad serving.' }}">
+    <meta property="og:url" content="{{ request.url }}">
+    <meta property="og:site_name" content="Ad Server">
+    <meta property="og:image" content="{{ og_image or 'https://ad-server.fly.dev/static/images/og-default.png' }}">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{{ title or 'Ad Server Blog' }}">
+    <meta name="twitter:description"
+        content="{{ description or 'Practical guides and tools for display ads, banners, and open-source ad serving.' }}">
+    <meta name="twitter:image" content="{{ og_image or 'https://ad-server.fly.dev/static/images/og-default.png' }}">
+
     <title>{% block page_title %}{% endblock %}</title>
-    <meta name="description" content="{% block description %}{% endblock %}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
     <link rel="icon" type="image/png" sizes="32x32" href="/static/images/favicon-32.png">
     <link rel="icon" type="image/png" sizes="192x192" href="/static/images/logo-192.png">
     <link rel="apple-touch-icon" href="/static/images/logo-192.png">
-    <link rel="canonical" href="{{ request.url }}">
+
     <meta name="theme-color" content="#111827">
 
+    {# --- Breadcrumb schema --- #}
     <script type="application/ld+json">
-      {
-        "@context": "https://schema.org",
-        "@type": "Article",
-        "headline": {{ self.header_title()|tojson }},
-        "description": {{ self.description()|tojson }},
-        "author": {
-          "@type": "Person",
-          "name": "Ad Preview Tester Team"
-        },
-        "publisher": {
-          "@type": "Organization",
-          "name": "Ad Preview Tester",
-          "logo": {
-            "@type": "ImageObject",
-            "url": "https://ad-server.fly.dev/static/images/logo.png"
-          }
-        },
-        "datePublished": "{{ published|default('2025-01-01T00:00:00') }}",
-        "dateModified": "{{ published|default('2025-01-01T00:00:00') }}",
-        "mainEntityOfPage": {
-          "@type": "WebPage",
-          "@id": "{{ request.url }}"
+        {
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://ad-server.fly.dev/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Blog",
+              "item": "https://ad-server.fly.dev/blog"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "{{ title or 'Post' }}"
+            }
+          ]
         }
-      }
     </script>
+
+    {# --- Article schema --- #}
+    <script type="application/ld+json">
+        {
+          "@context": "https://schema.org",
+          "@type": "Article",
+          "headline": "{{ title or 'Ad Server Blog Post' }}",
+          "description": "{{ description or 'A practical article about ad serving and banner tooling.' }}",
+          "author": {
+            "@type": "Person",
+            "name": "{{ author or 'Ad Server' }}"
+          },
+          "publisher": {
+            "@type": "Organization",
+            "name": "Ad Server",
+            "logo": {
+              "@type": "ImageObject",
+              "url": "https://ad-server.fly.dev/static/images/logo.png"
+            }
+          },
+          "image": "{{ og_image or 'https://ad-server.fly.dev/static/images/og-default.png' }}",
+          "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "{{ request.url }}"
+          },
+          "datePublished": "{{ published or '' }}",
+          "dateModified": "{{ modified or published or '' }}"
+        }
+    </script>
+
+
     <style>
         body {
             font-family: Arial, sans-serif;

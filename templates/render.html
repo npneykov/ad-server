@@ -45,13 +45,18 @@
 
     <!-- Auto-refresh with randomized interval (45s–60s) -->
     <script>
-        function scheduleRefresh() {
-            const delay = 45000 + Math.random() * 15000; // between 45s and 60s
+        (function schedule() {
+            const delay = 45000 + Math.random() * 15000; // 45s–60s
             setTimeout(() => {
-                window.location.reload();
+                // Refresh only when the tab/iframe is visible to look less robotic
+                if (document.visibilityState !== 'visible') return schedule();
+
+                const url = new URL(window.location.href);
+                url.searchParams.set('t', Date.now().toString());
+                // replace() avoids stacking history entries on every refresh
+                window.location.replace(url.toString());
             }, delay);
-        }
-        scheduleRefresh();
+        })();
     </script>
 
 </body>

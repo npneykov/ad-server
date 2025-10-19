@@ -19,13 +19,14 @@ from fastapi.responses import (
     PlainTextResponse,
     RedirectResponse,
 )
-from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from sqlalchemy import func
 from sqlmodel import Session, SQLModel, select
+from starlette.middleware.gzip import GZipMiddleware
+from starlette.staticfiles import StaticFiles
 
 from db import engine, get_session
-from models import Ad, Click, Impression, Zone  # add Impression, Click
+from models import Ad, Click, Impression, Zone
 
 logging.basicConfig(level=logging.DEBUG)
 load_dotenv()
@@ -37,6 +38,8 @@ ADSTERRA_SMARTLINK = (
     'https://www.revenuecpmgate.com/kh3axptg1?key=1685a081c46f9b5d7aaa7abf4d050eb3'
 )
 BLOG_DIR = os.path.join('templates', 'public')
+
+app.add_middleware(GZipMiddleware, minimum_size=500)  # compress responses > ~0.5 KB
 
 
 @app.on_event('startup')
@@ -54,11 +57,18 @@ def verify_admin_key(x_admin_key: str | None = Header(default=None)):
     raise HTTPException(status_code=401, detail='Unauthorized: invalid X-ADMIN-KEY')
 
 
+class CachedStaticFiles(StaticFiles):
+    async def get_response(self, path, scope):
+        resp = await super().get_response(path, scope)
+        resp.headers.setdefault('Cache-Control', 'public, max-age=2592000, immutable')
+        return resp
+
+
 if os.path.isdir('tools'):
-    app.mount('/tools', StaticFiles(directory='tools'), name='tools')
+    app.mount('/tools', CachedStaticFiles(directory='tools'), name='tools')
 
 if os.path.isdir('static'):
-    app.mount('/static', StaticFiles(directory='static'), name='static')
+    app.mount('/static', CachedStaticFiles(directory='static'), name='static')
 
 
 def range_counts(session: Session, days: int = 7):
@@ -666,3 +676,7 @@ def admin_ads_enable(ad_id: int, session: Session = Depends(get_session)):
     session.add(ad)
     session.commit()
     return RedirectResponse(url='/admin/analytics', status_code=303)
+
+
+# Replace your existing static mount with this:
+app.mount('/static', CachedStaticFiles(directory='static'), name='static')

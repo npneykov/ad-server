@@ -91,6 +91,12 @@ def range_counts(session: Session, days: int = 7):
     return imps, clks
 
 
+@app.get('/tools', include_in_schema=False)
+@app.get('/tools/', include_in_schema=False)
+def tools_index():
+    return RedirectResponse(url='/tools/index.html', status_code=307)
+
+
 @app.get(
     '/admin/analytics',
     response_class=HTMLResponse,
@@ -676,7 +682,3 @@ def admin_ads_enable(ad_id: int, session: Session = Depends(get_session)):
     session.add(ad)
     session.commit()
     return RedirectResponse(url='/admin/analytics', status_code=303)
-
-
-# Replace your existing static mount with this:
-app.mount('/static', CachedStaticFiles(directory='static'), name='static')

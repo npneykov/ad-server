@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>HTML5 Banner Validator – Pre-Flight Checklist</title>
+    <meta name="description"
+        content="HTML5 banner validator checklist. Quickly review file size, click tags, tracking and behaviour before sending your banners to an ad network or DSP." />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <link rel="canonical" href="https://ad-server.fly.dev/tools/html5-banner-validator.html" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="HTML5 Banner Validator – Pre-Flight Checklist" />
+    <meta property="og:description"
+        content="Manual HTML5 banner validation checklist plus preview links for common sizes like 300x250 and 728x90." />
+    <meta property="og:url" content="https://ad-server.fly.dev/tools/html5-banner-validator.html" />
+    <meta property="og:image" content="https://ad-server.fly.dev/static/images/og-default.png" />
+</head>
+
+<body>
+    <header>
+        <h1>HTML5 Banner Validator – Pre-Flight Checklist</h1>
+        <p>Use this quick checklist to validate your HTML5 banners before you upload them to any ad server or network.
+        </p>
+    </header>
+
+    <main>
+        <section>
+            <h2>1. Basic technical checks</h2>
+            <ul>
+                <li>Total ZIP size is within your network’s limit (often 150–300&nbsp;KB).</li>
+                <li>Banner exports as a clean HTML5 package (no external fonts that break).</li>
+                <li>No console errors when you open the banner in Chrome DevTools.</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>2. Click &amp; tracking</h2>
+            <ul>
+                <li>Exactly one clickable area (no overlapping clickable elements).</li>
+                <li>Click opens the landing page in a new tab.</li>
+                <li>No blocked pop-ups, no auto-downloads, no redirects to suspicious URLs.</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>3. Visual behaviour</h2>
+            <ul>
+                <li>Animations end after a reasonable time (usually under 30 seconds).</li>
+                <li>No flashing or strobing that could be considered harmful.</li>
+                <li>Nothing “jumps” outside the banner size (no overflow / scrollbars).</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>4. Test in real preview frames</h2>
+            <p>Validate your banners inside realistic frames using these preview tools:</p>
+            <ul>
+                <li><a href="/tools/banner-preview-300x250.html">300×250 HTML5 banner preview</a></li>
+                <li><a href="/tools/banner-preview-728x90.html">728×90 leaderboard preview</a></li>
+                <li><a href="/tools/banner-preview-160x600.html">160×600 skyscraper preview</a></li>
+                <li><a href="/tools/html5-banner-preview-collection.html">All preview sizes on one page</a></li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>5. Optional: stress-test with auto-refresh</h2>
+            <p>
+                Some publishers refresh ad slots every 30–60 seconds.
+                You can simulate that behaviour here:
+            </p>
+            <ul>
+                <li><a href="/tools/publisher-auto-refresh.html">Auto-refresh publisher test page</a></li>
+            </ul>
+        </section>
+    </main>
+</body>
+
+</html>

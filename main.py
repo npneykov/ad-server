@@ -113,7 +113,7 @@ def admin_analytics(
         # get active ads only if field exists
         query = select(Ad)
         if hasattr(Ad, 'is_active'):
-            query = query.where(Ad.is_active == True)
+            query = query.where(Ad.is_active)
 
         ads = session.exec(query).all() or []
 
@@ -135,7 +135,7 @@ def admin_analytics(
 
     except Exception as e:
         logging.exception('Error in /admin/analytics')
-        raise HTTPException(status_code=500, detail=str(e))
+        raise HTTPException(status_code=500, detail=str(e)) from e
 
 
 # -------- util --------
@@ -431,7 +431,7 @@ def admin_ads(
         # fetch ads (filter by active + optional zone)
         query = select(Ad)
         if hasattr(Ad, 'is_active'):
-            query = query.where(Ad.is_active == True)
+            query = query.where(Ad.is_active)
         if zone:
             query = query.where(Ad.zone_id == zone)
 

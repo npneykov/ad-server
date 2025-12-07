@@ -5,7 +5,7 @@ from sqlmodel import Session, SQLModel, create_engine
 
 load_dotenv()
 
-APP_ENV = os.getenv('APP_ENV', 'development')
+APP_ENV = os.getenv('APP_ENV', 'production')
 
 if APP_ENV == 'development':
     # Local dev DB (SQLite)

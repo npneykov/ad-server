@@ -1,6 +1,7 @@
 from datetime import date, datetime, timedelta
 import logging
 import os
+from typing import Annotated
 
 from dotenv import load_dotenv
 from fastapi import (
@@ -27,6 +28,9 @@ from starlette.staticfiles import StaticFiles
 
 from db import engine, get_session
 from models import Ad, Click, Impression, Zone
+
+# Type aliases for dependency injection
+SessionDep = Annotated[Session, Depends(get_session)]
 
 logging.basicConfig(level=logging.DEBUG)
 load_dotenv()
@@ -104,8 +108,8 @@ def tools_index():
 )
 def admin_analytics(
     request: Request,
+    session: SessionDep,
     days: int = Query(7, ge=1, le=90),
-    session: Session = Depends(get_session),
 ):
     try:
         imps, clks = range_counts(session, days=days)
@@ -159,7 +163,7 @@ def weighted_choice(items, weights):
 
 # -------- Zones CRUD --------
 @app.post('/zones/', response_model=Zone)
-def create_zone(zone: Zone, session: Session = Depends(get_session)):
+def create_zone(zone: Zone, session: SessionDep):
     session.add(zone)
     session.commit()
     session.refresh(zone)
@@ -167,12 +171,12 @@ def create_zone(zone: Zone, session: Session = Depends(get_session)):
 
 
 @app.get('/zones/', response_model=list[Zone])
-def list_zones(session: Session = Depends(get_session)):
+def list_zones(session: SessionDep):
     return session.exec(select(Zone)).all()
 
 
 @app.get('/zones/{zone_id}', response_model=Zone)
-def get_zone(zone_id: int, session: Session = Depends(get_session)):
+def get_zone(zone_id: int, session: SessionDep):
     zone = session.get(Zone, zone_id)
     if not zone:
         raise HTTPException(status_code=404, detail='Zone not found')
@@ -183,7 +187,7 @@ def get_zone(zone_id: int, session: Session = Depends(get_session)):
 def update_zone(
     zone_id: int,
     updated: Zone,
-    session: Session = Depends(get_session),
+    session: SessionDep,
 ):
     zone = session.get(Zone, zone_id)
     if not zone:
@@ -198,7 +202,7 @@ def update_zone(
 
 
 @app.delete('/zones/{zone_id}')
-def delete_zone(zone_id: int, session: Session = Depends(get_session)):
+def delete_zone(zone_id: int, session: SessionDep):
     zone = session.get(Zone, zone_id)
     if not zone:
         raise HTTPException(status_code=404, detail='Zone not found')
@@ -209,7 +213,7 @@ def delete_zone(zone_id: int, session: Session = Depends(get_session)):
 
 # -------- Ads CRUD --------
 @app.post('/ads/', response_model=Ad)
-def create_ad(ad: Ad, session: Session = Depends(get_session)):
+def create_ad(ad: Ad, session: SessionDep):
     # ensure zone exists
     if not session.get(Zone, ad.zone_id):
         raise HTTPException(status_code=400, detail='Invalid zone_id')
@@ -220,12 +224,12 @@ def create_ad(ad: Ad, session: Session = Depends(get_session)):
 
 
 @app.get('/ads/', response_model=list[Ad])
-def list_ads(session: Session = Depends(get_session)):
+def list_ads(session: SessionDep):
     return session.exec(select(Ad)).all()
 
 
 @app.get('/ads/rent', response_class=HTMLResponse)
-def rent_form(request: Request, session: Session = Depends(get_session)):
+def rent_form(request: Request, session: SessionDep):
     zones = session.exec(select(Zone)).all()
     return templates.TemplateResponse(
         'ads/rent.html', {'request': request, 'zones': zones}
@@ -234,11 +238,11 @@ def rent_form(request: Request, session: Session = Depends(get_session)):
 
 @app.post('/ads/rent')
 def submit_rental(
+    session: SessionDep,
     html: str = Form(...),
     url: str = Form(...),
     zone_id: int = Form(...),
     weight: int = Form(1),
-    session: Session = Depends(get_session),
 ):
     if not session.get(Zone, zone_id):
         raise HTTPException(status_code=400, detail='Invalid zone ID')
@@ -254,7 +258,7 @@ def submit_rental(
 
 
 @app.get('/ads/{ad_id}', response_model=Ad)
-def get_ad(ad_id: int, session: Session = Depends(get_session)):
+def get_ad(ad_id: int, session: SessionDep):
     ad = session.get(Ad, ad_id)
     if not ad:
         raise HTTPException(status_code=404, detail='Ad not found')
@@ -265,7 +269,7 @@ def get_ad(ad_id: int, session: Session = Depends(get_session)):
 def update_ad(
     ad_id: int,
     updated: Ad,
-    session: Session = Depends(get_session),
+    session: SessionDep,
 ):
     ad = session.get(Ad, ad_id)
     if not ad:
@@ -281,7 +285,7 @@ def update_ad(
 
 
 @app.delete('/ads/{ad_id}')
-def delete_ad(ad_id: int, session: Session = Depends(get_session)):
+def delete_ad(ad_id: int, session: SessionDep):
     ad = session.get(Ad, ad_id)
     if not ad:
         raise HTTPException(status_code=404, detail='Ad not found')
@@ -293,8 +297,8 @@ def delete_ad(ad_id: int, session: Session = Depends(get_session)):
 @app.get('/render', response_class=HTMLResponse)
 def render_ad(
     request: Request,
+    session: SessionDep,
     zone: int = Query(1, description='Zone ID (defaults to 1)'),
-    session: Session = Depends(get_session),
 ):
     # Get the zone
     z = session.get(Zone, zone)
@@ -348,7 +352,7 @@ def render_ad(
 
 
 @app.get('/click')
-def click(id: int, session: Session = Depends(get_session)):
+def click(id: int, session: SessionDep):
     ad = session.get(Ad, id)
     if not ad:
         raise HTTPException(status_code=404, detail='Ad not found')
@@ -386,7 +390,7 @@ def admin_home(request: Request):
     response_class=HTMLResponse,
     dependencies=[Depends(verify_admin_key)],
 )
-def admin_zones(request: Request, session: Session = Depends(get_session)):
+def admin_zones(request: Request, session: SessionDep):
     zones = session.exec(select(Zone)).all()
     return templates.TemplateResponse(
         'admin/zones.html', {'request': request, 'zones': zones}
@@ -395,10 +399,10 @@ def admin_zones(request: Request, session: Session = Depends(get_session)):
 
 @app.post('/admin/zones', dependencies=[Depends(verify_admin_key)])
 def admin_zones_create(
+    session: SessionDep,
     name: str = Form(...),
     width: int = Form(...),
     height: int = Form(...),
-    session: Session = Depends(get_session),
 ):
     z = Zone(name=name, width=width, height=height)
     session.add(z)
@@ -407,7 +411,7 @@ def admin_zones_create(
 
 
 @app.post('/admin/zones/{zone_id}/delete', dependencies=[Depends(verify_admin_key)])
-def admin_zones_delete(zone_id: int, session: Session = Depends(get_session)):
+def admin_zones_delete(zone_id: int, session: SessionDep):
     z = session.get(Zone, zone_id)
     if not z:
         raise HTTPException(status_code=404, detail='Zone not found')
@@ -421,8 +425,8 @@ def admin_zones_delete(zone_id: int, session: Session = Depends(get_session)):
 )
 def admin_ads(
     request: Request,
+    session: SessionDep,
     zone: int | None = Query(default=None),
-    session: Session = Depends(get_session),
 ):
     try:
         # fetch all zones
@@ -455,11 +459,11 @@ def admin_ads(
 
 @app.post('/admin/ads', dependencies=[Depends(verify_admin_key)])
 def admin_ads_create(
+    session: SessionDep,
     zone_id: int = Form(...),
     html: str = Form(...),
     url: str = Form(...),
     weight: int = Form(1),
-    session: Session = Depends(get_session),
 ):
     if not session.get(Zone, zone_id):
         raise HTTPException(status_code=400, detail='Invalid zone_id')
@@ -470,7 +474,7 @@ def admin_ads_create(
 
 
 @app.post('/admin/ads/{ad_id}/delete', dependencies=[Depends(verify_admin_key)])
-def admin_ads_delete(ad_id: int, session: Session = Depends(get_session)):
+def admin_ads_delete(ad_id: int, session: SessionDep):
     a = session.get(Ad, ad_id)
     if not a:
         raise HTTPException(status_code=404, detail='Ad not found')
@@ -481,7 +485,8 @@ def admin_ads_delete(ad_id: int, session: Session = Depends(get_session)):
 
 @app.get('/embed.js', response_class=Response, include_in_schema=False)
 def embed_js(
-    request: Request, zone: int | None = Query(default=None, description='Zone ID')
+    request: Request,
+    zone: int | None = Query(default=None, description='Zone ID'),
 ):
     return templates.TemplateResponse(
         'embed.js.jinja2',
@@ -491,7 +496,7 @@ def embed_js(
 
 
 @app.get('/api/stats.json')
-def stats_api(session: Session = Depends(get_session)):
+def stats_api(session: SessionDep):
     imps, clks = range_counts(session, days=7)
     ads = session.exec(select(Ad)).all()
 
@@ -511,7 +516,7 @@ def stats_api(session: Session = Depends(get_session)):
 
 
 @app.get('/stats.json', response_class=JSONResponse)
-def public_stats(session: Session = Depends(get_session)):
+def public_stats(session: SessionDep):
     # Optional: support filtering per zone later
     ads = session.exec(select(Ad)).all()
 
@@ -663,7 +668,7 @@ def debug_db(request: Request):
 
 
 @app.post('/admin/ads/{ad_id}/disable', dependencies=[Depends(verify_admin_key)])
-def admin_ads_disable(ad_id: int, session: Session = Depends(get_session)):
+def admin_ads_disable(ad_id: int, session: SessionDep):
     ad = session.get(Ad, ad_id)
     if not ad:
         raise HTTPException(status_code=404, detail='Ad not found')
@@ -674,7 +679,7 @@ def admin_ads_disable(ad_id: int, session: Session = Depends(get_session)):
 
 
 @app.post('/admin/ads/{ad_id}/enable', dependencies=[Depends(verify_admin_key)])
-def admin_ads_enable(ad_id: int, session: Session = Depends(get_session)):
+def admin_ads_enable(ad_id: int, session: SessionDep):
     ad = session.get(Ad, ad_id)
     if not ad:
         raise HTTPException(status_code=404, detail='Ad not found')

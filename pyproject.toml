@@ -10,6 +10,7 @@ dependencies = [
     "python-dotenv>=1.1.1",
     "python-multipart>=0.0.20",
     "psycopg[binary]>=3.1",
+    "pytest>=9.0.2",
 ]
 
 [project.optional-dependencies]
@@ -107,4 +108,5 @@ source = [".", "*/site-packages"]
 [dependency-groups]
 dev = [
     "pre-commit>=4.5.1",
+    "ruff>=0.14.14",
 ]

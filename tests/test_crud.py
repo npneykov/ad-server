@@ -23,7 +23,7 @@ def test_create_and_get_zone():
         data = resp.json()
         assert data['id'] and data['name'] == 'Z1'
 
-        get_resp = client.get(f"/zones/{data['id']}")
+        get_resp = client.get(f'/zones/{data["id"]}')
         assert get_resp.status_code == 200
         assert get_resp.json()['width'] == 100
 

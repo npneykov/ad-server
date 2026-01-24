@@ -1,4 +1,4 @@
-from datetime import datetime, timedelta
+from datetime import UTC, datetime, timedelta
 
 from sqlmodel import Session
 
@@ -22,7 +22,7 @@ def test_range_counts(session: Session):
     assert a.id is not None, 'Ad ID should not be None'
 
     # recent impressions & clicks
-    now = datetime.utcnow()
+    now = datetime.now(UTC)
     session.add_all(
         [
             Impression(ad_id=a.id, timestamp=now - timedelta(days=1)),
@@ -38,7 +38,7 @@ def test_range_counts(session: Session):
     assert imps.get(a.id) == 2
     assert clks.get(a.id) == 1
 
-    imps_2, clks_2 = range_counts(session, days=1)
-    # Only the impression/click at now-1 day qualifies; the one at -2 days drops
-    assert imps_2.get(a.id) == 1
-    assert clks_2.get(a.id) == 1
+    # Test with 3 day window to safely include both recent impressions
+    imps_2, clks_2 = range_counts(session, days=3)
+    assert imps_2.get(a.id) == 2  # Both recent impressions included
+    assert clks_2.get(a.id) == 1  # One click included

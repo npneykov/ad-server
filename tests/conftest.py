@@ -7,25 +7,24 @@ from db import get_session
 from main import app
 
 
-@pytest.fixture(autouse=True)
-def override_db():
+@pytest.fixture(scope='function')
+def session():
     """
-    Give every test its own in-memory SQLite database and override the app's
-    get_session() dependency to use it. Ensures tables exist before requests.
+    Provide a SQLModel Session for tests that need direct database access.
+    Each test gets its own in-memory SQLite database.
     """
     engine = create_engine(
         'sqlite://',  # in-memory
         connect_args={'check_same_thread': False},
-        poolclass=StaticPool,  # keep one in-memory DB per test function
+        poolclass=StaticPool,
     )
     SQLModel.metadata.create_all(engine)
 
-    def _get_session():
-        with Session(engine) as session:
-            yield session
+    with Session(engine) as test_session:
+        # Override FastAPI's get_session dependency
+        def _get_session():
+            yield test_session
 
-    app.dependency_overrides[get_session] = _get_session
-    try:
-        yield
-    finally:
+        app.dependency_overrides[get_session] = _get_session
+        yield test_session
         app.dependency_overrides.pop(get_session, None)

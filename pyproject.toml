@@ -1,6 +1,23 @@
-[build-system]
-requires = ["poetry-core>=1.0.0"]
-build-backend = "poetry.core.masonry.api"
+[project]
+name = "ad-server"
+version = "0.1.0"
+description = "FastAPI-based lightweight ad delivery system"
+requires-python = ">=3.11"
+dependencies = [
+    "fastapi>=0.116.1",
+    "uvicorn>=0.35.0",
+    "sqlmodel>=0.0.24",
+    "python-dotenv>=1.1.1",
+    "python-multipart>=0.0.20",
+    "psycopg[binary]>=3.1",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.4.1",
+    "pre-commit>=4.2.0",
+    "httpx>=0.28.1",
+]
 
 [tool.ruff]
 line-length = 88
@@ -86,3 +103,8 @@ exclude_lines = [
 [tool.coverage.paths]
 # Combine paths across OS/CI runners
 source = [".", "*/site-packages"]
+
+[dependency-groups]
+dev = [
+    "pre-commit>=4.5.1",
+]

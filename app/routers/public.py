@@ -22,16 +22,113 @@ def home(request: Request):
     )
 
 
+@router.get('/tools', response_class=HTMLResponse)
+def tools_page(request: Request):
+    """Ad testing tools page."""
+    return templates.TemplateResponse(request=request, name='tools.html')
+
+
+# Banner Preview Pages
+BANNER_SIZES = {
+    '728x90': {
+        'size': '728×90',
+        'name': 'Leaderboard',
+        'width': 728,
+        'height': 90,
+        'zone_id': 1,
+        'placement': 'Header, above-the-fold',
+    },
+    '300x250': {
+        'size': '300×250',
+        'name': 'Medium Rectangle',
+        'width': 300,
+        'height': 250,
+        'zone_id': 2,
+        'placement': 'Sidebar, in-content',
+    },
+    '468x60': {
+        'size': '468×60',
+        'name': 'Full Banner',
+        'width': 468,
+        'height': 60,
+        'zone_id': 3,
+        'placement': 'Mid-page, footer',
+    },
+    '160x600': {
+        'size': '160×600',
+        'name': 'Skyscraper',
+        'width': 160,
+        'height': 600,
+        'zone_id': 4,
+        'placement': 'Sidebar (vertical)',
+    },
+    '160x300': {
+        'size': '160×300',
+        'name': 'Large Banner',
+        'width': 160,
+        'height': 300,
+        'zone_id': 5,
+        'placement': 'Sidebar (vertical)',
+    },
+    '320x50': {
+        'size': '320×50',
+        'name': 'Mobile Banner',
+        'width': 320,
+        'height': 50,
+        'zone_id': 6,
+        'placement': 'Mobile screens',
+    },
+}
+
+
+@router.get('/tools/banner-preview-{size_slug}.html', response_class=HTMLResponse)
+def banner_preview_page(request: Request, size_slug: str):
+    """Individual banner preview pages."""
+    if size_slug not in BANNER_SIZES:
+        raise HTTPException(status_code=404, detail='Banner size not found')
+
+    banner_info = BANNER_SIZES[size_slug]
+    context = {
+        'size_slug': size_slug,
+        **banner_info,
+    }
+    return templates.TemplateResponse(
+        request=request, name='tools/banner-preview.html', context=context
+    )
+
+
+@router.get('/tools/test-html5-banner-preview.html', response_class=HTMLResponse)
+def html5_test_page(request: Request):
+    """HTML5 banner testing page."""
+    return templates.TemplateResponse(request=request, name='tools/html5-test.html')
+
+
+@router.get('/tools/html5-banner-preview-collection.html', response_class=HTMLResponse)
+def html5_collection_page(request: Request):
+    """HTML5 banner multi-size preview page."""
+    return templates.TemplateResponse(
+        request=request, name='tools/html5-collection.html'
+    )
+
+
+@router.get('/tools/html5-banner-validator.html', response_class=HTMLResponse)
+def html5_validator_page(request: Request):
+    """HTML5 banner validator page."""
+    return templates.TemplateResponse(
+        request=request, name='tools/html5-validator.html'
+    )
+
+
 @router.get('/stats', response_class=HTMLResponse)
 def public_stats_ui(request: Request):
     """Public stats page."""
-    return templates.TemplateResponse(request=request, name='public/stats.html')
+    return templates.TemplateResponse(request=request, name='stats.html')
 
 
 @router.get('/publisher', response_class=HTMLResponse)
 def publisher_page(request: Request):
     """Publisher information page."""
-    return templates.TemplateResponse(request=request, name='public/publisher.html')
+    return templates.TemplateResponse(request=request, name='publisher.html')
 
 
 @router.get('/publisher-test', response_class=HTMLResponse)
@@ -52,7 +149,7 @@ def blog_index(request: Request):
         and f not in ('blog_index.html', 'blog_base.html')
     ]
     return templates.TemplateResponse(
-        request=request, name='public/blog_index.html', context={'posts': posts}
+        request=request, name='blog.html', context={'posts': posts}
     )
 
 

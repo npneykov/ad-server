@@ -1,0 +1,165 @@
+{% extends "base.html" %}
+
+{% block title %}Test HTML5 Banner - Online Preview Tool{% endblock %}
+
+{% block description %}Test your HTML5 banner ads online. Preview common sizes like 300x250, 728x90, 160x600 and more before sending to your client or ad network.{% endblock %}
+
+{% block extra_meta %}
+<meta name="keywords" content="HTML5 banner test, banner preview, ad testing tool">
+{% endblock %}
+
+{% block canonical %}https://ad-server.fly.dev/tools/test-html5-banner-preview.html{% endblock %}
+
+{% block og_title %}Test HTML5 Banner - Online Preview Tool{% endblock %}
+
+{% block og_description %}Drop your HTML5 banner into our preview tools and see how it looks in real ad sizes before you launch.{% endblock %}
+
+{% block og_url %}https://ad-server.fly.dev/tools/test-html5-banner-preview.html{% endblock %}
+
+{% block content %}
+<div class="container-narrow">
+
+    <!-- Hero Section -->
+    <div class="hero">
+        <h1>Test HTML5 Banner Online</h1>
+        <p>
+            Use these simple preview pages to test your HTML5 banner ads in the most common display sizes.
+            Quick, free, and no registration required.
+        </p>
+        <div style="margin-top: 1.5rem;">
+            <span class="badge badge-success">Instant Testing</span>
+            <span class="badge badge-primary">All Sizes</span>
+        </div>
+    </div>
+
+    <!-- Quick Links Section -->
+    <section class="card mt-xl">
+        <div class="card-header">
+            <h2 class="card-title">Quick Links to Banner Preview Pages</h2>
+            <p class="card-subtitle">Select the size you need to test</p>
+        </div>
+        <div style="padding: var(--spacing-lg);">
+            <p style="color: var(--gray-700); margin-bottom: var(--spacing-lg);">
+                Open the size you need, paste or upload your banner code, and reload a few times to make sure everything works.
+            </p>
+            <div style="display: grid; gap: var(--spacing-md);">
+                <a href="/tools/banner-preview-300x250.html" class="card" style="text-decoration: none; padding: var(--spacing-md); transition: var(--transition);">
+                    <div style="display: flex; align-items: center; gap: var(--spacing-md);">
+                        <div style="background: var(--accent); color: white; width: 40px; height: 40px; border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center; font-weight: 700; flex-shrink: 0;">1</div>
+                        <div>
+                            <strong style="color: var(--gray-900);">300×250 Medium Rectangle</strong>
+                            <p style="color: var(--gray-600); font-size: 0.875rem; margin: 0;">Most versatile size for sidebars and content</p>
+                        </div>
+                    </div>
+                </a>
+
+                <a href="/tools/banner-preview-728x90.html" class="card" style="text-decoration: none; padding: var(--spacing-md); transition: var(--transition);">
+                    <div style="display: flex; align-items: center; gap: var(--spacing-md);">
+                        <div style="background: var(--accent); color: white; width: 40px; height: 40px; border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center; font-weight: 700; flex-shrink: 0;">2</div>
+                        <div>
+                            <strong style="color: var(--gray-900);">728×90 Leaderboard</strong>
+                            <p style="color: var(--gray-600); font-size: 0.875rem; margin: 0;">Popular header banner for desktop</p>
+                        </div>
+                    </div>
+                </a>
+
+                <a href="/tools/banner-preview-160x600.html" class="card" style="text-decoration: none; padding: var(--spacing-md); transition: var(--transition);">
+                    <div style="display: flex; align-items: center; gap: var(--spacing-md);">
+                        <div style="background: var(--accent); color: white; width: 40px; height: 40px; border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center; font-weight: 700; flex-shrink: 0;">3</div>
+                        <div>
+                            <strong style="color: var(--gray-900);">160×600 Skyscraper</strong>
+                            <p style="color: var(--gray-600); font-size: 0.875rem; margin: 0;">Tall vertical banner for sidebars</p>
+                        </div>
+                    </div>
+                </a>
+
+                <a href="/tools/banner-preview-320x50.html" class="card" style="text-decoration: none; padding: var(--spacing-md); transition: var(--transition);">
+                    <div style="display: flex; align-items: center; gap: var(--spacing-md);">
+                        <div style="background: var(--accent); color: white; width: 40px; height: 40px; border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center; font-weight: 700; flex-shrink: 0;">4</div>
+                        <div>
+                            <strong style="color: var(--gray-900);">320×50 Mobile Banner</strong>
+                            <p style="color: var(--gray-600); font-size: 0.875rem; margin: 0;">Standard mobile ad size</p>
+                        </div>
+                    </div>
+                </a>
+
+                <a href="/tools/banner-preview-468x60.html" class="card" style="text-decoration: none; padding: var(--spacing-md); transition: var(--transition);">
+                    <div style="display: flex; align-items: center; gap: var(--spacing-md);">
+                        <div style="background: var(--accent); color: white; width: 40px; height: 40px; border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center; font-weight: 700; flex-shrink: 0;">5</div>
+                        <div>
+                            <strong style="color: var(--gray-900);">468×60 Full Banner</strong>
+                            <p style="color: var(--gray-600); font-size: 0.875rem; margin: 0;">Classic banner for various placements</p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Before Sending Checklist -->
+    <section class="mt-xl">
+        <h2 class="text-center mb-xl">Before You Send the Banner to a Network</h2>
+
+        <div class="card">
+            <div style="padding: var(--spacing-xl);">
+                <ol style="line-height: 2; color: var(--gray-700); padding-left: var(--spacing-lg);">
+                    <li><strong>Check click URL</strong> - Verify that the click URL works and opens in a new tab</li>
+                    <li><strong>Verify size</strong> - Ensure the banner stays within the correct dimensions (no overflow)</li>
+                    <li><strong>Monitor CPU usage</strong> - Watch for excessive looping animations that drain resources</li>
+                    <li><strong>Test reloading</strong> - Reload several times to make sure there are no random errors</li>
+                    <li><strong>Mobile testing</strong> - Check responsiveness on different screen sizes</li>
+                    <li><strong>Browser compatibility</strong> - Test in Chrome, Firefox, Safari, and Edge</li>
+                </ol>
+            </div>
+        </div>
+    </section>
+
+    <!-- Additional Tools -->
+    <section class="mt-xl">
+        <h2 class="text-center mb-xl">Additional Testing Tools</h2>
+
+        <div class="features-grid" style="grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));">
+            <a href="/tools/html5-banner-preview-collection.html" class="feature-card" style="text-decoration: none;">
+                <div class="feature-icon" style="background: var(--success); color: white; width: 48px; height: 48px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto var(--spacing-md); font-weight: 700;">A</div>
+                <h3>Multi-Size Preview</h3>
+                <p>
+                    Preview your HTML5 banner in all standard sizes simultaneously.
+                    Compare how it looks across different formats.
+                </p>
+            </a>
+
+            <a href="/tools/html5-banner-validator.html" class="feature-card" style="text-decoration: none;">
+                <div class="feature-icon" style="background: var(--success); color: white; width: 48px; height: 48px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto var(--spacing-md); font-weight: 700;">B</div>
+                <h3>HTML5 Validator</h3>
+                <p>
+                    Validate your HTML5 banner code for errors and compatibility.
+                    Full checklist to meet industry standards.
+                </p>
+            </a>
+
+            <a href="/tools/publisher-auto-refresh.html" class="feature-card" style="text-decoration: none;">
+                <div class="feature-icon" style="background: var(--success); color: white; width: 48px; height: 48px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto var(--spacing-md); font-weight: 700;">C</div>
+                <h3>Auto-Refresh Test</h3>
+                <p>
+                    Simulate live traffic and verify your ad behaves correctly
+                    when it reloads automatically.
+                </p>
+            </a>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta-box mt-xl">
+        <h2>Ready to Test Your Banners?</h2>
+        <p>
+            Choose a banner size above to start testing your HTML5 ads.
+            Get instant feedback and ensure quality before deployment.
+        </p>
+        <div style="margin-top: 1.5rem;">
+            <a href="/tools" class="btn btn-primary">Back to All Tools</a>
+            <a href="/" class="btn btn-secondary">View Live Demos</a>
+        </div>
+    </section>
+
+</div>
+{% endblock %}

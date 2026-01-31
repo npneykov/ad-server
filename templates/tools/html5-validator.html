@@ -1,0 +1,187 @@
+{% extends "base.html" %}
+
+{% block title %}HTML5 Banner Validator - Quality Checklist{% endblock %}
+
+{% block description %}Validate your HTML5 banner ads with our comprehensive quality checklist. Ensure your ads meet industry standards before deployment.{% endblock %}
+
+{% block canonical %}https://ad-server.fly.dev/tools/html5-banner-validator.html{% endblock %}
+
+{% block content %}
+<div class="container-narrow">
+
+    <!-- Hero Section -->
+    <div class="hero">
+        <h1>HTML5 Banner Validator</h1>
+        <p>
+            Comprehensive quality checklist for HTML5 banner ads.
+            Ensure your creative meets industry standards and performs optimally.
+        </p>
+        <div style="margin-top: 1.5rem;">
+            <span class="badge badge-success">Quality Assured</span>
+            <span class="badge badge-primary">Industry Standards</span>
+        </div>
+    </div>
+
+    <!-- Technical Validation -->
+    <section class="card mt-xl">
+        <div class="card-header">
+            <h2 class="card-title">Technical Validation Checklist</h2>
+            <p class="card-subtitle">Core requirements for HTML5 banners</p>
+        </div>
+        <div style="padding: var(--spacing-xl);">
+            <div style="display: grid; gap: var(--spacing-md);">
+                <label style="display: flex; align-items: start; gap: var(--spacing-md); padding: var(--spacing-md); background: var(--gray-50); border-radius: var(--radius-md); cursor: pointer;">
+                    <input type="checkbox" style="margin-top: 0.25rem; width: 18px; height: 18px;">
+                    <span style="color: var(--gray-700);"><strong>File size within limits</strong> - Banner should be under 150KB (compressed)</span>
+                </label>
+
+                <label style="display: flex; align-items: start; gap: var(--spacing-md); padding: var(--spacing-md); background: var(--gray-50); border-radius: var(--radius-md); cursor: pointer;">
+                    <input type="checkbox" style="margin-top: 0.25rem; width: 18px; height: 18px;">
+                    <span style="color: var(--gray-700);"><strong>Correct dimensions</strong> - Ad stays within specified pixel dimensions (no overflow)</span>
+                </label>
+
+                <label style="display: flex; align-items: start; gap: var(--spacing-md); padding: var(--spacing-md); background: var(--gray-50); border-radius: var(--radius-md); cursor: pointer;">
+                    <input type="checkbox" style="margin-top: 0.25rem; width: 18px; height: 18px;">
+                    <span style="color: var(--gray-700);"><strong>Click URL works</strong> - Clickthrough opens correct landing page in new tab</span>
+                </label>
+
+                <label style="display: flex; align-items: start; gap: var(--spacing-md); padding: var(--spacing-md); background: var(--gray-50); border-radius: var(--radius-md); cursor: pointer;">
+                    <input type="checkbox" style="margin-top: 0.25rem; width: 18px; height: 18px;">
+                    <span style="color: var(--gray-700);"><strong>No console errors</strong> - Browser console shows no JavaScript errors</span>
+                </label>
+
+                <label style="display: flex; align-items: start; gap: var(--spacing-md); padding: var(--spacing-md); background: var(--gray-50); border-radius: var(--radius-md); cursor: pointer;">
+                    <input type="checkbox" style="margin-top: 0.25rem; width: 18px; height: 18px;">
+                    <span style="color: var(--gray-700);"><strong>Fast load time</strong> - Banner loads in under 3 seconds</span>
+                </label>
+
+                <label style="display: flex; align-items: start; gap: var(--spacing-md); padding: var(--spacing-md); background: var(--gray-50); border-radius: var(--radius-md); cursor: pointer;">
+                    <input type="checkbox" style="margin-top: 0.25rem; width: 18px; height: 18px;">
+                    <span style="color: var(--gray-700);"><strong>SSL compatible</strong> - All assets load over HTTPS (no mixed content)</span>
+                </label>
+            </div>
+        </div>
+    </section>
+
+    <!-- Performance Checklist -->
+    <section class="card mt-xl">
+        <div class="card-header">
+            <h2 class="card-title">Performance Checklist</h2>
+            <p class="card-subtitle">Optimize for speed and efficiency</p>
+        </div>
+        <div style="padding: var(--spacing-xl);">
+            <div style="display: grid; gap: var(--spacing-md);">
+                <label style="display: flex; align-items: start; gap: var(--spacing-md); padding: var(--spacing-md); background: var(--gray-50); border-radius: var(--radius-md); cursor: pointer;">
+                    <input type="checkbox" style="margin-top: 0.25rem; width: 18px; height: 18px;">
+                    <span style="color: var(--gray-700);"><strong>CPU usage acceptable</strong> - Banner uses less than 10% CPU when idle</span>
+                </label>
+
+                <label style="display: flex; align-items: start; gap: var(--spacing-md); padding: var(--spacing-md); background: var(--gray-50); border-radius: var(--radius-md); cursor: pointer;">
+                    <input type="checkbox" style="margin-top: 0.25rem; width: 18px; height: 18px;">
+                    <span style="color: var(--gray-700);"><strong>Animation controlled</strong> - Animations stop after 30 seconds (IAB guideline)</span>
+                </label>
+
+                <label style="display: flex; align-items: start; gap: var(--spacing-md); padding: var(--spacing-md); background: var(--gray-50); border-radius: var(--radius-md); cursor: pointer;">
+                    <input type="checkbox" style="margin-top: 0.25rem; width: 18px; height: 18px;">
+                    <span style="color: var(--gray-700);"><strong>Images optimized</strong> - Images compressed without quality loss</span>
+                </label>
+
+                <label style="display: flex; align-items: start; gap: var(--spacing-md); padding: var(--spacing-md); background: var(--gray-50); border-radius: var(--radius-md); cursor: pointer;">
+                    <input type="checkbox" style="margin-top: 0.25rem; width: 18px; height: 18px;">
+                    <span style="color: var(--gray-700);"><strong>No memory leaks</strong> - Banner doesn't accumulate memory over time</span>
+                </label>
+
+                <label style="display: flex; align-items: start; gap: var(--spacing-md); padding: var(--spacing-md); background: var(--gray-50); border-radius: var(--radius-md); cursor: pointer;">
+                    <input type="checkbox" style="margin-top: 0.25rem; width: 18px; height: 18px;">
+                    <span style="color: var(--gray-700);"><strong>Responsive design</strong> - Banner adapts to container size gracefully</span>
+                </label>
+            </div>
+        </div>
+    </section>
+
+    <!-- Browser Compatibility -->
+    <section class="card mt-xl">
+        <div class="card-header">
+            <h2 class="card-title">Browser Compatibility</h2>
+            <p class="card-subtitle">Test across all major browsers</p>
+        </div>
+        <div style="padding: var(--spacing-xl);">
+            <div style="display: grid; gap: var(--spacing-md);">
+                <label style="display: flex; align-items: start; gap: var(--spacing-md); padding: var(--spacing-md); background: var(--gray-50); border-radius: var(--radius-md); cursor: pointer;">
+                    <input type="checkbox" style="margin-top: 0.25rem; width: 18px; height: 18px;">
+                    <span style="color: var(--gray-700);"><strong>Chrome</strong> - Works correctly in latest Chrome</span>
+                </label>
+
+                <label style="display: flex; align-items: start; gap: var(--spacing-md); padding: var(--spacing-md); background: var(--gray-50); border-radius: var(--radius-md); cursor: pointer;">
+                    <input type="checkbox" style="margin-top: 0.25rem; width: 18px; height: 18px;">
+                    <span style="color: var(--gray-700);"><strong>Firefox</strong> - Works correctly in latest Firefox</span>
+                </label>
+
+                <label style="display: flex; align-items: start; gap: var(--spacing-md); padding: var(--spacing-md); background: var(--gray-50); border-radius: var(--radius-md); cursor: pointer;">
+                    <input type="checkbox" style="margin-top: 0.25rem; width: 18px; height: 18px;">
+                    <span style="color: var(--gray-700);"><strong>Safari</strong> - Works correctly in latest Safari</span>
+                </label>
+
+                <label style="display: flex; align-items: start; gap: var(--spacing-md); padding: var(--spacing-md); background: var(--gray-50); border-radius: var(--radius-md); cursor: pointer;">
+                    <input type="checkbox" style="margin-top: 0.25rem; width: 18px; height: 18px;">
+                    <span style="color: var(--gray-700);"><strong>Edge</strong> - Works correctly in latest Edge</span>
+                </label>
+
+                <label style="display: flex; align-items: start; gap: var(--spacing-md); padding: var(--spacing-md); background: var(--gray-50); border-radius: var(--radius-md); cursor: pointer;">
+                    <input type="checkbox" style="margin-top: 0.25rem; width: 18px; height: 18px;">
+                    <span style="color: var(--gray-700);"><strong>Mobile browsers</strong> - Tested on iOS Safari and Chrome Mobile</span>
+                </label>
+            </div>
+        </div>
+    </section>
+
+    <!-- Best Practices -->
+    <section class="card mt-xl">
+        <div class="card-header">
+            <h2 class="card-title">Best Practices</h2>
+            <p class="card-subtitle">Quality and user experience</p>
+        </div>
+        <div style="padding: var(--spacing-xl);">
+            <div style="display: grid; gap: var(--spacing-md);">
+                <label style="display: flex; align-items: start; gap: var(--spacing-md); padding: var(--spacing-md); background: var(--gray-50); border-radius: var(--radius-md); cursor: pointer;">
+                    <input type="checkbox" style="margin-top: 0.25rem; width: 18px; height: 18px;">
+                    <span style="color: var(--gray-700);"><strong>Clear call-to-action</strong> - CTA button is visible and clickable</span>
+                </label>
+
+                <label style="display: flex; align-items: start; gap: var(--spacing-md); padding: var(--spacing-md); background: var(--gray-50); border-radius: var(--radius-md); cursor: pointer;">
+                    <input type="checkbox" style="margin-top: 0.25rem; width: 18px; height: 18px;">
+                    <span style="color: var(--gray-700);"><strong>Readable text</strong> - Text is legible at banner size (no tiny fonts)</span>
+                </label>
+
+                <label style="display: flex; align-items: start; gap: var(--spacing-md); padding: var(--spacing-md); background: var(--gray-50); border-radius: var(--radius-md); cursor: pointer;">
+                    <input type="checkbox" style="margin-top: 0.25rem; width: 18px; height: 18px;">
+                    <span style="color: var(--gray-700);"><strong>Brand visible</strong> - Brand logo or name is clearly displayed</span>
+                </label>
+
+                <label style="display: flex; align-items: start; gap: var(--spacing-md); padding: var(--spacing-md); background: var(--gray-50); border-radius: var(--radius-md); cursor: pointer;">
+                    <input type="checkbox" style="margin-top: 0.25rem; width: 18px; height: 18px;">
+                    <span style="color: var(--gray-700);"><strong>No auto-audio</strong> - Sound only plays on user interaction</span>
+                </label>
+
+                <label style="display: flex; align-items: start; gap: var(--spacing-md); padding: var(--spacing-md); background: var(--gray-50); border-radius: var(--radius-md); cursor: pointer;">
+                    <input type="checkbox" style="margin-top: 0.25rem; width: 18px; height: 18px;">
+                    <span style="color: var(--gray-700);"><strong>Compliant with policies</strong> - Follows ad network and IAB policies</span>
+                </label>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta-box mt-xl">
+        <h2>Ready to Preview Your Banners?</h2>
+        <p>
+            Use our live preview tools to test your HTML5 banners in all standard sizes.
+        </p>
+        <div style="margin-top: 1.5rem;">
+            <a href="/tools/test-html5-banner-preview.html" class="btn btn-primary">Preview Tools</a>
+            <a href="/tools" class="btn btn-secondary">Back to Tools</a>
+        </div>
+    </section>
+
+</div>
+{% endblock %}

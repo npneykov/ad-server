@@ -141,9 +141,4 @@ def submit_rental(
     return RedirectResponse(url='/ads/rent?success=true', status_code=303)
 
 
-# -------- Tools Redirect --------
-@router.get('/tools', include_in_schema=False)
-@router.get('/tools/', include_in_schema=False)
-def tools_index():
-    """Redirect to tools index page."""
-    return RedirectResponse(url='/tools/index.html', status_code=307)
+# Note: /tools route is now handled by public_router

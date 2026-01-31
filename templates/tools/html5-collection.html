@@ -1,0 +1,137 @@
+{% extends "base.html" %}
+
+{% block title %}HTML5 Banner Collection Preview - Test All Sizes{% endblock %}
+
+{% block description %}Preview your HTML5 banners in all standard IAB sizes simultaneously. Compare how your ad creative looks across different formats on one page.{% endblock %}
+
+{% block canonical %}https://ad-server.fly.dev/tools/html5-banner-preview-collection.html{% endblock %}
+
+{% block content %}
+<div class="container-narrow">
+
+    <!-- Hero Section -->
+    <div class="hero">
+        <h1>Multi-Size Banner Preview</h1>
+        <p>
+            Preview your HTML5 banners in all standard IAB sizes simultaneously.
+            See how your creative adapts to different formats side-by-side.
+        </p>
+        <div style="margin-top: 1.5rem;">
+            <span class="badge badge-success">All Sizes</span>
+            <span class="badge badge-primary">Side-by-Side</span>
+        </div>
+    </div>
+
+    <!-- Preview Grid -->
+    <section class="mt-xl">
+        <h2 class="text-center mb-xl">Live Preview Collection</h2>
+
+        <div style="display: grid; gap: var(--spacing-xl);">
+            <!-- 728x90 -->
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">728×90 Leaderboard</h3>
+                    <p class="card-subtitle">Most popular desktop header size</p>
+                </div>
+                <div style="padding: var(--spacing-xl); background: var(--gray-50); display: flex; justify-content: center;">
+                    <iframe
+                        src="/render?zone=1"
+                        style="width: 728px; height: 90px; max-width: 100%; border: 2px dashed var(--gray-300); background: white;"
+                        loading="lazy"
+                    ></iframe>
+                </div>
+            </div>
+
+            <!-- 300x250 -->
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">300×250 Medium Rectangle</h3>
+                    <p class="card-subtitle">Versatile sidebar and in-content size</p>
+                </div>
+                <div style="padding: var(--spacing-xl); background: var(--gray-50); display: flex; justify-content: center;">
+                    <iframe
+                        src="/render?zone=2"
+                        style="width: 300px; height: 250px; border: 2px dashed var(--gray-300); background: white;"
+                        loading="lazy"
+                    ></iframe>
+                </div>
+            </div>
+
+            <!-- 468x60 -->
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">468×60 Full Banner</h3>
+                    <p class="card-subtitle">Classic mid-page and footer banner</p>
+                </div>
+                <div style="padding: var(--spacing-xl); background: var(--gray-50); display: flex; justify-content: center;">
+                    <iframe
+                        src="/render?zone=3"
+                        style="width: 468px; height: 60px; max-width: 100%; border: 2px dashed var(--gray-300); background: white;"
+                        loading="lazy"
+                    ></iframe>
+                </div>
+            </div>
+
+            <!-- 160x600 -->
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">160×600 Skyscraper</h3>
+                    <p class="card-subtitle">Tall vertical sidebar banner</p>
+                </div>
+                <div style="padding: var(--spacing-xl); background: var(--gray-50); display: flex; justify-content: center;">
+                    <iframe
+                        src="/render?zone=4"
+                        style="width: 160px; height: 600px; border: 2px dashed var(--gray-300); background: white;"
+                        loading="lazy"
+                    ></iframe>
+                </div>
+            </div>
+
+            <!-- 320x50 -->
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">320×50 Mobile Banner</h3>
+                    <p class="card-subtitle">Standard mobile ad format</p>
+                </div>
+                <div style="padding: var(--spacing-xl); background: var(--gray-50); display: flex; justify-content: center;">
+                    <iframe
+                        src="/render?zone=6"
+                        style="width: 320px; height: 50px; max-width: 100%; border: 2px dashed var(--gray-300); background: white;"
+                        loading="lazy"
+                    ></iframe>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Usage Guide -->
+    <section class="card mt-xl">
+        <div class="card-header">
+            <h2 class="card-title">How to Use This Tool</h2>
+            <p class="card-subtitle">Quick comparison guide</p>
+        </div>
+        <div style="padding: var(--spacing-xl);">
+            <ol style="line-height: 2; color: var(--gray-700);">
+                <li><strong>Visual comparison</strong> - See how your creative scales across different sizes</li>
+                <li><strong>Layout testing</strong> - Verify text readability and element positioning</li>
+                <li><strong>Quality check</strong> - Ensure images and graphics render correctly</li>
+                <li><strong>Device testing</strong> - Test on different screen sizes by resizing your browser</li>
+                <li><strong>Refresh testing</strong> - Reload the page to check ad rotation and consistency</li>
+            </ol>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta-box mt-xl">
+        <h2>Need Individual Size Testing?</h2>
+        <p>
+            Test each banner size separately with detailed specifications and usage guidelines.
+        </p>
+        <div style="margin-top: 1.5rem;">
+            <a href="/tools/test-html5-banner-preview.html" class="btn btn-primary">View All Banner Tools</a>
+            <a href="/tools" class="btn btn-secondary">Back to Tools</a>
+        </div>
+    </section>
+
+</div>
+{% endblock %}

@@ -47,8 +47,9 @@ def create_app() -> FastAPI:
     app.include_router(serving_router)
 
     # Mount static files
-    if os.path.isdir('tools'):
-        app.mount('/tools', CachedStaticFiles(directory='tools'), name='tools')
+    # Note: /tools routes are now handled by dynamic templates in public_router
+    # if os.path.isdir('tools'):
+    #     app.mount('/tools', CachedStaticFiles(directory='tools'), name='tools')
 
     if os.path.isdir('static'):
         app.mount('/static', CachedStaticFiles(directory='static'), name='static')

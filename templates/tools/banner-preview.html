@@ -1,0 +1,164 @@
+{% extends "base.html" %}
+
+{% block title %}{{ size }} Banner Preview Tool - Test Ad Banners Online{% endblock %}
+
+{% block description %}Preview your {{ size }} {{ name }} ad banners instantly before publishing. Live ad preview tool with real-time rendering.{% endblock %}
+
+{% block extra_meta %}
+<meta name="keywords" content="ad banner preview, {{ size }} banner tester, ad server tool, banner preview">
+<meta name="robots" content="index, follow">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "{{ size }} Banner Preview Tool",
+  "operatingSystem": "All",
+  "applicationCategory": "DeveloperApplication",
+  "description": "Preview your {{ size }} {{ name }} ad banner instantly.",
+  "url": "https://ad-server.fly.dev/tools/banner-preview-{{ size_slug }}.html",
+  "inLanguage": "en",
+  "creator": {
+    "@type": "Organization",
+    "name": "Ad Server Tools",
+    "url": "https://ad-server.fly.dev"
+  }
+}
+</script>
+{% endblock %}
+
+{% block canonical %}https://ad-server.fly.dev/tools/banner-preview-{{ size_slug }}.html{% endblock %}
+
+{% block og_title %}{{ size }} Banner Preview Tool{% endblock %}
+
+{% block og_description %}Instant preview of {{ size }} ad banners. Test responsiveness and appearance before deployment.{% endblock %}
+
+{% block og_url %}https://ad-server.fly.dev/tools/banner-preview-{{ size_slug }}.html{% endblock %}
+
+{% block twitter_title %}{{ size }} Banner Preview Tool{% endblock %}
+
+{% block twitter_description %}Preview your {{ size }} ad banners live. Test how they render before publishing.{% endblock %}
+
+{% block content %}
+<div class="container-narrow">
+
+    <!-- Hero Section -->
+    <div class="hero" style="text-align: center;">
+        <h1>{{ size }} {{ name }} Preview</h1>
+        <p>
+            Instantly preview your {{ size }} {{ name }} ad banners before publishing.
+            Test layout, alignment, and design in a real webpage environment.
+        </p>
+        <div style="margin-top: 1.5rem;">
+            <span class="badge badge-success">Live Preview</span>
+            <span class="badge badge-primary">{{ size }}</span>
+        </div>
+    </div>
+
+    <!-- Preview Section -->
+    <section class="card mt-xl">
+        <div class="card-header">
+            <h2 class="card-title">Live Banner Preview</h2>
+            <p class="card-subtitle">Real-time rendering from our ad server</p>
+        </div>
+        <div style="padding: var(--spacing-xl); background: var(--gray-50); display: flex; justify-content: center; align-items: center; min-height: 300px;">
+            <iframe
+                src="/render?zone={{ zone_id }}"
+                style="width: {{ width }}px; height: {{ height }}px; max-width: 100%; border: 2px dashed var(--gray-300); background: white; box-shadow: var(--shadow-md);"
+                loading="lazy"
+                title="{{ size }} Banner Preview"
+            ></iframe>
+        </div>
+        <div style="padding: var(--spacing-lg); text-align: center; color: var(--gray-600); font-size: 0.875rem;">
+            <p>This is a live demo banner from our ad server. Refresh to see different ads.</p>
+        </div>
+    </section>
+
+    <!-- Info Section -->
+    <section class="mt-xl">
+        <h2 class="text-center mb-xl">About the {{ size }} Banner</h2>
+
+        <div class="features-grid" style="grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));">
+            <div class="feature-card">
+                <div class="feature-icon" style="background: var(--accent); color: white; width: 48px; height: 48px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto var(--spacing-md); font-weight: 700;">1</div>
+                <h3>Who Should Use This?</h3>
+                <ul style="text-align: left; color: var(--gray-700); line-height: 1.8;">
+                    <li>AdOps specialists</li>
+                    <li>UI/UX designers</li>
+                    <li>Affiliate marketers</li>
+                    <li>Web publishers</li>
+                </ul>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon" style="background: var(--accent); color: white; width: 48px; height: 48px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto var(--spacing-md); font-weight: 700;">2</div>
+                <h3>Why It's Useful</h3>
+                <ul style="text-align: left; color: var(--gray-700); line-height: 1.8;">
+                    <li>Test banner responsiveness</li>
+                    <li>Preview ad aesthetics</li>
+                    <li>Simulate live placement</li>
+                    <li>Verify click functionality</li>
+                </ul>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon" style="background: var(--accent); color: white; width: 48px; height: 48px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto var(--spacing-md); font-weight: 700;">3</div>
+                <h3>Best Practices</h3>
+                <ul style="text-align: left; color: var(--gray-700); line-height: 1.8;">
+                    <li>Check load times</li>
+                    <li>Test on mobile devices</li>
+                    <li>Verify brand safety</li>
+                    <li>Monitor CPU usage</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Technical Details -->
+    <section class="card mt-xl">
+        <div class="card-header">
+            <h2 class="card-title">Technical Specifications</h2>
+            <p class="card-subtitle">Standard IAB dimensions and usage</p>
+        </div>
+        <div style="padding: var(--spacing-lg);">
+            <table style="width: 100%; border-collapse: collapse;">
+                <tr style="border-bottom: 1px solid var(--gray-200);">
+                    <td style="padding: var(--spacing-md); font-weight: 600; color: var(--gray-900);">Size</td>
+                    <td style="padding: var(--spacing-md); color: var(--gray-700);">{{ width }} × {{ height }} pixels</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--gray-200);">
+                    <td style="padding: var(--spacing-md); font-weight: 600; color: var(--gray-900);">Format Name</td>
+                    <td style="padding: var(--spacing-md); color: var(--gray-700);">{{ name }}</td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--gray-200);">
+                    <td style="padding: var(--spacing-md); font-weight: 600; color: var(--gray-900);">IAB Standard</td>
+                    <td style="padding: var(--spacing-md); color: var(--gray-700);">Yes</td>
+                </tr>
+                <tr>
+                    <td style="padding: var(--spacing-md); font-weight: 600; color: var(--gray-900);">Typical Placement</td>
+                    <td style="padding: var(--spacing-md); color: var(--gray-700);">{{ placement }}</td>
+                </tr>
+            </table>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta-box mt-xl">
+        <h2>Try Other Banner Sizes</h2>
+        <p>
+            Test how your ads look in different standard IAB banner formats.
+            Each size has specific use cases and performance characteristics.
+        </p>
+        <div style="margin-top: 1.5rem; display: flex; gap: var(--spacing-md); flex-wrap: wrap; justify-content: center;">
+            <a href="/tools/banner-preview-728x90.html" class="btn btn-secondary">728×90</a>
+            <a href="/tools/banner-preview-300x250.html" class="btn btn-secondary">300×250</a>
+            <a href="/tools/banner-preview-468x60.html" class="btn btn-secondary">468×60</a>
+            <a href="/tools/banner-preview-160x600.html" class="btn btn-secondary">160×600</a>
+            <a href="/tools/banner-preview-320x50.html" class="btn btn-secondary">320×50</a>
+        </div>
+        <div style="margin-top: var(--spacing-lg);">
+            <a href="/tools" class="btn btn-primary">Back to All Tools</a>
+        </div>
+    </section>
+
+</div>
+{% endblock %}

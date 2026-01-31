@@ -1,0 +1,160 @@
+{% extends "base.html" %}
+
+{% block title %}Ad Preview Tester Blog - Guides, Tutorials & Best Practices{% endblock %}
+
+{% block description %}Read practical guides, tutorials, and comparisons about banner ads, ad testing, and open source ad servers. Learn best practices for display advertising.{% endblock %}
+
+{% block extra_meta %}
+<meta name="keywords" content="ad server blog, banner ads tutorial, display advertising guide, HTML5 ads">
+{% endblock %}
+
+{% block canonical %}https://ad-server.fly.dev/blog{% endblock %}
+
+{% block og_title %}Ad Preview Tester Blog{% endblock %}
+
+{% block og_description %}Practical guides and tutorials about banner ads, ad testing, and open source ad servers.{% endblock %}
+
+{% block og_url %}https://ad-server.fly.dev/blog{% endblock %}
+
+{% block twitter_title %}Ad Preview Tester Blog{% endblock %}
+
+{% block twitter_description %}Practical guides and tutorials about banner ads, ad testing, and open source ad servers.{% endblock %}
+
+{% block content %}
+<div class="container-narrow">
+
+    <!-- Hero Section -->
+    <div class="hero">
+        <h1>📚 Blog & Resources</h1>
+        <p>
+            Practical guides, tutorials, and best practices for display advertising.
+            Learn how to test, optimize, and serve banner ads effectively.
+        </p>
+        <div style="margin-top: 1.5rem;">
+            <span class="badge badge-success">Free Resources</span>
+            <span class="badge badge-primary">Expert Tips</span>
+        </div>
+    </div>
+
+    <!-- Blog Posts -->
+    <section class="mt-xl">
+        <h2 class="text-center mb-xl">Latest Articles</h2>
+
+        {% if posts %}
+        <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: var(--spacing-xl);">
+            {% for slug in posts %}
+            <div class="card" style="display: flex; flex-direction: column; transition: var(--transition); height: 100%;">
+                <div style="padding: var(--spacing-xl); flex: 1; display: flex; flex-direction: column;">
+                    <div style="background: var(--accent); color: white; width: 40px; height: 40px; border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center; font-weight: 700; margin-bottom: var(--spacing-md);">
+                        {{ loop.index }}
+                    </div>
+                    <h3 style="color: var(--gray-900); margin-bottom: var(--spacing-sm); font-size: 1.25rem; line-height: 1.4;">
+                        {{ slug.replace('_', ' ') | title }}
+                    </h3>
+                    <p style="color: var(--gray-600); font-size: 0.9375rem; line-height: 1.6; flex: 1;">
+                        Click to read the full article and learn more about this topic.
+                    </p>
+                </div>
+                <div style="padding: var(--spacing-lg); padding-top: 0;">
+                    <a href="/blog/{{ slug }}" class="btn btn-secondary" style="width: 100%; text-align: center; display: block; text-decoration: none;">
+                        Read Article →
+                    </a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">No Posts Yet</h3>
+                <p class="card-subtitle">Check back soon for new content!</p>
+            </div>
+            <div style="padding: var(--spacing-lg); text-align: center; color: var(--gray-600);">
+                <p>
+                    We're working on creating valuable content about ad testing,
+                    banner optimization, and display advertising best practices.
+                </p>
+                <div style="margin-top: var(--spacing-lg);">
+                    <a href="/" class="btn btn-primary">Explore Tools</a>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+    </section>
+
+    <!-- Topics -->
+    <section class="mt-xl">
+        <h2 class="text-center mb-xl">📖 Popular Topics</h2>
+
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">🎯</div>
+                <h3>Banner Ad Testing</h3>
+                <p>
+                    Learn how to test banner ads before deployment.
+                    Preview tools, validation, and best practices.
+                </p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">📊</div>
+                <h3>Performance Optimization</h3>
+                <p>
+                    Improve your CTR and engagement rates.
+                    A/B testing, placement strategies, and analytics.
+                </p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">💻</div>
+                <h3>HTML5 Banner Ads</h3>
+                <p>
+                    Create interactive HTML5 banner creatives.
+                    Code examples, tools, and troubleshooting.
+                </p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">🔧</div>
+                <h3>Ad Server Setup</h3>
+                <p>
+                    Deploy your own open source ad server.
+                    Self-hosting guides and configuration tips.
+                </p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">📐</div>
+                <h3>IAB Standards</h3>
+                <p>
+                    Understanding standard banner sizes and formats.
+                    IAB guidelines and industry best practices.
+                </p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">🚀</div>
+                <h3>Publisher Tips</h3>
+                <p>
+                    Monetization strategies for website publishers.
+                    Integration guides and revenue optimization.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta-box mt-xl">
+        <h2>🎓 Start Learning</h2>
+        <p>
+            Explore our tools and start testing banner ads today.
+            Get hands-on experience with all standard ad formats.
+        </p>
+        <div style="margin-top: 1.5rem;">
+            <a href="/tools" class="btn btn-primary">Try Ad Tools</a>
+            <a href="/publisher" class="btn btn-secondary">Publisher Guide</a>
+        </div>
+    </section>
+
+</div>
+{% endblock %}

@@ -1,305 +1,492 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends "base.html" %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="google-site-verification" content="VLZ8wzxs2PvB7JLl0jrBhP5sY5bWbp0dznM9yhEbVU8" />
+{% block title %}Free HTML5 Banner Ad Preview Tool | Online Ad Tester{% endblock %}
 
-    <link rel="icon" href="/static/images/favicon.ico" type="image/x-icon">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+{% block description %}Preview and test banner ads online. Free HTML5 ad preview tool and open-source ad server demo for marketers and developers.{% endblock %}
 
-    <!-- SEO Meta Tags -->
-    <title>Free HTML5 Banner Ad Preview Tool | Online Ad Tester</title>
-    <meta name="description"
-        content="Preview and test banner ads online. Free HTML5 ad preview tool and open-source ad server demo for marketers and developers.">
-    <meta name="keywords"
-        content="Banner Ad Preview, HTML5 Ad Tester, Free Ad Preview, Online Ad Preview Tool, Ad Server Demo">
-    <meta name="author" content="Ad Server Project">
-    <link rel="canonical" href="https://ad-server.fly.dev/">
+{% block extra_meta %}
+<meta name="google-site-verification" content="VLZ8wzxs2PvB7JLl0jrBhP5sY5bWbp0dznM9yhEbVU8" />
+<meta name="keywords" content="Banner Ad Preview, HTML5 Ad Tester, Free Ad Preview, Online Ad Preview Tool, Ad Server Demo">
+<meta name="author" content="Ad Server Project">
+{% endblock %}
 
-    <!-- Open Graph (for Facebook, LinkedIn) -->
-    <meta property="og:title" content="Free HTML5 Banner Preview Tool | Ad Server">
-    <meta property="og:description"
-        content="Test common ad sizes like 728x90, 300x250, and 160x600 with our free banner preview tool. Open-source ad server demo.">
-    <meta property="og:image" content="https://ad-server.fly.dev/static/images/banner-preview.png">
-    <meta property="og:url" content="https://ad-server.fly.dev/">
-    <meta property="og:type" content="website">
+{% block canonical %}https://ad-server.fly.dev/{% endblock %}
 
-    <!-- Twitter Card -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Free HTML5 Banner Ad Preview Tool">
-    <meta name="twitter:description"
-        content="Instantly preview and test HTML5 banner ads online. Free open-source ad server demo for developers and marketers.">
-    <meta name="twitter:image" content="https://ad-server.fly.dev/static/images/banner-preview.png">
+{% block og_title %}Free HTML5 Banner Ad Preview Tool | Online Ad Tester{% endblock %}
 
-    <style>
-        body {
-            font-family: 'Segoe UI', sans-serif;
-            padding: 2rem;
-            max-width: 960px;
-            margin: auto;
-            background: #f8f9fa;
-            color: #212529;
-            line-height: 1.6;
-        }
+{% block og_description %}Preview and test banner ads online. Free HTML5 ad preview tool and open-source ad server demo for marketers and developers.{% endblock %}
 
-        h1 {
-            font-size: 2.2rem;
-            margin-bottom: 0.5rem;
-        }
+{% block og_url %}https://ad-server.fly.dev/{% endblock %}
 
-        h2 {
-            font-size: 1.4rem;
-            margin-top: 2.5rem;
-        }
+{% block twitter_title %}Free HTML5 Banner Ad Preview Tool | Online Ad Tester{% endblock %}
 
-        .banner-preview {
-            background: #fff;
-            border: 1px solid #dee2e6;
-            padding: 1rem;
-            margin: 2rem 0;
-            box-shadow: 0 1px 5px rgba(0, 0, 0, 0.05);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
+{% block twitter_description %}Preview and test banner ads online. Free HTML5 ad preview tool and open-source ad server demo for marketers and developers.{% endblock %}
 
-        .banner-container {
-            display: flex;
-            justify-content: center;
-            /* center horizontally */
-            align-items: center;
-            /* center vertically */
-            overflow: hidden;
-            background: #f8f9fa;
-            border: 1px dashed #ccc;
-            margin-top: 0.5rem;
-            position: relative;
-        }
+{% block content %}
+<div class="container-narrow">
 
-        .banner-container:empty::before {
-            content: "⚠️ " attr(data-size) "Ad failed to load ( ad blocker ? )";
-            font-size: 13px;
-            color: #999;
-            text-align: center;
-            display: block;
-            width: 100%;
-            padding: 0.5rem;
-        }
-
-        .banner-container>* {
-            max-width: 100% !important;
-            max-height: 100% !important;
-            object-fit: scale-down;
-            display: block;
-            margin: auto;
-        }
-
-        .size-label {
-            font-weight: bold;
-            font-size: 1rem;
-            margin-bottom: 1rem;
-            text-align: left;
-        }
-
-        iframe {
-            display: block;
-            margin: auto;
-            border: none;
-        }
-
-        .fallback {
-            text-align: center;
-            padding: 1rem;
-            font-size: 0.9rem;
-            background: #e9ecef;
-            color: #6c757d;
-            border: 1px dashed #adb5bd;
-            margin-top: 1rem;
-        }
-
-        .cta-box {
-            background: #fff;
-            border-left: 4px solid #0d6efd;
-            padding: 1.5rem;
-            margin-top: 3rem;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
-        }
-
-        .cta-box p {
-            margin-top: 0.5rem;
-        }
-
-        .embed-snippet {
-            background: #f1f3f5;
-            padding: 1rem;
-            font-family: monospace;
-            overflow-x: auto;
-            font-size: 0.95rem;
-            border-radius: 4px;
-            margin-top: 1rem;
-        }
-
-        .share {
-            margin-top: 2.5rem;
-            text-align: center;
-        }
-
-        .share a {
-            margin: 0 8px;
-            text-decoration: none;
-            color: #0d6efd;
-            padding: 0.5rem 1rem;
-            display: inline-block;
-            border-radius: 4px;
-            background: #e7f1ff;
-            transition: background 0.2s ease-in-out;
-        }
-
-        .share a:hover {
-            background: #d0e7ff;
-        }
-
-        footer {
-            margin-top: 3rem;
-            text-align: center;
-            font-size: 0.85rem;
-            color: #868e96;
-        }
-
-        @media (max-width: 768px) {
-            .banner-container {
-                width: 100% !important;
-                height: auto !important;
-            }
-
-            .banner-container>* {
-                max-width: 100% !important;
-                height: auto !important;
-            }
-
-            body {
-                padding: 1rem;
-                font-size: 1rem;
-            }
-
-            h1 {
-                font-size: 1.5rem;
-                text-align: center;
-            }
-
-            .banner-preview {
-                padding: 0.75rem;
-            }
-
-            iframe {
-                width: 100% !important;
-                height: auto;
-            }
-
-            .cta-box {
-                padding: 1rem;
-                margin-top: 2rem;
-            }
-
-            .embed-snippet {
-                font-size: 0.85rem;
-                word-break: break-all;
-            }
-
-            .share a {
-                display: block;
-                margin: 0.5rem 0;
-                text-align: center;
-            }
-        }
-    </style>
-</head>
-
-<body>
-
-    <h1>🧪 Ad Preview Tester</h1>
-    <p>Test how banner ads look in your layout. This tool rotates various Adsterra formats like 728x90, 300x250, and
-        more.</p>
-
-    <div class="banner-preview">
-        <div class="size-label">728 × 90 Banner</div>
-        <div class="banner-container" style="width:728px; height:90px;" data-size='728x90'>
-            <script src="/embed.js?zone=27382965"
-                onerror="this.insertAdjacentHTML('afterend', '<div class=\'fallback\'>Banner failed to load. Please check your ad blocker or try a different browser.</div>')"></script>
+    <!-- Hero Section -->
+    <div class="hero">
+        <h1>Ad Preview Tester</h1>
+        <p>
+            Test how banner ads look in your layout. Preview various ad formats including
+            728x90, 300x250, 468x60, and more in real-time.
+        </p>
+        <div style="margin-top: 1.5rem;">
+            <span class="badge badge-success">Free Forever</span>
+            <span class="badge badge-primary">Open Source</span>
+        </div>
+        <div class="hero-buttons">
+            <a href="#previews" class="btn btn-primary">Try Live Demo</a>
+            <a href="/publisher" class="btn btn-secondary">View Documentation</a>
+            <a
+                href="https://github.com/your-username/ad-server"
+                target="_blank"
+                rel="noopener"
+                class="github-btn"
+            >
+                Star on GitHub
+            </a>
         </div>
     </div>
 
-    <div class="banner-preview">
-        <div class="size-label">300 × 250 Banner</div>
-        <div class="banner-container" style="width:300px; height:250px;" data-size="300x250">
-            <script src="/embed.js?zone=27383189"
-                onerror="this.insertAdjacentHTML('afterend', '<div class=\'fallback\'>Banner failed to load. Please check your ad blocker or try a different browser.</div>')"></script>
+    <!-- Stats Section -->
+    <section class="mt-xl">
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-number">100%</div>
+                <div class="stat-label">Free Forever</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">6+</div>
+                <div class="stat-label">Ad Formats</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">0</div>
+                <div class="stat-label">Sign-Up Required</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">∞</div>
+                <div class="stat-label">Free Previews</div>
+            </div>
         </div>
-    </div>
+    </section>
 
-    <div class="banner-preview">
-        <div class="size-label">468 × 60 Banner</div>
-        <div class="banner-container" style="width:468px; height:60px;" data-size="468x60">
-            <script src="/embed.js?zone=27383203"
-                onerror="this.insertAdjacentHTML('afterend', '<div class=\'fallback\'>Banner failed to load. Please check your ad blocker or try a different browser.</div>')"></script>
+    <!-- Features Section -->
+    <section class="mt-xl">
+        <h2 class="text-center mb-xl">Why Choose Our Ad Tester?</h2>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon" style="background: var(--accent); color: white; width: 48px; height: 48px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto var(--spacing-md); font-weight: 700;">1</div>
+                <h3>Instant Preview</h3>
+                <p>
+                    See your ads in real-time without any delays.
+                    No registration or complicated setup required.
+                </p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon" style="background: var(--accent); color: white; width: 48px; height: 48px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto var(--spacing-md); font-weight: 700;">2</div>
+                <h3>All Standard Formats</h3>
+                <p>
+                    Support for 728x90, 300x250, 468x60, 160x600,
+                    and more. Mobile and desktop sizes covered.
+                </p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon" style="background: var(--accent); color: white; width: 48px; height: 48px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto var(--spacing-md); font-weight: 700;">3</div>
+                <h3>Easy Integration</h3>
+                <p>
+                    Embed ads on your site with a single line of code.
+                    Works with any HTML page or CMS.
+                </p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon" style="background: var(--accent); color: white; width: 48px; height: 48px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto var(--spacing-md); font-weight: 700;">4</div>
+                <h3>Responsive Design</h3>
+                <p>
+                    Ads automatically adapt to your layout.
+                    Perfect for mobile, tablet, and desktop screens.
+                </p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon" style="background: var(--accent); color: white; width: 48px; height: 48px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto var(--spacing-md); font-weight: 700;">5</div>
+                <h3>Privacy Focused</h3>
+                <p>
+                    No tracking, no cookies, no data collection.
+                    Your privacy is our priority.
+                </p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon" style="background: var(--accent); color: white; width: 48px; height: 48px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto var(--spacing-md); font-weight: 700;">6</div>
+                <h3>Open Source</h3>
+                <p>
+                    Fully open source and self-hostable.
+                    Fork it, modify it, make it yours.
+                </p>
+            </div>
         </div>
-    </div>
+    </section>
 
-    <div class="banner-preview">
-        <div class="size-label">160 × 600 Banner</div>
-        <div class="banner-container" style="width:160px; height:600px;" data-size="160x600">
-            <script src="/embed.js?zone=27383212"
-                onerror="this.insertAdjacentHTML('afterend', '<div class=\'fallback\'>Banner failed to load. Please check your ad blocker or try a different browser.</div>')"></script>
+    <!-- How It Works Section -->
+    <section class="mt-xl">
+        <h2 class="text-center mb-xl">How It Works</h2>
+        <div class="steps-container">
+            <div class="step-card">
+                <div class="step-number">1</div>
+                <h3>Choose Format</h3>
+                <p>
+                    Select from various standard banner sizes
+                    below to see live previews.
+                </p>
+            </div>
+            <div class="step-card">
+                <div class="step-number">2</div>
+                <h3>Preview Live</h3>
+                <p>
+                    See how the ads look in real-time with
+                    actual content and styling.
+                </p>
+            </div>
+            <div class="step-card">
+                <div class="step-number">3</div>
+                <h3>Get Embed Code</h3>
+                <p>
+                    Copy the simple script tag and paste
+                    it anywhere on your website.
+                </p>
+            </div>
         </div>
-    </div>
+    </section>
 
-    <div class="banner-preview">
-        <div class="size-label">160 × 300 Banner</div>
-        <div class="banner-container" style="width:160px; height:300px;" data-size="160x300">
-            <script src="/embed.js?zone=27383210"
-                onerror="this.insertAdjacentHTML('afterend', '<div class=\'fallback\'>Banner failed to load. Please check your ad blocker or try a different browser.</div>')"></script>
+    <!-- Banner Previews -->
+    <section id="previews" class="banner-section">
+        <h2 class="text-center mb-xl">Live Banner Previews</h2>
+
+        <div class="banner-grid">
+            <!-- 728x90 Banner -->
+            <div class="banner-card">
+                <div class="banner-label">
+                    <span style="font-weight: 600; color: var(--primary);">728 × 90</span>
+                    <span>Leaderboard</span>
+                </div>
+                <div class="banner-container" style="width:728px; height:90px; max-width:100%;" data-size="728x90">
+                    <script src="/embed.js?zone=27382965"></script>
+                </div>
+            </div>
+
+            <!-- 300x250 Banner -->
+            <div class="banner-card">
+                <div class="banner-label">
+                    <span style="font-weight: 600; color: var(--primary);">300 × 250</span>
+                    <span>Medium Rectangle</span>
+                </div>
+                <div class="banner-container" style="width:300px; height:250px; max-width:100%;" data-size="300x250">
+                    <script src="/embed.js?zone=27383189"></script>
+                </div>
+            </div>
+
+            <!-- 468x60 Banner -->
+            <div class="banner-card">
+                <div class="banner-label">
+                    <span style="font-weight: 600; color: var(--primary);">468 × 60</span>
+                    <span>Banner</span>
+                </div>
+                <div class="banner-container" style="width:468px; height:60px; max-width:100%;" data-size="468x60">
+                    <script src="/embed.js?zone=27383203"></script>
+                </div>
+            </div>
+
+            <!-- 160x600 Banner -->
+            <div class="banner-card">
+                <div class="banner-label">
+                    <span style="font-weight: 600; color: var(--primary);">160 × 600</span>
+                    <span>Skyscraper</span>
+                </div>
+                <div class="banner-container" style="width:160px; height:600px; max-width:100%;" data-size="160x600">
+                    <script src="/embed.js?zone=27383212"></script>
+                </div>
+            </div>
+
+            <!-- 160x300 Banner -->
+            <div class="banner-card">
+                <div class="banner-label">
+                    <span style="font-weight: 600; color: var(--primary);">160 × 300</span>
+                    <span>Wide Skyscraper</span>
+                </div>
+                <div class="banner-container" style="width:160px; height:300px; max-width:100%;" data-size="160x300">
+                    <script src="/embed.js?zone=27383210"></script>
+                </div>
+            </div>
+
+            <!-- 320x50 Mobile Banner -->
+            <div class="banner-card">
+                <div class="banner-label">
+                    <span style="font-weight: 600; color: var(--primary);">320 × 50</span>
+                    <span>Mobile Banner</span>
+                </div>
+                <div class="banner-container" style="width:320px; height:50px; max-width:100%;" data-size="320x50">
+                    <script src="/embed.js?zone=27383198"></script>
+                </div>
+            </div>
         </div>
-    </div>
+    </section>
 
-    <div class="banner-preview">
-        <div class="size-label">320 × 50 Banner</div>
-        <div class="banner-container" style="width:320px; height:50px;" data-size="320x50">
-            <script src="/embed.js?zone=27383198"
-                onerror="this.insertAdjacentHTML('afterend', '<div class=\'fallback\'>Banner failed to load. Please check your ad blocker or try a different browser.</div>')"></script>
+    <!-- Embed CTA -->
+    <section class="cta-box mt-xl">
+        <h2>Want This On Your Website?</h2>
+        <p>
+            Embed rotating banners on your site with a single line of code.
+            Just copy and paste the snippet below into your HTML:
+        </p>
+        <div class="code-snippet">
+            <code>&lt;script src="https://ad-server.fly.dev/embed.js?zone=27382965" async&gt;&lt;/script&gt;</code>
         </div>
-    </div>
-
-    <div class="cta-box">
-        <h2>📦 Want This On Your Website?</h2>
-        <p>Embed this rotating banner using the snippet below. Just paste it inside your page’s HTML:</p>
-        <div class="embed-snippet">
-            &lt;script src="https://ad-server.fly.dev/embed.js?zone=27382965" async&gt;&lt;/script&gt;
+        <div style="margin-top: 1.5rem;">
+            <a href="/publisher" class="btn btn-primary" style="color: white; text-decoration: none;">
+                Learn More →
+            </a>
         </div>
-    </div>
+    </section>
 
-    <div class="cta-box">
-        <h2>📚 Blog</h2>
-        <ul>
-            <li><a href="/blog/best_free_tools">Best Free Tools to Test HTML Ads Online (2025)</a></li>
-            <li><a href="/blog/preview_html5_banners">How to Preview HTML5 Banners Without Google Ads</a></li>
-            <li><a href="/blog/open_source_ad_servers">Top 5 Open Source Ad Servers in 2025</a></li>
+    <!-- Blog Section -->
+    <section class="card mt-xl">
+        <div class="card-header">
+            <h2 class="card-title">Latest Articles</h2>
+            <p class="card-subtitle">Learn more about ad testing and optimization</p>
+        </div>
+        <ul class="blog-list">
+            <li class="blog-item">
+                <a href="/blog/best_free_tools">
+                    Best Free Tools to Test HTML Ads Online (2025)
+                </a>
+            </li>
+            <li class="blog-item">
+                <a href="/blog/preview_html5_banners">
+                    How to Preview HTML5 Banners Without Google Ads
+                </a>
+            </li>
+            <li class="blog-item">
+                <a href="/blog/open_source_ad_servers">
+                    Top 5 Open Source Ad Servers in 2025
+                </a>
+            </li>
         </ul>
+        <div style="margin-top: 1.5rem; text-align: center;">
+            <a href="/blog" class="btn btn-secondary">View All Articles →</a>
+        </div>
+    </section>
+
+    <!-- Comparison Section -->
+    <section class="mt-xl">
+        <h2 class="text-center mb-xl">Why Us vs Others?</h2>
+        <div class="comparison-table">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Feature</th>
+                        <th class="highlight">Our Tool</th>
+                        <th>Google Ad Manager</th>
+                        <th>Other Tools</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Free to Use</td>
+                        <td class="highlight"><span class="check-icon">✓</span> Always</td>
+                        <td><span class="cross-icon">✗</span> Paid</td>
+                        <td><span class="cross-icon">~</span> Limited</td>
+                    </tr>
+                    <tr>
+                        <td>No Sign-Up</td>
+                        <td class="highlight"><span class="check-icon">✓</span> None</td>
+                        <td><span class="cross-icon">✗</span> Required</td>
+                        <td><span class="cross-icon">✗</span> Required</td>
+                    </tr>
+                    <tr>
+                        <td>Instant Preview</td>
+                        <td class="highlight"><span class="check-icon">✓</span> Real-time</td>
+                        <td><span class="cross-icon">~</span> Delayed</td>
+                        <td><span class="check-icon">✓</span> Yes</td>
+                    </tr>
+                    <tr>
+                        <td>Open Source</td>
+                        <td class="highlight"><span class="check-icon">✓</span> Fully</td>
+                        <td><span class="cross-icon">✗</span> No</td>
+                        <td><span class="cross-icon">✗</span> No</td>
+                    </tr>
+                    <tr>
+                        <td>Self-Hostable</td>
+                        <td class="highlight"><span class="check-icon">✓</span> Yes</td>
+                        <td><span class="cross-icon">✗</span> No</td>
+                        <td><span class="cross-icon">✗</span> No</td>
+                    </tr>
+                    <tr>
+                        <td>Privacy Focused</td>
+                        <td class="highlight">
+                            <span class="check-icon">✓</span> No Tracking
+                        </td>
+                        <td><span class="cross-icon">✗</span> Tracks Users</td>
+                        <td><span class="cross-icon">~</span> Varies</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="mt-xl">
+        <h2 class="text-center mb-xl">Frequently Asked Questions</h2>
+        <div class="faq-container">
+            <div class="faq-item">
+                <div class="faq-question">
+                    What ad formats are supported?
+                    <span>▼</span>
+                </div>
+                <div class="faq-answer">
+                    We support all standard IAB ad sizes including 728x90 (Leaderboard),
+                    300x250 (Medium Rectangle), 468x60 (Banner), 160x600 (Skyscraper),
+                    160x300 (Wide Skyscraper), and 320x50 (Mobile Banner).
+                    More formats coming soon!
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    Is this really free?
+                    <span>▼</span>
+                </div>
+                <div class="faq-answer">
+                    Yes! This tool is 100% free and will remain free forever.
+                    It's open source, so you can even host it yourself if you prefer.
+                    No hidden fees, no premium tiers, no credit card required.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    How do I embed ads on my website?
+                    <span>▼</span>
+                </div>
+                <div class="faq-answer">
+                    Simply copy the embed code snippet (like
+                    <code>&lt;script src="..."&gt;&lt;/script&gt;</code>)
+                    and paste it into your HTML where you want the ad to appear.
+                    The ad will automatically load and rotate.
+                    See our Publisher Guide for detailed instructions.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    Do I need to sign up or create an account?
+                    <span>▼</span>
+                </div>
+                <div class="faq-answer">
+                    Nope! You can preview ads and get embed codes instantly
+                    without any registration. Just browse, test, and embed.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    Can I use this for commercial projects?
+                    <span>▼</span>
+                </div>
+                <div class="faq-answer">
+                    Absolutely! This project is open source and free to use
+                    for both personal and commercial purposes.
+                    Check the LICENSE file for more details.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    How is my privacy protected?
+                    <span>▼</span>
+                </div>
+                <div class="faq-answer">
+                    We don't track users, set cookies, or collect personal data.
+                    We believe in privacy-first advertising.
+                    Your browsing activity remains private.
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Social Share -->
+    <section class="mt-xl">
+        <h3 class="text-center mb-md">Share This Tool</h3>
+        <div class="social-share">
+                <a href="https://www.facebook.com/sharer/sharer.php?u=https://ad-server.fly.dev"
+               target="_blank"
+               class="social-btn">
+                Facebook
+            </a>
+            <a href="https://twitter.com/intent/tweet?text=Check+out+this+Ad+Preview+Tool:+https%3A%2F%2Fad-server.fly.dev"
+               target="_blank"
+               class="social-btn">
+                Twitter
+            </a>
+            <a href="https://www.reddit.com/submit?url=https%3A%2F%2Fad-server.fly.dev&title=Try+this+free+Ad+Preview+Tool"
+               target="_blank"
+               class="social-btn">
+                Reddit
+            </a>
+        </div>
+    </section>
+
+    <!-- Sticky CTA -->
+    <div class="sticky-cta" id="stickyCta">
+        <a href="#previews" class="btn btn-primary">
+            Try Now
+        </a>
     </div>
 
-    <div class="share">
-        <p>🔗 Share this tool with others:</p>
-        <a href="https://www.facebook.com/sharer/sharer.php?u=https://ad-server.fly.dev" target="_blank">Facebook</a>
-        <a href="https://twitter.com/intent/tweet?text=Check+out+this+Ad+Preview+Tool:+https%3A%2F%2Fad-server.fly.dev"
-            target="_blank">Twitter</a>
-        <a href="https://www.reddit.com/submit?url=https%3A%2F%2Fad-server.fly.dev&title=Try+this+free+Ad+Preview+Tool"
-            target="_blank">Reddit</a>
-    </div>
+</div>
+{% endblock %}
 
-    <footer>
-        Built with ❤️ using FastAPI · Hosted on Fly.io
-    </footer>
+{% block extra_js %}
+<script>
+// Sticky CTA visibility on scroll
+window.addEventListener('scroll', function() {
+    const stickyCta = document.getElementById('stickyCta');
+    const scrollPosition = window.scrollY;
 
-</body>
+    if (scrollPosition > 500) {
+        stickyCta.classList.add('visible');
+    } else {
+        stickyCta.classList.remove('visible');
+    }
+});
 
-</html>
+// Smooth scroll for anchor links
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+        const href = this.getAttribute('href');
+        if (href !== '#' && href !== '') {
+            e.preventDefault();
+            const target = document.querySelector(href);
+            if (target) {
+                target.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
+        }
+    });
+});
+
+// Loading skeleton for banner containers
+document.addEventListener('DOMContentLoaded', function() {
+    const banners = document.querySelectorAll('.banner-container');
+    banners.forEach(banner => {
+        banner.classList.add('loading');
+
+        // Remove loading state after 2 seconds (or when ad loads)
+        setTimeout(() => {
+            banner.classList.remove('loading');
+        }, 2000);
+    });
+});
+</script>
+{% endblock %}

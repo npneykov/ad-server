@@ -1,0 +1,301 @@
+{% extends "base.html" %}
+
+{% block title %}For Publishers - Monetize Your Website with Banner Ads{% endblock %}
+
+{% block description %}Learn how to integrate banner ads on your website. Step-by-step publisher guide for embedding ad zones and maximizing revenue.{% endblock %}
+
+{% block extra_meta %}
+<meta name="keywords" content="publisher guide, website monetization, embed banner ads, ad integration">
+{% endblock %}
+
+{% block canonical %}https://ad-server.fly.dev/publisher{% endblock %}
+
+{% block og_title %}For Publishers - Monetize Your Website{% endblock %}
+
+{% block og_description %}Learn how to integrate banner ads on your website and start monetizing your traffic today.{% endblock %}
+
+{% block og_url %}https://ad-server.fly.dev/publisher{% endblock %}
+
+{% block twitter_title %}For Publishers - Monetize Your Website{% endblock %}
+
+{% block twitter_description %}Learn how to integrate banner ads on your website and start monetizing your traffic today.{% endblock %}
+
+{% block content %}
+<div class="container-narrow">
+
+    <!-- Hero Section -->
+    <div class="hero">
+        <h1>📰 For Publishers</h1>
+        <p>
+            Monetize your website with high-quality banner ads.
+            Simple integration, multiple ad formats, and complete control over your placements.
+        </p>
+        <div style="margin-top: 1.5rem;">
+            <span class="badge badge-success">Free Integration</span>
+            <span class="badge badge-primary">100% Fill Rate</span>
+        </div>
+    </div>
+
+    <!-- Quick Start -->
+    <section class="cta-box mt-xl">
+        <h2>🚀 Quick Start Guide</h2>
+        <p>Get ads running on your site in under 5 minutes</p>
+
+        <div class="steps-container" style="margin-top: var(--spacing-lg);">
+            <div class="step-card">
+                <div class="step-number">1</div>
+                <h3>Choose Ad Zone</h3>
+                <p>
+                    Select the banner size that fits your layout.
+                    We support all standard IAB sizes.
+                </p>
+            </div>
+            <div class="step-card">
+                <div class="step-number">2</div>
+                <h3>Copy Code</h3>
+                <p>
+                    Get your unique embed script tag.
+                    One line of code, no registration required.
+                </p>
+            </div>
+            <div class="step-card">
+                <div class="step-number">3</div>
+                <h3>Paste & Publish</h3>
+                <p>
+                    Add the code to your HTML.
+                    Ads will start serving immediately.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Ad Formats -->
+    <section class="mt-xl">
+        <h2 class="text-center mb-xl">📐 Available Ad Formats</h2>
+
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">📱</div>
+                <h3>728×90 Leaderboard</h3>
+                <p>
+                    Perfect for header and above-the-fold placements.
+                    High visibility and engagement.
+                </p>
+                <div class="code-snippet" style="margin-top: var(--spacing-md);">
+                    <code style="font-size: 0.75rem;">&lt;script src="/embed.js?zone=YOUR_ZONE"&gt;&lt;/script&gt;</code>
+                </div>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">📰</div>
+                <h3>300×250 Rectangle</h3>
+                <p>
+                    Most versatile size for sidebars and content.
+                    Excellent performance across devices.
+                </p>
+                <div class="code-snippet" style="margin-top: var(--spacing-md);">
+                    <code style="font-size: 0.75rem;">&lt;script src="/embed.js?zone=YOUR_ZONE"&gt;&lt;/script&gt;</code>
+                </div>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">📲</div>
+                <h3>320×50 Mobile</h3>
+                <p>
+                    Optimized for mobile devices.
+                    Non-intrusive and responsive.
+                </p>
+                <div class="code-snippet" style="margin-top: var(--spacing-md);">
+                    <code style="font-size: 0.75rem;">&lt;script src="/embed.js?zone=YOUR_ZONE"&gt;&lt;/script&gt;</code>
+                </div>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">📏</div>
+                <h3>160×600 Skyscraper</h3>
+                <p>
+                    Vertical banner for sidebar placements.
+                    High viewability and click-through rate.
+                </p>
+                <div class="code-snippet" style="margin-top: var(--spacing-md);">
+                    <code style="font-size: 0.75rem;">&lt;script src="/embed.js?zone=YOUR_ZONE"&gt;&lt;/script&gt;</code>
+                </div>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">🖼️</div>
+                <h3>468×60 Banner</h3>
+                <p>
+                    Classic full banner for various placements.
+                    Works great in content and footers.
+                </p>
+                <div class="code-snippet" style="margin-top: var(--spacing-md);">
+                    <code style="font-size: 0.75rem;">&lt;script src="/embed.js?zone=YOUR_ZONE"&gt;&lt;/script&gt;</code>
+                </div>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">🎯</div>
+                <h3>160×300 Large Banner</h3>
+                <p>
+                    Medium vertical size for sidebar areas.
+                    Balance between size and performance.
+                </p>
+                <div class="code-snippet" style="margin-top: var(--spacing-md);">
+                    <code style="font-size: 0.75rem;">&lt;script src="/embed.js?zone=YOUR_ZONE"&gt;&lt;/script&gt;</code>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Integration Example -->
+    <section class="card mt-xl">
+        <div class="card-header">
+            <h2 class="card-title">💻 Code Integration Example</h2>
+            <p class="card-subtitle">Simple HTML embed code</p>
+        </div>
+        <div style="padding: var(--spacing-lg);">
+            <p style="color: var(--gray-700); margin-bottom: var(--spacing-md);">
+                Add this code anywhere in your HTML where you want the ad to appear:
+            </p>
+            <div class="code-snippet">
+                <code>&lt;!-- Ad Banner --&gt;<br>
+&lt;div id="ad-slot"&gt;<br>
+&nbsp;&nbsp;&lt;script src="https://ad-server.fly.dev/embed.js?zone=27382965" async&gt;&lt;/script&gt;<br>
+&lt;/div&gt;</code>
+            </div>
+            <p style="color: var(--gray-600); margin-top: var(--spacing-md); font-size: 0.875rem;">
+                The ad will automatically rotate and refresh. No additional JavaScript required.
+            </p>
+        </div>
+    </section>
+
+    <!-- Benefits -->
+    <section class="mt-xl">
+        <h2 class="text-center mb-xl">✨ Publisher Benefits</h2>
+
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon" style="background: var(--accent); color: white; width: 48px; height: 48px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto var(--spacing-md); font-weight: 700;">•</div>
+                <h3>Instant Setup</h3>
+                <p>
+                    No approval process, no waiting.
+                    Get your embed code and start serving ads immediately.
+                </p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">🔒</div>
+                <h3>Privacy First</h3>
+                <p>
+                    No user tracking, no cookies, GDPR compliant.
+                    Respect your visitors' privacy.
+                </p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">📊</div>
+                <h3>Performance Tracking</h3>
+                <p>
+                    Real-time statistics dashboard.
+                    Monitor impressions, clicks, and CTR.
+                </p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">🎨</div>
+                <h3>Responsive Design</h3>
+                <p>
+                    Ads automatically adapt to your layout.
+                    Works on mobile, tablet, and desktop.
+                </p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon" style="background: var(--accent); color: white; width: 48px; height: 48px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto var(--spacing-md); font-weight: 700;">•</div>
+                <h3>Easy Customization</h3>
+                <p>
+                    Control placement, frequency, and appearance.
+                    Full flexibility over your ad zones.
+                </p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">💻</div>
+                <h3>Open Source</h3>
+                <p>
+                    Self-host if you prefer.
+                    Complete transparency and control over your ads.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="mt-xl">
+        <h2 class="text-center mb-xl">Publisher FAQ</h2>
+        <div class="faq-container">
+            <div class="faq-item">
+                <div class="faq-question">
+                    Do I need to sign up or register?
+                    <span>▼</span>
+                </div>
+                <div class="faq-answer">
+                    No! You can embed ads instantly without any registration.
+                    Just copy the embed code and paste it into your website.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    How do I get paid?
+                    <span>▼</span>
+                </div>
+                <div class="faq-answer">
+                    This is a demo ad server for testing purposes.
+                    For production monetization, you'll need to integrate with an ad network or
+                    set up your own payment system if self-hosting.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    What are the requirements?
+                    <span>▼</span>
+                </div>
+                <div class="faq-answer">
+                    Just a website with HTML access. Works with any platform -
+                    WordPress, static sites, React, Vue, or any CMS.
+                    No special server requirements needed.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    Can I control which ads appear?
+                    <span>▼</span>
+                </div>
+                <div class="faq-answer">
+                    Yes! If you're self-hosting, you have complete control over ad content.
+                    You can create custom zones, upload your own creatives,
+                    and manage everything through the admin panel.
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta-box mt-xl">
+        <h2>🎯 Ready to Get Started?</h2>
+        <p>
+            Preview our ad formats and get your embed code today.
+            It takes less than 5 minutes to start serving ads.
+        </p>
+        <div style="margin-top: 1.5rem;">
+            <a href="/" class="btn btn-primary">View Ad Previews</a>
+            <a href="/tools" class="btn btn-secondary">Explore Tools</a>
+        </div>
+    </section>
+
+</div>
+{% endblock %}

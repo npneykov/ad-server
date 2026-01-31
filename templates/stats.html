@@ -1,0 +1,211 @@
+{% extends "base.html" %}
+
+{% block title %}Ad Performance Statistics - Real-Time Analytics{% endblock %}
+
+{% block description %}View real-time ad performance metrics. Track impressions, clicks, and CTR for all your banner ads across zones.{% endblock %}
+
+{% block extra_meta %}
+<meta name="keywords" content="ad statistics, banner performance, ad analytics, CTR tracking">
+{% endblock %}
+
+{% block canonical %}https://ad-server.fly.dev/stats{% endblock %}
+
+{% block og_title %}Ad Performance Statistics{% endblock %}
+
+{% block og_description %}View real-time ad performance metrics and analytics for all banner ads.{% endblock %}
+
+{% block og_url %}https://ad-server.fly.dev/stats{% endblock %}
+
+{% block twitter_title %}Ad Performance Statistics{% endblock %}
+
+{% block twitter_description %}View real-time ad performance metrics and analytics for all banner ads.{% endblock %}
+
+{% block content %}
+<div class="container-narrow">
+
+    <!-- Hero Section -->
+    <div class="hero">
+        <h1>📊 Performance Statistics</h1>
+        <p>
+            Real-time analytics for all ad campaigns.
+            Track impressions, clicks, and click-through rates across all zones.
+        </p>
+        <div style="margin-top: 1.5rem;">
+            <span class="badge badge-success">Live Data</span>
+            <span class="badge badge-primary">Real-Time Updates</span>
+        </div>
+    </div>
+
+    <!-- Filter -->
+    <section class="card mt-xl">
+        <div class="card-header">
+            <h2 class="card-title">🔍 Filter Results</h2>
+            <p class="card-subtitle">Search by Zone ID</p>
+        </div>
+        <div style="padding: var(--spacing-lg);">
+            <input
+                type="text"
+                id="zoneFilter"
+                placeholder="Enter Zone ID to filter..."
+                style="
+                    width: 100%;
+                    padding: var(--spacing-md);
+                    border: 1px solid var(--gray-300);
+                    border-radius: var(--radius-md);
+                    font-size: 1rem;
+                    transition: var(--transition);
+                "
+                onkeyup="filterTable()"
+            />
+        </div>
+    </section>
+
+    <!-- Stats Table -->
+    <section class="mt-xl">
+        <h2 class="text-center mb-xl">📈 Ad Performance Metrics</h2>
+
+        <div class="comparison-table">
+            <table id="statsTable">
+                <thead>
+                    <tr>
+                        <th>Ad ID</th>
+                        <th>Zone ID</th>
+                        <th>Impressions</th>
+                        <th>Clicks</th>
+                        <th>CTR %</th>
+                    </tr>
+                </thead>
+                <tbody id="statsBody">
+                    <tr>
+                        <td colspan="5" style="text-align: center; color: var(--gray-500);">
+                            Loading statistics...
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- Info Cards -->
+    <section class="mt-xl">
+        <h2 class="text-center mb-xl">📌 About These Statistics</h2>
+
+        <div class="features-grid" style="grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));">
+            <div class="feature-card">
+                <div class="feature-icon">👁️</div>
+                <h3>Impressions</h3>
+                <p>
+                    Total number of times an ad was displayed to visitors.
+                    Updated in real-time as ads are served.
+                </p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">👆</div>
+                <h3>Clicks</h3>
+                <p>
+                    Number of times visitors clicked on the ad.
+                    Helps measure engagement and interest.
+                </p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">📊</div>
+                <h3>CTR (Click-Through Rate)</h3>
+                <p>
+                    Percentage of impressions that resulted in clicks.
+                    Higher CTR indicates more effective ads.
+                </p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">🎯</div>
+                <h3>Zone Targeting</h3>
+                <p>
+                    Each ad is associated with a specific zone.
+                    Filter by zone ID to see targeted performance.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta-box mt-xl">
+        <h2>🚀 Want Better Performance?</h2>
+        <p>
+            Test different banner sizes and placements to optimize your CTR.
+            Use our preview tools to see how ads look before deploying.
+        </p>
+        <div style="margin-top: 1.5rem;">
+            <a href="/tools" class="btn btn-primary">Try Preview Tools</a>
+            <a href="/publisher" class="btn btn-secondary">Publisher Guide</a>
+        </div>
+    </section>
+
+</div>
+
+{% block extra_js %}
+<script>
+async function fetchStats() {
+    try {
+        const res = await fetch('/stats.json');
+        const data = await res.json();
+        const tbody = document.getElementById('statsBody');
+        tbody.innerHTML = '';
+
+        if (!data.ads || data.ads.length === 0) {
+            tbody.innerHTML = `
+                <tr>
+                    <td colspan="5" style="text-align: center; color: var(--gray-500);">
+                        No statistics available yet. Start serving ads to see metrics.
+                    </td>
+                </tr>
+            `;
+            return;
+        }
+
+        data.ads.forEach(ad => {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${ad.id}</td>
+                <td>${ad.zone_id}</td>
+                <td>${ad.impressions.toLocaleString()}</td>
+                <td>${ad.clicks.toLocaleString()}</td>
+                <td>${ad.ctr.toFixed(2)}%</td>
+            `;
+            tbody.appendChild(row);
+        });
+    } catch (error) {
+        const tbody = document.getElementById('statsBody');
+        tbody.innerHTML = `
+            <tr>
+                <td colspan="5" style="text-align: center; color: var(--danger);">
+                    Error loading statistics. Please try again later.
+                </td>
+            </tr>
+        `;
+        console.error('Failed to fetch stats:', error);
+    }
+}
+
+function filterTable() {
+    const input = document.getElementById("zoneFilter").value.toLowerCase();
+    const rows = document.getElementById("statsBody").getElementsByTagName("tr");
+
+    for (let row of rows) {
+        // Skip if this is the "no data" row
+        if (row.cells.length === 1) continue;
+
+        const zone = row.cells[1].textContent;
+        row.style.display = zone.toLowerCase().includes(input) ? "" : "none";
+    }
+}
+
+// Load stats on page load
+fetchStats();
+
+// Refresh stats every 30 seconds
+setInterval(fetchStats, 30000);
+</script>
+{% endblock %}
+{% endblock %}

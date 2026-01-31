@@ -2,10 +2,8 @@ from datetime import UTC, datetime, timedelta
 
 from sqlmodel import Session
 
-from main import (
-    range_counts,
-)
-from models import Ad, Click, Impression, Zone
+from app.models import Ad, Click, Impression, Zone
+from app.services.analytics import range_counts
 
 
 def test_range_counts(session: Session):

@@ -2,8 +2,8 @@ from fastapi.testclient import TestClient
 import pytest
 from sqlmodel import Session
 
-from main import app
-from models import Ad, Click, Impression, Zone
+from app.main import app
+from app.models import Ad, Click, Impression, Zone
 
 
 @pytest.fixture(autouse=True)

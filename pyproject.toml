@@ -7,18 +7,15 @@ dependencies = [
     "fastapi>=0.116.1",
     "uvicorn>=0.35.0",
     "sqlmodel>=0.0.24",
+    "jinja2>=3.1.6",
     "python-dotenv>=1.1.1",
     "python-multipart>=0.0.20",
     "psycopg[binary]>=3.1",
-    "pytest>=9.0.2",
+    "pydantic-settings>=2.0.0",
 ]
 
-[project.optional-dependencies]
-dev = [
-    "pytest>=8.4.1",
-    "pre-commit>=4.2.0",
-    "httpx>=0.28.1",
-]
+[dependency-groups]
+dev = ["pytest>=8.4.1", "pre-commit>=4.2.0", "httpx>=0.28.1", "ruff>=0.9.6"]
 
 [tool.ruff]
 line-length = 88
@@ -75,7 +72,7 @@ exclude = ["tests/fixtures/.*", "build/.*", "dist/.*"]
 # ---- Type checker used by Pylance (Pyright) ----
 [tool.pyright]
 pythonVersion = "3.11"
-typeCheckingMode = "basic"    # Pragmatic defaults for current code style
+typeCheckingMode = "basic"                             # Pragmatic defaults for current code style
 venvPath = "."
 venv = ".venv"
 include = ["."]
@@ -88,7 +85,7 @@ reportUnusedVariable = "warning"
 # ---- Coverage (coverage.py) ----
 [tool.coverage.run]
 branch = true
-source = ["."]
+source = ["app"]
 omit = ["tests/*", "**/__init__.py", ".venv/*"]
 
 [tool.coverage.report]
@@ -104,9 +101,3 @@ exclude_lines = [
 [tool.coverage.paths]
 # Combine paths across OS/CI runners
 source = [".", "*/site-packages"]
-
-[dependency-groups]
-dev = [
-    "pre-commit>=4.5.1",
-    "ruff>=0.14.14",
-]

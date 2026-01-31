@@ -1,7 +1,7 @@
 import pytest
 from sqlmodel import Session, SQLModel, create_engine
 
-from models import Ad, Zone
+from app.models import Ad, Zone
 
 
 @pytest.fixture(name='session')

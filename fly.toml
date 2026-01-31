@@ -7,7 +7,7 @@ app = "ad-server"
 primary_region = "ams"
 
 [processes]
-app = "uvicorn main:app --host 0.0.0.0 --port 8080"
+app = "uvicorn app.main:app --host 0.0.0.0 --port 8080"
 
 [env]
 

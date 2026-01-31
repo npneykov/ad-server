@@ -3,8 +3,8 @@ import pytest
 from sqlalchemy.pool import StaticPool
 from sqlmodel import Session, SQLModel, create_engine
 
-from db import get_session
-from main import app
+from app.database import get_session
+from app.main import app
 
 
 @pytest.fixture(scope='function')

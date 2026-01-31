@@ -2,8 +2,8 @@ from fastapi.testclient import TestClient
 import pytest
 from sqlmodel import Session, SQLModel, create_engine
 
-from db import get_session
-from main import app
+from app.database import get_session
+from app.main import app
 
 # Create a test database in memory
 test_engine = create_engine('sqlite:///:memory:')

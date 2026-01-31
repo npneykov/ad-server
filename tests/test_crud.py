@@ -2,8 +2,8 @@ from fastapi.testclient import TestClient
 import pytest
 from sqlmodel import SQLModel
 
-from db import engine
-from main import app
+from app.database import engine
+from app.main import app
 
 client = TestClient(app)
 

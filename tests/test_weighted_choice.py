@@ -1,7 +1,7 @@
 from collections import Counter
 import random
 
-from utils import weighted_choice
+from app.services.ad_selection import weighted_choice
 
 
 def test_weighted_choice_distribution():

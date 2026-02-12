@@ -216,3 +216,5 @@ db backup/
 .github/workflows/fly-deploy.yml
 ad_server_dev.db
 UV_WORKFLOW.md
+tools_old_backup/
+SEO_GUIDE.md

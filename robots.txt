@@ -1,8 +1,17 @@
+# Ad Server - Robots.txt
 User-agent: *
-Allow: /tools/
-Allow: /index.html
-Allow: /*.html$
-Disallow: /admin/
-Disallow: /data/
+Allow: /
+Disallow: /api/
+Disallow: /docs
+Disallow: /redoc
+Disallow: /openapi.json
+Disallow: /render
+Disallow: /click
+Disallow: /impression
+Disallow: /embed.js
 
+# Sitemap location
 Sitemap: https://ad-server.fly.dev/sitemap.xml
+
+# Crawl-delay (be nice to servers)
+Crawl-delay: 1

@@ -29,6 +29,9 @@ class Settings(BaseSettings):
         'https://www.revenuecpmgate.com/kh3axptg1?key=1685a081c46f9b5d7aaa7abf4d050eb3'
     )
 
+    # Analytics
+    ga_measurement_id: str | None = None
+
     # Paths
     blog_dir: str = os.path.join('templates', 'public')
 

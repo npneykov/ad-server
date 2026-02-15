@@ -5,13 +5,13 @@ import os
 
 from fastapi import APIRouter, HTTPException, Request
 from fastapi.responses import HTMLResponse, PlainTextResponse
-from fastapi.templating import Jinja2Templates
 
 from app.config import get_settings
+from app.template_utils import create_templates
 
 router = APIRouter(tags=['Public'])
-templates = Jinja2Templates(directory='templates')
 settings = get_settings()
+templates = create_templates()
 
 HOME_CRUMB = {'name': 'Home', 'url': '/'}
 TOOLS_CRUMB = {'name': 'Tools', 'url': '/tools'}

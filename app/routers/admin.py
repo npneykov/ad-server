@@ -5,15 +5,15 @@ import os
 
 from fastapi import APIRouter, Depends, Form, HTTPException, Query, Request
 from fastapi.responses import HTMLResponse, RedirectResponse
-from fastapi.templating import Jinja2Templates
 from sqlmodel import select
 
 from app.dependencies import SessionDep, verify_admin_key
 from app.models import Ad, Zone
 from app.services.analytics import calculate_ctr_data
+from app.template_utils import create_templates
 
 router = APIRouter(prefix='/admin', tags=['Admin'])
-templates = Jinja2Templates(directory='templates')
+templates = create_templates()
 
 
 @router.get('', response_class=HTMLResponse, dependencies=[Depends(verify_admin_key)])

@@ -2,17 +2,17 @@
 
 from fastapi import APIRouter, Form, HTTPException, Query, Request, Response
 from fastapi.responses import HTMLResponse, RedirectResponse
-from fastapi.templating import Jinja2Templates
 from sqlmodel import select
 
 from app.config import get_settings
 from app.dependencies import SessionDep
 from app.models import Ad, Click, Zone
 from app.services.ad_selection import record_impression, select_ad_for_zone
+from app.template_utils import create_templates
 
 router = APIRouter(tags=['Serving'])
-templates = Jinja2Templates(directory='templates')
 settings = get_settings()
+templates = create_templates()
 
 
 @router.get('/render', response_class=HTMLResponse)

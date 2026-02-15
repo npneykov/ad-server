@@ -4,6 +4,7 @@
   <!-- Homepage -->
   <url>
     <loc>https://ad-server.fly.dev/</loc>
+    <lastmod>2026-01-23</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
@@ -11,6 +12,7 @@
   <!-- Blog Index -->
   <url>
     <loc>https://ad-server.fly.dev/blog</loc>
+    <lastmod>2026-01-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -18,26 +20,31 @@
   <!-- Blog Posts -->
   <url>
     <loc>https://ad-server.fly.dev/blog/best_free_tools</loc>
+    <lastmod>2026-01-20</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://ad-server.fly.dev/blog/preview_html5_banners</loc>
+    <lastmod>2026-01-20</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://ad-server.fly.dev/blog/open_source_ad_servers</loc>
+    <lastmod>2026-01-20</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://ad-server.fly.dev/blog/monetize_website</loc>
+    <lastmod>2026-01-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://ad-server.fly.dev/blog/banner_ctr_optimization</loc>
+    <lastmod>2026-01-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -45,6 +52,7 @@
   <!-- Publisher -->
   <url>
     <loc>https://ad-server.fly.dev/publisher</loc>
+    <lastmod>2026-01-20</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
@@ -52,6 +60,7 @@
   <!-- Stats -->
   <url>
     <loc>https://ad-server.fly.dev/stats</loc>
+    <lastmod>2026-01-20</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
@@ -59,51 +68,61 @@
   <!-- Tools -->
   <url>
     <loc>https://ad-server.fly.dev/tools</loc>
+    <lastmod>2026-01-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://ad-server.fly.dev/tools/banner-preview-728x90.html</loc>
+    <lastmod>2026-01-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://ad-server.fly.dev/tools/banner-preview-160x600.html</loc>
+    <lastmod>2026-01-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://ad-server.fly.dev/tools/banner-preview-160x300.html</loc>
+    <lastmod>2026-01-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://ad-server.fly.dev/tools/banner-preview-320x50.html</loc>
+    <lastmod>2026-01-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://ad-server.fly.dev/tools/banner-preview-468x60.html</loc>
+    <lastmod>2026-01-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://ad-server.fly.dev/tools/banner-preview-300x250.html</loc>
+    <lastmod>2026-01-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://ad-server.fly.dev/tools/test-html5-banner-preview.html</loc>
+    <lastmod>2026-01-20</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.80</priority>
   </url>
   <url>
     <loc>https://ad-server.fly.dev/tools/html5-banner-preview-collection.html</loc>
+    <lastmod>2026-01-20</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.80</priority>
   </url>
   <url>
     <loc>https://ad-server.fly.dev/tools/html5-banner-validator.html</loc>
+    <lastmod>2026-01-20</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.80</priority>
   </url>

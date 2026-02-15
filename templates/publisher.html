@@ -20,6 +20,49 @@
 
 {% block twitter_description %}Learn how to integrate banner ads on your website and start monetizing your traffic today.{% endblock %}
 
+{% block structured_data %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Do I need to sign up or register?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No! You can embed ads instantly without any registration. Just copy the embed code and paste it into your website."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How do I get paid?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "This is a demo ad server for testing purposes. For production monetization, you'll need to integrate with an ad network or set up your own payment system if self-hosting."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What are the requirements?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Just a website with HTML access. Works with any platform - WordPress, static sites, React, Vue, or any CMS. No special server requirements needed."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I control which ads appear?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes! If you're self-hosting, you have complete control over ad content. You can create custom zones, upload your own creatives, and manage everything through the admin panel."
+      }
+    }
+  ]
+}
+</script>
+{% endblock %}
+
 {% block content %}
 <div class="container-narrow">
 

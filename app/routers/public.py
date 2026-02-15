@@ -13,6 +13,10 @@ router = APIRouter(tags=['Public'])
 templates = Jinja2Templates(directory='templates')
 settings = get_settings()
 
+HOME_CRUMB = {'name': 'Home', 'url': '/'}
+TOOLS_CRUMB = {'name': 'Tools', 'url': '/tools'}
+BLOG_CRUMB = {'name': 'Blog', 'url': '/blog'}
+
 
 @router.get('/', response_class=HTMLResponse)
 def home(request: Request):
@@ -25,7 +29,11 @@ def home(request: Request):
 @router.get('/tools', response_class=HTMLResponse)
 def tools_page(request: Request):
     """Ad testing tools page."""
-    return templates.TemplateResponse(request=request, name='tools.html')
+    return templates.TemplateResponse(
+        request=request,
+        name='tools.html',
+        context={'breadcrumb_items': [HOME_CRUMB, {'name': 'Tools', 'url': '/tools'}]},
+    )
 
 
 # Banner Preview Pages
@@ -90,6 +98,14 @@ def banner_preview_page(request: Request, size_slug: str):
     banner_info = BANNER_SIZES[size_slug]
     context = {
         'size_slug': size_slug,
+        'breadcrumb_items': [
+            HOME_CRUMB,
+            TOOLS_CRUMB,
+            {
+                'name': f'{banner_info["size"]} {banner_info["name"]}',
+                'url': f'/tools/banner-preview-{size_slug}.html',
+            },
+        ],
         **banner_info,
     }
     return templates.TemplateResponse(
@@ -100,14 +116,38 @@ def banner_preview_page(request: Request, size_slug: str):
 @router.get('/tools/test-html5-banner-preview.html', response_class=HTMLResponse)
 def html5_test_page(request: Request):
     """HTML5 banner testing page."""
-    return templates.TemplateResponse(request=request, name='tools/html5-test.html')
+    return templates.TemplateResponse(
+        request=request,
+        name='tools/html5-test.html',
+        context={
+            'breadcrumb_items': [
+                HOME_CRUMB,
+                TOOLS_CRUMB,
+                {
+                    'name': 'HTML5 Test Hub',
+                    'url': '/tools/test-html5-banner-preview.html',
+                },
+            ]
+        },
+    )
 
 
 @router.get('/tools/html5-banner-preview-collection.html', response_class=HTMLResponse)
 def html5_collection_page(request: Request):
     """HTML5 banner multi-size preview page."""
     return templates.TemplateResponse(
-        request=request, name='tools/html5-collection.html'
+        request=request,
+        name='tools/html5-collection.html',
+        context={
+            'breadcrumb_items': [
+                HOME_CRUMB,
+                TOOLS_CRUMB,
+                {
+                    'name': 'Banner Collection',
+                    'url': '/tools/html5-banner-preview-collection.html',
+                },
+            ]
+        },
     )
 
 
@@ -115,20 +155,49 @@ def html5_collection_page(request: Request):
 def html5_validator_page(request: Request):
     """HTML5 banner validator page."""
     return templates.TemplateResponse(
-        request=request, name='tools/html5-validator.html'
+        request=request,
+        name='tools/html5-validator.html',
+        context={
+            'breadcrumb_items': [
+                HOME_CRUMB,
+                TOOLS_CRUMB,
+                {
+                    'name': 'Banner Validator',
+                    'url': '/tools/html5-banner-validator.html',
+                },
+            ]
+        },
     )
 
 
 @router.get('/stats', response_class=HTMLResponse)
 def public_stats_ui(request: Request):
     """Public stats page."""
-    return templates.TemplateResponse(request=request, name='stats.html')
+    return templates.TemplateResponse(
+        request=request,
+        name='stats.html',
+        context={
+            'breadcrumb_items': [
+                HOME_CRUMB,
+                {'name': 'Statistics', 'url': '/stats'},
+            ]
+        },
+    )
 
 
 @router.get('/publisher', response_class=HTMLResponse)
 def publisher_page(request: Request):
     """Publisher information page."""
-    return templates.TemplateResponse(request=request, name='publisher.html')
+    return templates.TemplateResponse(
+        request=request,
+        name='publisher.html',
+        context={
+            'breadcrumb_items': [
+                HOME_CRUMB,
+                {'name': 'Publishers', 'url': '/publisher'},
+            ]
+        },
+    )
 
 
 @router.get('/publisher-test', response_class=HTMLResponse)
@@ -149,7 +218,12 @@ def blog_index(request: Request):
         and f not in ('blog_index.html', 'blog_base.html')
     ]
     return templates.TemplateResponse(
-        request=request, name='blog.html', context={'posts': posts}
+        request=request,
+        name='blog.html',
+        context={
+            'posts': posts,
+            'breadcrumb_items': [HOME_CRUMB, {'name': 'Blog', 'url': '/blog'}],
+        },
     )
 
 
@@ -177,10 +251,19 @@ def blog_page(request: Request, slug: str):
         )
 
     year = date.today().year
+    title = slug.replace('_', ' ').title()
     return templates.TemplateResponse(
         request=request,
         name=f'public/{filename}',
-        context={'published': published, 'year': year},
+        context={
+            'published': published,
+            'year': year,
+            'breadcrumb_items': [
+                HOME_CRUMB,
+                BLOG_CRUMB,
+                {'name': title, 'url': f'/blog/{slug}'},
+            ],
+        },
     )
 
 

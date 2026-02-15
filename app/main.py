@@ -10,7 +10,13 @@ from starlette.middleware.gzip import GZipMiddleware
 from starlette.staticfiles import StaticFiles
 
 from app.database import engine
-from app.routers import admin_router, api_router, public_router, serving_router
+from app.routers import (
+    admin_router,
+    api_router,
+    public_router,
+    seo_router,
+    serving_router,
+)
 
 logging.basicConfig(level=logging.DEBUG)
 
@@ -41,6 +47,7 @@ def create_app() -> FastAPI:
     app.add_middleware(GZipMiddleware, minimum_size=500)
 
     # Include routers
+    app.include_router(seo_router)
     app.include_router(api_router)
     app.include_router(admin_router)
     app.include_router(public_router)

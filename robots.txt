@@ -12,6 +12,3 @@ Disallow: /embed.js
 
 # Sitemap location
 Sitemap: https://ad-server.fly.dev/sitemap.xml
-
-# Crawl-delay (be nice to servers)
-Crawl-delay: 1

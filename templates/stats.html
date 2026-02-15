@@ -20,6 +20,23 @@
 
 {% block twitter_description %}View real-time ad performance metrics and analytics for all banner ads.{% endblock %}
 
+{% block structured_data %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "name": "Ad Performance Statistics",
+  "description": "Real-time ad performance metrics including impressions, clicks, and CTR for all banner ad zones.",
+  "url": "https://ad-server.fly.dev/stats",
+  "isPartOf": {
+    "@type": "WebSite",
+    "name": "Ad Server",
+    "url": "https://ad-server.fly.dev/"
+  }
+}
+</script>
+{% endblock %}
+
 {% block content %}
 <div class="container-narrow">
 

@@ -9,6 +9,13 @@
     <meta name="description" content="{% block description %}Modern ad server platform{% endblock %}">
     {% block extra_meta %}{% endblock %}
 
+    <!-- Performance Hints -->
+    <link rel="dns-prefetch" href="//www.highperformanceformat.com">
+    <link rel="preconnect" href="//www.highperformanceformat.com" crossorigin>
+    <link rel="dns-prefetch" href="//www.topcreativeformat.com">
+    <link rel="preconnect" href="//www.topcreativeformat.com" crossorigin>
+    <link rel="dns-prefetch" href="//www.profitablegatecpm.com">
+
     <!-- Favicon -->
     <link rel="icon" href="/static/images/favicon.ico" type="image/x-icon">
 
@@ -28,6 +35,33 @@
     <meta name="twitter:description" content="{% block twitter_description %}Modern ad server platform{% endblock %}">
     <meta name="twitter:image" content="{% block twitter_image %}https://ad-server.fly.dev/static/images/og-default.png{% endblock %}">
 
+    <!-- Sitewide Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "Ad Server",
+      "alternateName": "Ad Preview Tester",
+      "url": "https://ad-server.fly.dev/",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "https://ad-server.fly.dev/tools?q={search_term_string}",
+        "query-input": "required name=search_term_string"
+      }
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "Ad Server",
+      "url": "https://ad-server.fly.dev/",
+      "logo": "https://ad-server.fly.dev/static/images/og-default.png",
+      "sameAs": []
+    }
+    </script>
+    {% block structured_data %}{% endblock %}
+
     <!-- Styles -->
     <link rel="stylesheet" href="/static/css/main.css">
     {% block extra_css %}{% endblock %}
@@ -35,6 +69,9 @@
 <body>
     <!-- Navigation -->
     {% include 'components/nav.html' %}
+
+    <!-- Breadcrumbs -->
+    {% include 'components/breadcrumb.html' %}
 
     <!-- Main Content -->
     <main>

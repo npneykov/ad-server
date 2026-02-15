@@ -21,6 +21,29 @@
 
 {% block twitter_description %}Comprehensive collection of ad banner preview tools. Test all standard banner sizes and validate HTML5 ads.{% endblock %}
 
+{% block structured_data %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  "name": "Ad Banner Preview Tools",
+  "description": "Collection of free tools for previewing and testing HTML5 banner ads in standard IAB sizes.",
+  "numberOfItems": 9,
+  "itemListElement": [
+    {"@type": "ListItem", "position": 1, "name": "728x90 Leaderboard Preview", "url": "https://ad-server.fly.dev/tools/banner-preview-728x90.html"},
+    {"@type": "ListItem", "position": 2, "name": "300x250 Medium Rectangle Preview", "url": "https://ad-server.fly.dev/tools/banner-preview-300x250.html"},
+    {"@type": "ListItem", "position": 3, "name": "468x60 Full Banner Preview", "url": "https://ad-server.fly.dev/tools/banner-preview-468x60.html"},
+    {"@type": "ListItem", "position": 4, "name": "160x600 Skyscraper Preview", "url": "https://ad-server.fly.dev/tools/banner-preview-160x600.html"},
+    {"@type": "ListItem", "position": 5, "name": "320x50 Mobile Banner Preview", "url": "https://ad-server.fly.dev/tools/banner-preview-320x50.html"},
+    {"@type": "ListItem", "position": 6, "name": "160x300 Large Banner Preview", "url": "https://ad-server.fly.dev/tools/banner-preview-160x300.html"},
+    {"@type": "ListItem", "position": 7, "name": "HTML5 Banner Test Hub", "url": "https://ad-server.fly.dev/tools/test-html5-banner-preview.html"},
+    {"@type": "ListItem", "position": 8, "name": "HTML5 Banner Collection", "url": "https://ad-server.fly.dev/tools/html5-banner-preview-collection.html"},
+    {"@type": "ListItem", "position": 9, "name": "HTML5 Banner Validator", "url": "https://ad-server.fly.dev/tools/html5-banner-validator.html"}
+  ]
+}
+</script>
+{% endblock %}
+
 {% block content %}
 <div class="container-narrow">
 

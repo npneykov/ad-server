@@ -1,0 +1,20 @@
+{% if breadcrumb_items %}
+<nav aria-label="Breadcrumb" style="max-width: 900px; margin: 0 auto; padding: var(--spacing-md) var(--spacing-lg) 0;">
+    <ol itemscope itemtype="https://schema.org/BreadcrumbList" style="list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: 0.25rem; font-size: 0.8125rem; color: var(--gray-500);">
+        {% for item in breadcrumb_items %}
+        <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem" style="display: flex; align-items: center;">
+            {% if not loop.last %}
+            <a itemprop="item" href="{{ item.url }}" style="color: var(--gray-500); text-decoration: none; transition: color 0.15s;">
+                <span itemprop="name">{{ item.name }}</span>
+            </a>
+            <meta itemprop="position" content="{{ loop.index }}" />
+            <span style="margin: 0 0.375rem; color: var(--gray-300);">/</span>
+            {% else %}
+            <span itemprop="name" style="color: var(--gray-700); font-weight: 500;">{{ item.name }}</span>
+            <meta itemprop="position" content="{{ loop.index }}" />
+            {% endif %}
+        </li>
+        {% endfor %}
+    </ol>
+</nav>
+{% endif %}

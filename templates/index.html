@@ -26,6 +26,34 @@ for marketers and developers.{% endblock %}
 {% block twitter_description %}Preview and test banner ads online. Free HTML5 ad preview tool and open-source ad server
 demo for marketers and developers.{% endblock %}
 
+{% block structured_data %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Ad Preview Tester",
+  "description": "Free tool to preview and test HTML5 banner ads in standard IAB sizes. Open source ad server demo for marketers and developers.",
+  "applicationCategory": "BusinessApplication",
+  "operatingSystem": "Web",
+  "url": "https://ad-server.fly.dev/",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  },
+  "featureList": [
+    "728x90 Leaderboard Preview",
+    "300x250 Medium Rectangle Preview",
+    "468x60 Banner Preview",
+    "160x600 Skyscraper Preview",
+    "320x50 Mobile Banner Preview",
+    "Real-time Impression Tracking",
+    "Click-through Rate Analytics"
+  ]
+}
+</script>
+{% endblock %}
+
 {% block content %}
 <div class="container-narrow">
 

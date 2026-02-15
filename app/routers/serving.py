@@ -103,9 +103,11 @@ def click(id: int, session: SessionDep, response: Response):
 @router.get('/embed.js', response_class=Response, include_in_schema=False)
 def embed_js(
     request: Request,
+    response: Response,
     zone: int | None = Query(default=None, description='Zone ID'),
 ):
     """Generate embeddable JavaScript for ad display."""
+    response.headers['Cache-Control'] = 'public, max-age=3600'
     return templates.TemplateResponse(
         request=request,
         name='embed.js.jinja2',

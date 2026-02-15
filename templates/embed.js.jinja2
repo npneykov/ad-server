@@ -1,49 +1,140 @@
 (function() {
-  const container = document.currentScript.parentElement;
+  var container = document.currentScript.parentElement;
   if (!container) return;
 
-  // 🔄 All Adsterra banners available for rotation
-  const zones = [
-    { id: "363fe61789ea411afa3a518e263921d3", width: 728, height: 90 },
-    { id: "667cbfaa4276c3a1a5297a14a6a72a4c", width: 468, height: 60 },
-    { id: "0b1c3d2651ee6075ac8ece211622ff34", width: 300, height: 250 },
-    { id: "f3c69ff1bb6955e67ecabdf7aea461cb", width: 160, height: 600 },
-    { id: "8666fede885322207af096e33f9cf8d5", width: 160, height: 300 },
-    { id: "071342321d1d152325291bc8945d1a86", width: 320, height: 50 }
-  ];
+  var ZONE_MAP = {
+    "27382965": { id: "363fe61789ea411afa3a518e263921d3", width: 728, height: 90 },
+    "27383203": { id: "667cbfaa4276c3a1a5297a14a6a72a4c", width: 468, height: 60 },
+    "27383189": { id: "0b1c3d2651ee6075ac8ece211622ff34", width: 300, height: 250 },
+    "27383212": { id: "f3c69ff1bb6955e67ecabdf7aea461cb", width: 160, height: 600 },
+    "27383210": { id: "8666fede885322207af096e33f9cf8d5", width: 160, height: 300 },
+    "27383198": { id: "071342321d1d152325291bc8945d1a86", width: 320, height: 50 }
+  };
 
-  const selected = zones[Math.floor(Math.random() * zones.length)];
+  {% if zone %}
+  var zoneId = "{{ zone }}";
+  {% else %}
+  var zoneId = null;
+  {% endif %}
 
-  const iframe = document.createElement('iframe');
+  var selected = null;
+  if (zoneId && ZONE_MAP[zoneId]) {
+    selected = ZONE_MAP[zoneId];
+  } else {
+    var keys = Object.keys(ZONE_MAP);
+    selected = ZONE_MAP[keys[Math.floor(Math.random() * keys.length)]];
+  }
+
+  var REFRESH_MS = 45000;
+  var FALLBACK_MS = 5000;
+
+  function buildSrcdoc() {
+    return ''
+      + '<html>'
+      + '<head><base target="_top"></head>'
+      + '<body style="margin:0;padding:0;overflow:hidden;width:' + selected.width + 'px;height:' + selected.height + 'px;">'
+      + '<script>'
+      + 'atOptions = {'
+      + "  'key': '" + selected.id + "',"
+      + "  'format': 'iframe',"
+      + "  'height': " + selected.height + ","
+      + "  'width': " + selected.width + ","
+      + "  'params': {}"
+      + '};'
+      + '<\/script>'
+      + '<script src="https://www.highperformanceformat.com/' + selected.id + '/invoke.js"><\/script>'
+      + '</body>'
+      + '</html>';
+  }
+
+  function buildFallback() {
+    return '<div style="display:flex;align-items:center;justify-content:center;'
+      + 'width:' + selected.width + 'px;height:' + selected.height + 'px;'
+      + 'background:#f8f9fa;border:1px solid #e9ecef;border-radius:8px;'
+      + 'font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,sans-serif;'
+      + 'text-align:center;color:#6c757d;font-size:13px;">'
+      + '<a href="/tools" style="color:#4361ee;text-decoration:none;">'
+      + 'Explore Ad Preview Tools &rarr;</a></div>';
+  }
+
+  var iframe = document.createElement('iframe');
   iframe.width = selected.width;
   iframe.height = selected.height;
   iframe.style.border = '0';
+  iframe.style.maxWidth = '100%';
+  iframe.style.overflow = 'hidden';
+  iframe.style.display = 'block';
   iframe.setAttribute('scrolling', 'no');
   iframe.setAttribute('frameborder', '0');
   iframe.setAttribute('allowtransparency', 'true');
+  iframe.setAttribute('loading', 'lazy');
 
-  // Inject Adsterra banner using srcdoc
-  iframe.srcdoc = `
-    <html>
-      <head><base target="_top"></head>
-      <body style="margin:0;padding:0;">
-        <script>
-          atOptions = {
-            'key': '${selected.id}',
-            'format': 'iframe',
-            'height': ${selected.height},
-            'width': ${selected.width},
-            'params': {}
-          };
-        <\/script>
-        <script src="https://www.highperformanceformat.com/${selected.id}/invoke.js"><\/script>
-      </body>
-    </html>
-  `;
+  var adLoaded = false;
+  var isVisible = false;
+  var refreshTimer = null;
+
+  function loadAd() {
+    iframe.srcdoc = buildSrcdoc();
+    adLoaded = true;
+    startFallbackCheck();
+  }
+
+  function startFallbackCheck() {
+    setTimeout(function() {
+      try {
+        var body = iframe.contentDocument && iframe.contentDocument.body;
+        var hasContent = body && body.children.length > 2;
+        if (!hasContent) {
+          container.innerHTML = buildFallback();
+        }
+      } catch(e) {
+        // cross-origin means ad loaded successfully
+      }
+    }, FALLBACK_MS);
+  }
+
+  function startRefreshCycle() {
+    stopRefreshCycle();
+    refreshTimer = setInterval(function() {
+      if (isVisible && document.visibilityState === 'visible') {
+        try { iframe.srcdoc = buildSrcdoc(); } catch(e) {}
+      }
+    }, REFRESH_MS);
+  }
+
+  function stopRefreshCycle() {
+    if (refreshTimer) {
+      clearInterval(refreshTimer);
+      refreshTimer = null;
+    }
+  }
 
   container.appendChild(iframe);
-  // Reload ad every 45 seconds
-  setInterval(() => {
-    iframe.contentWindow.location.reload();
-  }, 45000); // 45,000 ms = 45 seconds
+
+  if ('IntersectionObserver' in window) {
+    var observer = new IntersectionObserver(function(entries) {
+      var entry = entries[0];
+      isVisible = entry.isIntersecting;
+      if (isVisible && !adLoaded) {
+        loadAd();
+        startRefreshCycle();
+      } else if (isVisible && !refreshTimer) {
+        startRefreshCycle();
+      } else if (!isVisible) {
+        stopRefreshCycle();
+      }
+    }, { rootMargin: '200px' });
+    observer.observe(container);
+  } else {
+    loadAd();
+    startRefreshCycle();
+  }
+
+  document.addEventListener('visibilitychange', function() {
+    if (document.visibilityState === 'hidden') {
+      stopRefreshCycle();
+    } else if (isVisible && adLoaded) {
+      startRefreshCycle();
+    }
+  });
 })();

@@ -1,0 +1,222 @@
+{% extends "public/blog_base.html" %}
+
+{% block page_title %}How to Test HTML5 Banner Ads Before Publishing: Complete 2026 Guide{% endblock %}
+{% block header_title %}How to Test HTML5 Banner Ads Before Publishing: Complete 2026 Guide{% endblock %}
+{% block description %}Learn how to test HTML5 banner ads before publishing. Step-by-step testing checklist covering browser compatibility, file size, animations, and click-through tracking.{% endblock %}
+
+{% block article_content %}
+<h2>Why Testing HTML5 Banner Ads is Critical</h2>
+<p>A broken or poorly optimized HTML5 banner ad can cost thousands in wasted ad spend. Ad networks often reject banners with technical issues, and even if they accept them, poorly tested ads may fail to load, render incorrectly, or drive zero clicks. Testing your HTML5 banners before publishing ensures they work across devices, load quickly, and deliver maximum ROI.</p>
+
+<p>This guide covers everything you need to test before sending your HTML5 banners to ad networks or clients.</p>
+
+<hr />
+
+<h2>Pre-Publishing Test Checklist</h2>
+
+<h3>1. File Size Validation</h3>
+<p>Most ad networks enforce strict file size limits. Google Ads, for example, limits HTML5 banners to 150KB (initial load) with a maximum of 2.2MB total assets after polite loading.</p>
+
+<p><strong>How to check:</strong></p>
+<ul>
+    <li>Zip your HTML5 creative folder (HTML, CSS, JS, images)</li>
+    <li>Verify the .zip file is under 150KB</li>
+    <li>If over the limit, optimize images (WebP format, compression) and minify JS/CSS</li>
+</ul>
+
+<p><strong>Tools:</strong></p>
+<ul>
+    <li><a href="https://tinypng.com/" target="_blank" rel="nofollow">TinyPNG</a> - Image compression</li>
+    <li><a href="https://www.toptal.com/developers/javascript-minifier" target="_blank" rel="nofollow">JavaScript Minifier</a></li>
+    <li><a href="/tools/html5-banner-validator.html">HTML5 banner validation checklist</a></li>
+</ul>
+
+<h3>2. Browser Compatibility Testing</h3>
+<p>Your HTML5 banner must work across all major browsers. A banner that works in Chrome but breaks in Safari will lose 30%+ of potential impressions.</p>
+
+<p><strong>Test in these browsers (minimum):</strong></p>
+<ul>
+    <li>Google Chrome (latest version)</li>
+    <li>Safari (desktop and iOS)</li>
+    <li>Firefox (latest version)</li>
+    <li>Microsoft Edge</li>
+    <li>Mobile Chrome (Android)</li>
+    <li>Mobile Safari (iOS)</li>
+</ul>
+
+<p><strong>Common issues:</strong></p>
+<ul>
+    <li>Safari doesn't support some newer CSS features without prefixes</li>
+    <li>iOS Safari has strict autoplay restrictions for video/audio</li>
+    <li>Firefox handles flexbox slightly differently than Chrome</li>
+</ul>
+
+<p><strong>Quick test:</strong> Use our <a href="/tools/html5-banner-preview-collection.html">multi-size HTML5 preview tool</a> to see all banner sizes simultaneously.</p>
+
+<h3>3. Animation & Interaction Testing</h3>
+<p>HTML5 banner animations must follow IAB guidelines. Most ad networks require animations to stop after 15-30 seconds and limit looping animations.</p>
+
+<p><strong>Animation requirements:</strong></p>
+<ul>
+    <li>Total animation duration: 15-30 seconds maximum</li>
+    <li>Auto-play animations should stop after 15 seconds</li>
+    <li>User-initiated animations (hover, click) are allowed to continue</li>
+    <li>No auto-playing audio (requires user interaction)</li>
+    <li>Looping animations: maximum 3 loops</li>
+</ul>
+
+<p><strong>Testing steps:</strong></p>
+<ol>
+    <li>Load your banner in a browser</li>
+    <li>Start a timer when the page loads</li>
+    <li>Verify animations stop at the correct time (15-30s)</li>
+    <li>Check that hover/click interactions still work after auto-animations stop</li>
+</ol>
+
+<h3>4. Click-Through Functionality</h3>
+<p>A banner with a broken click-through URL will generate 0 conversions. Always test the clickTag implementation.</p>
+
+<p><strong>ClickTag best practices:</strong></p>
+<ul>
+    <li>Use <code>window.open(clickTag, '_blank')</code> for standard click-throughs</li>
+    <li>Ensure the entire banner area is clickable (not just specific elements)</li>
+    <li>Test with a placeholder URL like <code>http://example.com</code></li>
+    <li>Verify the URL opens in a new tab (target="_blank")</li>
+</ul>
+
+<p><strong>Common clickTag errors:</strong></p>
+<ul>
+    <li>Missing <code>clickTag</code> variable in JavaScript</li>
+    <li>Click handler not attached to the full banner area</li>
+    <li>Using relative URLs instead of absolute URLs</li>
+    <li>Opening links in the same tab (should use <code>_blank</code>)</li>
+</ul>
+
+<h3>5. Responsive Behavior Testing</h3>
+<p>While most HTML5 banners use fixed dimensions (e.g., 728x90, 300x250), they should still handle edge cases like high-DPI displays and zoom levels.</p>
+
+<p><strong>Test at different zoom levels:</strong></p>
+<ul>
+    <li>100% zoom (default)</li>
+    <li>150% zoom (common for accessibility)</li>
+    <li>200% zoom (high DPI displays like Retina)</li>
+</ul>
+
+<p><strong>What to look for:</strong></p>
+<ul>
+    <li>Text remains readable</li>
+    <li>Images don't pixelate (use SVG or high-res PNGs)</li>
+    <li>Layout doesn't break</li>
+    <li>Clickable areas scale correctly</li>
+</ul>
+
+<h3>6. Performance Testing</h3>
+<p>Slow-loading banners hurt user experience and reduce impressions. Your banner should load in under 1 second on a standard connection.</p>
+
+<p><strong>Performance benchmarks:</strong></p>
+<ul>
+    <li>Initial load time: &lt; 1 second</li>
+    <li>Total asset size: &lt; 2.2MB</li>
+    <li>Number of HTTP requests: &lt; 10</li>
+    <li>CPU usage: Minimal (no infinite loops, heavy calculations)</li>
+</ul>
+
+<p><strong>How to test:</strong></p>
+<ol>
+    <li>Open Chrome DevTools (F12)</li>
+    <li>Go to the "Network" tab</li>
+    <li>Reload your banner preview page</li>
+    <li>Check "DOMContentLoaded" time (should be &lt; 1s)</li>
+    <li>Review the "Size" column to verify total asset size</li>
+</ol>
+
+<hr />
+
+<h2>Testing Tools & Resources</h2>
+
+<h3>Free Online Testing Tools</h3>
+<ul>
+    <li><a href="/tools">Ad Server Banner Preview Tools</a> - Test all standard banner sizes instantly</li>
+    <li><a href="/tools/html5-banner-validator.html">HTML5 Banner Validation Checklist</a> - Interactive quality checklist</li>
+    <li><a href="/tools/html5-banner-preview-collection.html">Multi-Size Preview</a> - Compare multiple banner sizes side-by-side</li>
+</ul>
+
+<h3>Browser Testing Tools</h3>
+<ul>
+    <li><a href="https://www.browserstack.com/" target="_blank" rel="nofollow">BrowserStack</a> - Test in 2,000+ browsers (paid)</li>
+    <li><a href="https://developer.chrome.com/docs/devtools/" target="_blank" rel="nofollow">Chrome DevTools</a> - Free browser testing and debugging</li>
+    <li><a href="https://caniuse.com/" target="_blank" rel="nofollow">Can I Use</a> - Check CSS/JS feature compatibility</li>
+</ul>
+
+<h3>Performance Testing</h3>
+<ul>
+    <li><a href="https://pagespeed.web.dev/" target="_blank" rel="nofollow">PageSpeed Insights</a> - Google's performance tool</li>
+    <li>Chrome DevTools Network tab - Monitor load times and asset sizes</li>
+    <li>Chrome DevTools Performance tab - Identify CPU bottlenecks</li>
+</ul>
+
+<hr />
+
+<h2>Common HTML5 Banner Issues & Fixes</h2>
+
+<h3>Issue: Banner Doesn't Load</h3>
+<p><strong>Possible causes:</strong></p>
+<ul>
+    <li>File size exceeds 150KB limit</li>
+    <li>Missing or incorrect file paths in HTML</li>
+    <li>JavaScript errors preventing render</li>
+</ul>
+<p><strong>Fix:</strong> Open browser console (F12) and check for errors. Compress images and minify code to reduce file size.</p>
+
+<h3>Issue: Animation Doesn't Play</h3>
+<p><strong>Possible causes:</strong></p>
+<ul>
+    <li>CSS animation not triggered correctly</li>
+    <li>JavaScript animation loop has syntax error</li>
+    <li>Browser autoplay restrictions (video/audio)</li>
+</ul>
+<p><strong>Fix:</strong> Use CSS animations instead of JavaScript where possible. Test in multiple browsers to identify compatibility issues.</p>
+
+<h3>Issue: ClickTag Not Working</h3>
+<p><strong>Possible causes:</strong></p>
+<ul>
+    <li>Missing <code>clickTag</code> variable declaration</li>
+    <li>Click event not bound to full banner container</li>
+    <li>z-index conflicts preventing clicks</li>
+</ul>
+<p><strong>Fix:</strong> Ensure your click handler wraps the entire banner and uses <code>window.open(clickTag, '_blank')</code>.</p>
+
+<h3>Issue: Banner Looks Different on Mobile</h3>
+<p><strong>Possible causes:</strong></p>
+<ul>
+    <li>Font sizes too small for mobile screens</li>
+    <li>Touch targets smaller than 44x44px (minimum for mobile)</li>
+    <li>Fixed positioning conflicts with mobile browsers</li>
+</ul>
+<p><strong>Fix:</strong> Test on actual mobile devices, not just desktop browser emulation. Use relative font sizes and ensure buttons are large enough for touch.</p>
+
+<hr />
+
+<h2>Step-by-Step Testing Workflow</h2>
+
+<p>Follow this workflow to ensure comprehensive testing:</p>
+
+<ol>
+    <li><strong>Export your banner</strong> - Zip the HTML5 creative folder</li>
+    <li><strong>Check file size</strong> - Verify .zip is &lt; 150KB</li>
+    <li><strong>Test in Chrome</strong> - Load the banner and verify all functionality</li>
+    <li><strong>Test in Safari</strong> - Check for webkit-specific issues</li>
+    <li><strong>Test on mobile</strong> - Load on iOS and Android devices</li>
+    <li><strong>Validate animations</strong> - Confirm they stop after 15-30s</li>
+    <li><strong>Test clickTag</strong> - Click the banner, verify new tab opens</li>
+    <li><strong>Performance check</strong> - Use DevTools to check load time</li>
+    <li><strong>Final review</strong> - Use our <a href="/tools/html5-banner-validator.html">validation checklist</a></li>
+</ol>
+
+<hr />
+
+<h2>Conclusion</h2>
+<p>Testing HTML5 banner ads thoroughly before publishing prevents costly rejections, wasted ad spend, and poor performance. Follow this checklist to ensure your banners work across all devices, load quickly, and drive maximum click-through rates.</p>
+
+<p>Use our <a href="/tools">free banner preview tools</a> to test all standard IAB sizes instantly, and bookmark our <a href="/tools/html5-banner-validator.html">HTML5 validation checklist</a> for quick pre-flight checks.</p>
+{% endblock %}

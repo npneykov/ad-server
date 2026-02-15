@@ -19,9 +19,12 @@ settings = get_settings()
 def render_ad(
     request: Request,
     session: SessionDep,
+    response: Response,
     zone: int = Query(1, description='Zone ID (defaults to 1)'),
 ):
     """Render an ad for the specified zone."""
+    # Tell search engines not to index this endpoint
+    response.headers['X-Robots-Tag'] = 'noindex, nofollow'
     # Verify zone exists
     z = session.get(Zone, zone)
     if not z:
@@ -81,8 +84,10 @@ def render_ad(
 
 
 @router.get('/click')
-def click(id: int, session: SessionDep):
+def click(id: int, session: SessionDep, response: Response):
     """Handle ad click - log and redirect to Adsterra SmartLink."""
+    # Tell search engines not to index this endpoint
+    response.headers['X-Robots-Tag'] = 'noindex, nofollow'
     ad = session.get(Ad, id)
     if not ad:
         raise HTTPException(status_code=404, detail='Ad not found')

@@ -258,6 +258,7 @@ def blog_page(request: Request, slug: str):
         context={
             'published': published,
             'year': year,
+            'slug': slug,
             'breadcrumb_items': [
                 HOME_CRUMB,
                 BLOG_CRUMB,

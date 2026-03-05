@@ -4,6 +4,10 @@
 
 {% block description %}{{ description or 'Practical guides and tools for display ads, banners, and open-source ad serving.' }}{% endblock %}
 
+{% block canonical %}https://ad-server.fly.dev/blog/{{ slug }}{% endblock %}
+
+{% block og_url %}https://ad-server.fly.dev/blog/{{ slug }}{% endblock %}
+
 {% block extra_meta %}
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="Ad Server">
@@ -131,14 +135,38 @@
         </div>
     </section>
 
-    <!-- Related Articles CTA -->
-    <section class="cta-box mt-xl">
-        <h2>Keep Reading</h2>
-        <p>
-            Explore more articles about ad testing, optimization, and best practices.
-        </p>
-        <div style="margin-top: 1.5rem;">
+    <!-- Related Articles -->
+    <section class="mt-xl">
+        <h2 style="font-size: 1.5rem; margin-bottom: var(--spacing-lg);">Related Articles</h2>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: var(--spacing-md);">
+            <a href="/blog/standard_banner_sizes" style="display: block; padding: var(--spacing-lg); background: var(--gray-50); border-radius: var(--radius-md); text-decoration: none; border: 1px solid var(--gray-200); transition: border-color 0.2s;">
+                <strong style="color: var(--gray-900);">Standard Banner Ad Sizes Guide 2026</strong>
+                <p style="color: var(--gray-500); font-size: 0.875rem; margin-top: 0.5rem;">IAB dimensions, performance benchmarks, and best practices.</p>
+            </a>
+            <a href="/blog/html5_testing_guide" style="display: block; padding: var(--spacing-lg); background: var(--gray-50); border-radius: var(--radius-md); text-decoration: none; border: 1px solid var(--gray-200); transition: border-color 0.2s;">
+                <strong style="color: var(--gray-900);">How to Test HTML5 Banner Ads</strong>
+                <p style="color: var(--gray-500); font-size: 0.875rem; margin-top: 0.5rem;">Complete pre-publishing testing checklist for banner ads.</p>
+            </a>
+            <a href="/blog/banner_ctr_optimization" style="display: block; padding: var(--spacing-lg); background: var(--gray-50); border-radius: var(--radius-md); text-decoration: none; border: 1px solid var(--gray-200); transition: border-color 0.2s;">
+                <strong style="color: var(--gray-900);">10 Strategies to Boost Banner Ad CTR</strong>
+                <p style="color: var(--gray-500); font-size: 0.875rem; margin-top: 0.5rem;">Actionable tips to increase your click-through rates.</p>
+            </a>
+            <a href="/blog/monetize_website" style="display: block; padding: var(--spacing-lg); background: var(--gray-50); border-radius: var(--radius-md); text-decoration: none; border: 1px solid var(--gray-200); transition: border-color 0.2s;">
+                <strong style="color: var(--gray-900);">How to Monetize Your Website with Display Ads</strong>
+                <p style="color: var(--gray-500); font-size: 0.875rem; margin-top: 0.5rem;">Ad networks, sizes, placement, and revenue optimization.</p>
+            </a>
+            <a href="/blog/ad_server_setup" style="display: block; padding: var(--spacing-lg); background: var(--gray-50); border-radius: var(--radius-md); text-decoration: none; border: 1px solid var(--gray-200); transition: border-color 0.2s;">
+                <strong style="color: var(--gray-900);">Ad Server Setup: Self-Hosted vs Cloud</strong>
+                <p style="color: var(--gray-500); font-size: 0.875rem; margin-top: 0.5rem;">Compare costs, features, and technical requirements.</p>
+            </a>
+            <a href="/blog/open_source_ad_servers" style="display: block; padding: var(--spacing-lg); background: var(--gray-50); border-radius: var(--radius-md); text-decoration: none; border: 1px solid var(--gray-200); transition: border-color 0.2s;">
+                <strong style="color: var(--gray-900);">Top 5 Open Source Ad Servers</strong>
+                <p style="color: var(--gray-500); font-size: 0.875rem; margin-top: 0.5rem;">Compare the best open-source ad serving platforms.</p>
+            </a>
+        </div>
+        <div style="margin-top: var(--spacing-xl); text-align: center;">
             <a href="/blog" class="btn btn-primary">View All Articles</a>
+            <a href="/tools" class="btn btn-secondary" style="margin-left: var(--spacing-sm);">Try Banner Preview Tools</a>
         </div>
     </section>
 

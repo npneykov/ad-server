@@ -4,8 +4,9 @@ from datetime import UTC, date, datetime
 import os
 
 from fastapi import APIRouter, HTTPException, Request
-from fastapi.responses import HTMLResponse, PlainTextResponse
+from fastapi.responses import HTMLResponse, PlainTextResponse, RedirectResponse
 
+from app.blog_seo import BLOG_DISPLAY_TITLES
 from app.config import get_settings
 from app.template_utils import create_templates
 
@@ -33,6 +34,28 @@ def tools_page(request: Request):
         request=request,
         name='tools.html',
         context={'breadcrumb_items': [HOME_CRUMB, {'name': 'Tools', 'url': '/tools'}]},
+    )
+
+
+# Legacy static tool URLs (301) — old sitemap/links still crawled by Google
+@router.get('/tools/display-ad-preview.html', include_in_schema=False)
+def legacy_display_ad_preview():
+    return RedirectResponse(
+        url='/tools/test-html5-banner-preview.html', status_code=301
+    )
+
+
+@router.get('/tools/publisher-auto-refresh.html', include_in_schema=False)
+def legacy_publisher_auto_refresh():
+    return RedirectResponse(
+        url='/tools/html5-banner-preview-collection.html', status_code=301
+    )
+
+
+@router.get('/tools/real-time-ad-check.html', include_in_schema=False)
+def legacy_real_time_ad_check():
+    return RedirectResponse(
+        url='/tools/test-html5-banner-preview.html', status_code=301
     )
 
 
@@ -251,7 +274,7 @@ def blog_page(request: Request, slug: str):
         )
 
     year = date.today().year
-    title = slug.replace('_', ' ').title()
+    title = BLOG_DISPLAY_TITLES.get(slug, slug.replace('_', ' ').title())
     return templates.TemplateResponse(
         request=request,
         name=f'public/{filename}',
@@ -264,6 +287,7 @@ def blog_page(request: Request, slug: str):
                 BLOG_CRUMB,
                 {'name': title, 'url': f'/blog/{slug}'},
             ],
+            'title': title,
         },
     )
 

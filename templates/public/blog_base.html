@@ -2,7 +2,7 @@
 
 {% block title %}{% block page_title %}{% endblock %}{% endblock %}
 
-{% block description %}{{ description or 'Practical guides and tools for display ads, banners, and open-source ad serving.' }}{% endblock %}
+{% block description %}{{ meta_description | default('Practical guides and tools for display ads, banners, and open-source ad serving.') }}{% endblock %}
 
 {% block canonical %}https://ad-server.fly.dev/blog/{{ slug }}{% endblock %}
 
@@ -32,7 +32,7 @@
     {
       "@type": "ListItem",
       "position": 3,
-      "name": "{{ title or 'Post' }}"
+      "name": {{ (title or 'Post') | tojson }}
     }
   ]
 }
@@ -42,8 +42,8 @@
 {
   "@context": "https://schema.org",
   "@type": "Article",
-  "headline": "{{ title or 'Ad Server Blog Post' }}",
-  "description": "{{ description or 'A practical article about ad serving and banner tooling.' }}",
+  "headline": {{ (title or 'Ad Server Blog Post') | tojson }},
+  "description": {{ (meta_description | default('A practical article about ad serving and banner tooling.')) | tojson }},
   "author": {
     "@type": "Person",
     "name": "{{ author or 'Ad Server' }}"
@@ -68,11 +68,11 @@
 {% endblock %}
 
 {% block og_title %}{{ title or 'Ad Server Blog' }}{% endblock %}
-{% block og_description %}{{ description or 'Practical guides and tools for display ads, banners, and open-source ad serving.' }}{% endblock %}
+{% block og_description %}{{ meta_description | default('Practical guides and tools for display ads, banners, and open-source ad serving.') }}{% endblock %}
 {% block og_image %}{{ og_image or 'https://ad-server.fly.dev/static/images/og-default.png' }}{% endblock %}
 
 {% block twitter_title %}{{ title or 'Ad Server Blog' }}{% endblock %}
-{% block twitter_description %}{{ description or 'Practical guides and tools for display ads, banners, and open-source ad serving.' }}{% endblock %}
+{% block twitter_description %}{{ meta_description | default('Practical guides and tools for display ads, banners, and open-source ad serving.') }}{% endblock %}
 {% block twitter_image %}{{ og_image or 'https://ad-server.fly.dev/static/images/og-default.png' }}{% endblock %}
 
 {% block content %}

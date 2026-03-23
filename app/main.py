@@ -22,11 +22,26 @@ logging.basicConfig(level=logging.DEBUG)
 
 
 class CachedStaticFiles(StaticFiles):
-    """Static files with caching headers."""
+    """Static files with Cache-Control tuned for unhashed CSS/JS vs images/fonts."""
+
+    _CACHE_CSS_JS = 'public, max-age=86400'  # 1d — main.css updates apply within a day
+    _CACHE_FONT = 'public, max-age=604800'  # 7d
+    # 7d; no immutable — same path may be replaced after deploy
+    _CACHE_IMAGE = 'public, max-age=604800'
 
     async def get_response(self, path, scope):
         resp = await super().get_response(path, scope)
-        resp.headers.setdefault('Cache-Control', 'public, max-age=2592000, immutable')
+        if resp.status_code != 200:
+            return resp
+        ext = path.rsplit('.', 1)[-1].lower() if '.' in path else ''
+        if ext in ('css', 'js', 'mjs'):
+            resp.headers['Cache-Control'] = self._CACHE_CSS_JS
+        elif ext in ('woff', 'woff2', 'ttf', 'otf', 'eot'):
+            resp.headers['Cache-Control'] = self._CACHE_FONT
+        elif ext in ('png', 'jpg', 'jpeg', 'webp', 'gif', 'ico', 'svg'):
+            resp.headers['Cache-Control'] = self._CACHE_IMAGE
+        else:
+            resp.headers['Cache-Control'] = self._CACHE_CSS_JS
         return resp
 
 
